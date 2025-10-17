@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAVL Web Banners (728x90)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .banner-container {
+            margin-bottom: 40px;
+        }
+
+        .banner-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .banner {
+            width: 728px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Banner 1: Bold Navy & Gold */
+        .banner-1 {
+            background: linear-gradient(135deg, #001a33 0%, #003366 100%);
+            color: white;
+        }
+
+        .banner-1 .logo {
+            font-size: 36px;
+            font-weight: 900;
+            color: #D4AF37;
+            letter-spacing: 2px;
+        }
+
+        .banner-1 .text {
+            font-size: 16px;
+            font-weight: 600;
+            flex: 1;
+            margin: 0 20px;
+            line-height: 1.3;
+        }
+
+        .banner-1 .text .highlight {
+            color: #D4AF37;
+            font-weight: 700;
+        }
+
+        .banner-1 .cta {
+            background: #D4AF37;
+            color: #001a33;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Banner 2: Professional White */
+        .banner-2 {
+            background: white;
+            color: #003366;
+            border: 2px solid #003366;
+        }
+
+        .banner-2 .icon {
+            font-size: 48px;
+        }
+
+        .banner-2 .text {
+            font-size: 16px;
+            font-weight: 600;
+            flex: 1;
+            margin: 0 20px;
+            line-height: 1.3;
+        }
+
+        .banner-2 .text .headline {
+            font-size: 18px;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 3px;
+        }
+
+        .banner-2 .cta {
+            background: #003366;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Banner 3: Gradient Action */
+        .banner-3 {
+            background: linear-gradient(90deg, #D4AF37 0%, #003366 100%);
+            color: white;
+        }
+
+        .banner-3 .icon {
+            font-size: 56px;
+        }
+
+        .banner-3 .text {
+            font-size: 18px;
+            font-weight: 700;
+            flex: 1;
+            margin: 0 20px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .banner-3 .cta {
+            background: white;
+            color: #003366;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 900;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .code-snippet {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border-radius: 5px;
+            max-width: 728px;
+        }
+
+        .notes {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            max-width: 728px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GAVL Web Banner Ads (728x90 pixels)</h1>
+    <p>Ready-to-use banner ads for legal tech conference websites, newsletters, and partner sites.</p>
+
+    <!-- Banner 1 -->
+    <div class="banner-container">
+        <div class="banner-title">Banner 1: Bold Navy & Gold (Conference Booth Promotion)</div>
+        <div class="banner banner-1">
+            <div class="logo">GAVL</div>
+            <div class="text">
+                <span class="highlight">Quantum-Enhanced Legal AI</span> • 99%+ Accuracy • Visit Booth #247
+            </div>
+            <div class="cta">Live Demo</div>
+        </div>
+        <div class="notes">
+            <strong>Use case:</strong> Conference program website, email newsletters<br>
+            <strong>Target audience:</strong> Conference attendees looking for booth visits
+        </div>
+        <div class="code-snippet">
+&lt;a href="https://thegavl.com/demo?utm_source=conference&utm_medium=banner&utm_campaign=booth247" target="_blank"&gt;
+  &lt;img src="gavl_banner_bold.png" width="728" height="90" alt="GAVL - Quantum Legal AI"&gt;
+&lt;/a&gt;
+        </div>
+    </div>
+
+    <!-- Banner 2 -->
+    <div class="banner-container">
+        <div class="banner-title">Banner 2: Professional White (General Promotion)</div>
+        <div class="banner banner-2">
+            <div class="icon">⚖️</div>
+            <div class="text">
+                <div class="headline">Justice at Quantum Speed</div>
+                GAVL delivers AI-powered legal analysis in minutes, not months
+            </div>
+            <div class="cta">Learn More →</div>
+        </div>
+        <div class="notes">
+            <strong>Use case:</strong> Legal tech blogs, partner websites, association sites<br>
+            <strong>Target audience:</strong> Legal professionals researching new technology
+        </div>
+        <div class="code-snippet">
+&lt;a href="https://thegavl.com?utm_source=partner&utm_medium=banner&utm_campaign=professional" target="_blank"&gt;
+  &lt;img src="gavl_banner_professional.png" width="728" height="90" alt="GAVL - Justice at Quantum Speed"&gt;
+&lt;/a&gt;
+        </div>
+    </div>
+
+    <!-- Banner 3 -->
+    <div class="banner-container">
+        <div class="banner-title">Banner 3: Gradient Action (Direct CTA)</div>
+        <div class="banner banner-3">
+            <div class="icon">⚖️</div>
+            <div class="text">
+                Stop Waiting Months. Get AI-Powered Verdicts in 3 Minutes
+            </div>
+            <div class="cta">Try Free</div>
+        </div>
+        <div class="notes">
+            <strong>Use case:</strong> Email campaigns, retargeting ads, conversion-focused placements<br>
+            <strong>Target audience:</strong> Decision-makers ready to try the platform
+        </div>
+        <div class="code-snippet">
+&lt;a href="https://thegavl.com/demo?utm_source=email&utm_medium=banner&utm_campaign=free_trial" target="_blank"&gt;
+  &lt;img src="gavl_banner_action.png" width="728" height="90" alt="Try GAVL Free - AI Legal Analysis"&gt;
+&lt;/a&gt;
+        </div>
+    </div>
+
+    <hr style="margin: 60px 0; border: none; border-top: 2px solid #ddd;">
+
+    <h2>Export Instructions</h2>
+    <div style="max-width: 728px; color: #333; line-height: 1.8;">
+        <p><strong>To use these banners:</strong></p>
+        <ol>
+            <li>Open this HTML file in Chrome or Firefox</li>
+            <li>Use browser screenshot tool or print to PDF</li>
+            <li>Crop each banner to exactly 728x90 pixels</li>
+            <li>Save as PNG or JPEG (PNG recommended for web)</li>
+            <li>Upload to ad platform or website</li>
+        </ol>
+
+        <p><strong>For professional design:</strong></p>
+        <ul>
+            <li>Send this file to a designer to create high-resolution versions</li>
+            <li>Request 2x resolution (1456x180) for retina displays</li>
+            <li>Provide GAVL brand assets: logo, color codes (#003366, #D4AF37)</li>
+        </ul>
+
+        <p><strong>Ad platforms that accept 728x90:</strong></p>
+        <ul>
+            <li>Google Display Network</li>
+            <li>LinkedIn Ads</li>
+            <li>Legal tech conference websites</li>
+            <li>Association websites (ABA, ILTA, etc.)</li>
+            <li>Email newsletter sponsorships</li>
+        </ul>
+
+        <p><strong>Tracking UTM parameters:</strong></p>
+        <ul>
+            <li><code>utm_source</code>: conference name, partner site, or platform</li>
+            <li><code>utm_medium</code>: banner</li>
+            <li><code>utm_campaign</code>: specific campaign name</li>
+        </ul>
+    </div>
+
+    <hr style="margin: 60px 0; border: none; border-top: 2px solid #ddd;">
+
+    <div style="max-width: 728px; color: #666; font-size: 12px; margin-top: 40px;">
+        <p><strong>Copyright © 2025 Corporation of Light. All Rights Reserved. PATENT PENDING.</strong></p>
+        <p>These marketing materials are proprietary and for use by The GAVL and authorized partners only.</p>
+    </div>
+</body>
+</html>
