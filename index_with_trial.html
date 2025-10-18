@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The GAVL • Global Automated Verdict Logic</title>
+
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --gavl-navy: #0A1628;
+            --gavl-blue: #1E40AF;
+            --gavl-gold: #D4AF37;
+            --gavl-white: #FFFFFF;
+            --gavl-gray: #F3F4F6;
+            --gavl-text: #1F2937;
+            --gavl-border: #E5E7EB;
+            --gavl-green: #10B981;
+            --gavl-orange: #F59E0B;
+            --gavl-red: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gavl-navy);
+            color: var(--gavl-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background pattern */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .background-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(90deg, var(--gavl-gold) 1px, transparent 1px),
+                linear-gradient(0deg, var(--gavl-gold) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: scroll-pattern 20s linear infinite;
+        }
+
+        @keyframes scroll-pattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            width: 90%;
+            margin: 2rem auto;
+        }
+
+        /* Logo and header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fade-in 1s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gavl-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--gavl-white);
+            opacity: 0.9;
+            letter-spacing: 0.1em;
+        }
+
+        /* Trial Status Banner */
+        .trial-banner {
+            display: none;
+            background: linear-gradient(135deg, var(--gavl-green) 0%, var(--gavl-blue) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            animation: slide-down 0.5s ease-out;
+        }
+
+        .trial-banner.active {
+            display: block;
+        }
+
+        .trial-banner.warning {
+            background: linear-gradient(135deg, var(--gavl-orange) 0%, var(--gavl-red) 100%);
+        }
+
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .trial-banner h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .trial-banner p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        /* Wizard card */
+        .wizard-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            color: var(--gavl-text);
+            animation: slide-up 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Wizard content */
+        .wizard-content {
+            display: none;
+        }
+
+        .wizard-content.active {
+            display: block;
+            animation: fade-in-content 0.5s ease-out;
+        }
+
+        @keyframes fade-in-content {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .wizard-step {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .wizard-step h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gavl-navy);
+            margin-bottom: 1rem;
+        }
+
+        .wizard-step p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gavl-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .wizard-step ul {
+            text-align: left;
+            margin: 1.5rem auto;
+            max-width: 500px;
+        }
+
+        .wizard-step li {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .wizard-step li::before {
+            content: '⚖️';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Progress indicator */
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gavl-border);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: var(--gavl-blue);
+            transform: scale(1.3);
+        }
+
+        .progress-dot.completed {
+            background: var(--gavl-gold);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 1rem 2.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button.primary {
+            background: var(--gavl-blue);
+            color: var(--gavl-white);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+        }
+
+        button.primary:hover {
+            background: #1E3A8A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.5);
+        }
+
+        button.secondary {
+            background: transparent;
+            color: var(--gavl-text);
+            border: 2px solid var(--gavl-border);
+        }
+
+        button.secondary:hover {
+            border-color: var(--gavl-blue);
+            color: var(--gavl-blue);
+        }
+
+        button.gold {
+            background: var(--gavl-gold);
+            color: var(--gavl-navy);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        button.gold:hover {
+            background: #C5A028;
+            transform: translateY(-2px);
+        }
+
+        /* Auth forms */
+        .auth-form {
+            max-width: 450px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gavl-navy);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            border: 2px solid var(--gavl-border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gavl-blue);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+
+        .form-help {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6B7280;
+            margin-top: 1rem;
+        }
+
+        .form-help a {
+            color: var(--gavl-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-help a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #FEE2E2;
+            border: 2px solid var(--gavl-red);
+            color: #991B1B;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Court view (hidden initially) */
+        .court-view {
+            display: none;
+        }
+
+        .court-view.active {
+            display: block;
+            animation: fade-in 0.8s ease-out;
+        }
+
+        .court-dashboard {
+            background: var(--gavl-white);
+            color: var(--gavl-text);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .court-header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--gavl-border);
+            margin-bottom: 2rem;
+        }
+
+        .court-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gavl-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .court-header .user-email {
+            font-size: 1rem;
+            color: var(--gavl-gold);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .footer a {
+            color: var(--gavl-gold);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid var(--gavl-border);
+            border-top: 3px solid var(--gavl-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">THE GAVL</div>
+            <div class="tagline">Global Automated Verdict Logic</div>
+        </div>
+
+        <!-- Trial Status Banner -->
+        <div class="trial-banner" id="trial-banner">
+            <h3 id="trial-title">Free Trial Active</h3>
+            <p id="trial-message">You have 2 verdicts remaining OR 3 days</p>
+        </div>
+
+        <!-- Wizard Flow -->
+        <div class="wizard-card" id="wizard-card">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-dot active" data-step="0"></div>
+                <div class="progress-dot" data-step="1"></div>
+                <div class="progress-dot" data-step="2"></div>
+                <div class="progress-dot" data-step="3"></div>
+                <div class="progress-dot" data-step="4"></div>
+            </div>
+
+            <!-- Step 0: Welcome -->
+            <div class="wizard-content active" data-step="0">
+                <div class="wizard-step">
+                    <h2>Welcome to The GAVL</h2>
+                    <p>
+                        The Global Automated Verdict Logic system represents a paradigm shift in judicial decision-making—
+                        removing human bias and error through transparent, algorithmic justice.
+                    </p>
+                    <p>
+                        This wizard will guide you through our vision, capabilities, and secure access system.
+                    </p>
+                </div>
+                <div class="button-group">
+                    <button class="primary" onclick="nextStep()">Begin Tour →</button>
+                </div>
+            </div>
+
+            <!-- Step 1: The Problem -->
+            <div class="wizard-content" data-step="1">
+                <div class="wizard-step">
+                    <h2>The Challenge</h2>
+                    <p>
+                        Traditional judicial systems worldwide face critical challenges:
+                    </p>
+                    <ul>
+                        <li>Human bias influencing verdicts and sentencing</li>
+                        <li>Inconsistent application of law across similar cases</li>
+                        <li>Resource constraints leading to delayed justice</li>
+                        <li>Lack of transparency in decision-making processes</li>
+                        <li>Difficulty tracking and analyzing systemic patterns</li>
+                    </ul>
+                </div>
+                <div class="button-group">
+                    <button class="secondary" onclick="prevStep()">← Back</button>
+                    <button class="primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Our Solution -->
+            <div class="wizard-content" data-step="2">
+                <div class="wizard-step">
+                    <h2>The GAVL Solution</h2>
+                    <p>
+                        The GAVL platform leverages cutting-edge technology:
+                    </p>
+                    <ul>
+                        <li>Quantum-enhanced machine learning for pattern recognition</li>
+                        <li>Transparent, open-source algorithms (code publicly available)</li>
+                        <li>Bayesian inference for probabilistic verdict analysis</li>
+                        <li>Cryptographically secured verdict tokens for authenticity</li>
+                        <li>Multi-jurisdictional legal framework adaptation</li>
+                        <li>Complete audit trail for every decision made</li>
+                    </ul>
+                </div>
+                <div class="button-group">
+                    <button class="secondary" onclick="prevStep()">← Back</button>
+                    <button class="primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Transparency & Security -->
+            <div class="wizard-content" data-step="3">
+                <div class="wizard-step">
+                    <h2>Transparency & Security</h2>
+                    <p>
+                        The GAVL platform is built on principles of openness:
+                    </p>
+                    <ul>
+                        <li><strong>Open Source:</strong> All algorithms are publicly auditable</li>
+                        <li><strong>Encrypted Storage:</strong> AES-256 encryption for all verdict tokens</li>
+                        <li><strong>Blockchain Verification:</strong> Immutable record of all verdicts</li>
+                        <li><strong>Multi-Signature Authentication:</strong> Prevents unauthorized access</li>
+                        <li><strong>Regular Security Audits:</strong> Third-party penetration testing</li>
+                        <li><strong>Privacy Compliant:</strong> GDPR, CCPA, and international standards</li>
+                    </ul>
+                    <p style="font-size: 0.95rem; margin-top: 1.5rem; color: #6B7280;">
+                        <strong>Note:</strong> All security protocols require professional security audit before deployment.
+                    </p>
+                </div>
+                <div class="button-group">
+                    <button class="secondary" onclick="prevStep()">← Back</button>
+                    <button class="primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Free Trial Signup (REPLACED TOKEN ENTRY) -->
+            <div class="wizard-content" data-step="4">
+                <div class="wizard-step">
+                    <h2>Start Your Free Trial</h2>
+                    <p>
+                        Get instant access to The GAVL platform with our <strong>3-day free trial</strong>.
+                        No credit card required!
+                    </p>
+
+                    <div id="auth-error" class="error-message" style="display: none;"></div>
+
+                    <!-- Signup Form -->
+                    <form class="auth-form" id="signup-form" onsubmit="handleSignup(event)">
+                        <div class="form-group">
+                            <label for="signup-email">Email Address</label>
+                            <input
+                                type="email"
+                                id="signup-email"
+                                placeholder="your@email.com"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input
+                                type="password"
+                                id="signup-password"
+                                placeholder="Minimum 8 characters"
+                                minlength="8"
+                                required
+                            />
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="secondary" onclick="prevStep()">← Back</button>
+                            <button type="submit" class="gold">Start Free Trial →</button>
+                        </div>
+                    </form>
+
+                    <div class="form-help">
+                        Already have an account?
+                        <a href="#" onclick="showLoginForm(); return false;">Sign in here</a>
+                    </div>
+
+                    <!-- Login Form (Hidden initially) -->
+                    <form class="auth-form" id="login-form" onsubmit="handleLogin(event)" style="display: none;">
+                        <div class="form-group">
+                            <label for="login-email">Email Address</label>
+                            <input
+                                type="email"
+                                id="login-email"
+                                placeholder="your@email.com"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input
+                                type="password"
+                                id="login-password"
+                                placeholder="Your password"
+                                required
+                            />
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="secondary" onclick="prevStep()">← Back</button>
+                            <button type="submit" class="primary">Sign In →</button>
+                        </div>
+                    </form>
+
+                    <div class="form-help" id="login-help" style="display: none;">
+                        Don't have an account?
+                        <a href="#" onclick="showSignupForm(); return false;">Start free trial</a>
+                    </div>
+
+                    <p style="font-size: 0.85rem; margin-top: 2rem; text-align: center; color: #6B7280;">
+                        <strong>Trial includes:</strong> 2 verdict analyses OR 3 days of access (whichever comes first)
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Court View (Hidden until authenticated) -->
+        <div class="court-view" id="court-view">
+            <div class="court-dashboard">
+                <div class="court-header">
+                    <h1>⚖️ Court Dashboard</h1>
+                    <div class="user-email">Logged in as: <span id="user-email"></span></div>
+                    <button class="secondary" onclick="handleLogout()" style="margin-top: 1rem;">Sign Out</button>
+                </div>
+
+                <div style="text-align: center; padding: 3rem; color: #6B7280;">
+                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">Welcome to your court dashboard!</p>
+                    <p style="font-size: 0.95rem;">
+                        This is where you can request verdict analyses during your trial period.
+                    </p>
+                    <div style="margin-top: 2rem;">
+                        <button class="primary" onclick="alert('Verdict analysis feature coming soon!')">
+                            Request Verdict Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+            <p><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> • <a href="#">Open Source Code</a></p>
+        </div>
+    </div>
+
+    <script>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        // REPLACE THESE WITH YOUR ACTUAL SUPABASE CREDENTIALS
+        const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY-HERE';
+
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentStep = 0;
+        const totalSteps = 5;
+        let currentUser = null;
+
+        // Check if user is already logged in on page load
+        checkAuthStatus();
+
+        async function checkAuthStatus() {
+            const { data: { session } } = await supabase.auth.getSession();
+
+            if (session) {
+                currentUser = session.user;
+                await loadUserDashboard();
+            }
+        }
+
+        async function loadUserDashboard() {
+            // Hide wizard, show court view
+            document.getElementById('wizard-card').style.display = 'none';
+            document.getElementById('court-view').classList.add('active');
+            document.getElementById('user-email').textContent = currentUser.email;
+
+            // Load trial status
+            await updateTrialStatus();
+        }
+
+        async function updateTrialStatus() {
+            try {
+                // Call Supabase function to check trial status
+                const { data, error } = await supabase.rpc('check_trial_status', {
+                    user_uuid: currentUser.id
+                });
+
+                if (error) throw error;
+
+                const banner = document.getElementById('trial-banner');
+                const title = document.getElementById('trial-title');
+                const message = document.getElementById('trial-message');
+
+                if (data.is_trial_active) {
+                    banner.classList.add('active');
+                    banner.classList.remove('warning');
+                    title.textContent = '✅ Free Trial Active';
+                    message.textContent = `${data.verdicts_remaining} verdicts remaining OR ${Math.ceil(data.days_remaining)} days`;
+                } else {
+                    banner.classList.add('active', 'warning');
+                    title.textContent = '⚠️ Trial Expired';
+                    message.textContent = 'Upgrade to continue using The GAVL';
+                }
+            } catch (error) {
+                console.error('Error checking trial status:', error);
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const errorDiv = document.getElementById('auth-error');
+
+            try {
+                errorDiv.style.display = 'none';
+
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) throw error;
+
+                if (data.user) {
+                    currentUser = data.user;
+
+                    // Check if email confirmation is required
+                    if (data.session) {
+                        // User is immediately logged in
+                        await loadUserDashboard();
+                    } else {
+                        // Email confirmation required
+                        errorDiv.style.display = 'block';
+                        errorDiv.innerHTML = `
+                            <strong>Check your email!</strong><br>
+                            We've sent you a confirmation link. Click it to activate your trial.
+                        `;
+                        errorDiv.style.background = '#D1FAE5';
+                        errorDiv.style.borderColor = var(--gavl-green);
+                        errorDiv.style.color = '#065F46';
+                    }
+                }
+            } catch (error) {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = error.message || 'Signup failed. Please try again.';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorDiv = document.getElementById('auth-error');
+
+            try {
+                errorDiv.style.display = 'none';
+
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) throw error;
+
+                currentUser = data.user;
+                await loadUserDashboard();
+            } catch (error) {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = error.message || 'Login failed. Please check your credentials.';
+            }
+        }
+
+        async function handleLogout() {
+            await supabase.auth.signOut();
+            location.reload();
+        }
+
+        function showLoginForm() {
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.querySelector('.form-help').style.display = 'none';
+            document.getElementById('login-help').style.display = 'block';
+        }
+
+        function showSignupForm() {
+            document.getElementById('signup-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
+            document.querySelector('.form-help').style.display = 'block';
+            document.getElementById('login-help').style.display = 'none';
+        }
+
+        function updateProgressBar() {
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                if (index < currentStep) {
+                    dot.classList.add('completed');
+                    dot.classList.remove('active');
+                } else if (index === currentStep) {
+                    dot.classList.add('active');
+                    dot.classList.remove('completed');
+                } else {
+                    dot.classList.remove('active', 'completed');
+                }
+            });
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.wizard-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const targetContent = document.querySelector(`.wizard-content[data-step="${step}"]`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+
+            currentStep = step;
+            updateProgressBar();
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        // Initialize
+        updateProgressBar();
+    </script>
+</body>
+</html>
+

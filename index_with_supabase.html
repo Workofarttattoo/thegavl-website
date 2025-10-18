@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The GAVL • Global Automated Verdict Logic</title>
+
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --gavl-navy: #0A1628;
+            --gavl-blue: #1E40AF;
+            --gavl-gold: #D4AF37;
+            --gavl-white: #FFFFFF;
+            --gavl-gray: #F3F4F6;
+            --gavl-text: #1F2937;
+            --gavl-border: #E5E7EB;
+            --gavl-success: #10B981;
+            --gavl-error: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gavl-navy);
+            color: var(--gavl-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background pattern */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .background-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(90deg, var(--gavl-gold) 1px, transparent 1px),
+                linear-gradient(0deg, var(--gavl-gold) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: scroll-pattern 20s linear infinite;
+        }
+
+        @keyframes scroll-pattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 90%;
+            margin: 2rem auto;
+        }
+
+        /* Logo and header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fade-in 1s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gavl-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--gavl-white);
+            opacity: 0.9;
+            letter-spacing: 0.1em;
+        }
+
+        /* Card styles */
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            color: var(--gavl-text);
+            animation: slide-up 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gavl-navy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .card p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--gavl-text);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Form styles */
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gavl-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            border: 2px solid var(--gavl-border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gavl-blue);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+
+        /* Button styles */
+        button {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        button.primary {
+            background: var(--gavl-blue);
+            color: var(--gavl-white);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+        }
+
+        button.primary:hover {
+            background: #1E3A8A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.5);
+        }
+
+        button.secondary {
+            background: transparent;
+            color: var(--gavl-text);
+            border: 2px solid var(--gavl-border);
+        }
+
+        button.secondary:hover {
+            border-color: var(--gavl-blue);
+            color: var(--gavl-blue);
+        }
+
+        /* Alert messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .alert.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--gavl-success);
+            border: 1px solid var(--gavl-success);
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--gavl-error);
+            border: 1px solid var(--gavl-error);
+        }
+
+        /* Trial banner */
+        .trial-banner {
+            background: linear-gradient(135deg, var(--gavl-gold), #F59E0B);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--gavl-navy);
+            font-weight: 600;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gavl-border);
+        }
+
+        .user-info {
+            font-size: 0.9rem;
+        }
+
+        .user-info strong {
+            color: var(--gavl-navy);
+        }
+
+        /* Views */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+            animation: fade-in 0.5s ease-out;
+        }
+
+        /* Links */
+        .text-link {
+            color: var(--gavl-blue);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .text-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .footer a {
+            color: var(--gavl-gold);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid var(--gavl-border);
+            border-top: 3px solid var(--gavl-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">THE GAVL</div>
+            <div class="tagline">Global Automated Verdict Logic</div>
+        </div>
+
+        <!-- Auth View (Sign In / Sign Up) -->
+        <div class="view active" id="auth-view">
+            <div class="card">
+                <h2>🔐 Access The GAVL</h2>
+                <p>Start your 3-day free trial with 2 verdict analyses included</p>
+
+                <div id="auth-alert"></div>
+
+                <div class="auth-form">
+                    <!-- Sign Up Form -->
+                    <div id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email Address</label>
+                            <input type="email" id="signup-email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" placeholder="Minimum 6 characters" required>
+                        </div>
+                        <button class="primary" onclick="handleSignUp()">Start Free Trial</button>
+                        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+                            Already have an account? <span class="text-link" onclick="toggleAuthForms()">Sign In</span>
+                        </p>
+                    </div>
+
+                    <!-- Sign In Form (hidden initially) -->
+                    <div id="signin-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="signin-email">Email Address</label>
+                            <input type="email" id="signin-email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signin-password">Password</label>
+                            <input type="password" id="signin-password" placeholder="Your password" required>
+                        </div>
+                        <button class="primary" onclick="handleSignIn()">Sign In</button>
+                        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+                            Don't have an account? <span class="text-link" onclick="toggleAuthForms()">Start Free Trial</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard View (After Login) -->
+        <div class="view" id="dashboard-view">
+            <div class="card dashboard">
+                <div id="trial-banner-container"></div>
+
+                <div class="dashboard-header">
+                    <div class="user-info">
+                        <strong>Welcome,</strong> <span id="user-name">User</span><br>
+                        <small id="user-email"></small>
+                    </div>
+                    <button class="secondary" style="width: auto; padding: 0.75rem 1.5rem;" onclick="handleSignOut()">Sign Out</button>
+                </div>
+
+                <h2>⚖️ Court Dashboard</h2>
+                <p>Access your verdict analysis and court session tools</p>
+
+                <div style="margin-top: 2rem;">
+                    <button class="primary" onclick="openCourtSession()">
+                        🏛️ Start Court Session
+                    </button>
+                    <button class="secondary" onclick="viewVerdictHistory()">
+                        📊 View Verdict History
+                    </button>
+                </div>
+
+                <div style="margin-top: 3rem; padding: 2rem; background: var(--gavl-gray); border-radius: 10px; text-align: center;">
+                    <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: var(--gavl-navy);">
+                        🎯 Quantum-Enhanced Legal Analysis
+                    </p>
+                    <ul style="text-align: left; max-width: 500px; margin: 0 auto; color: var(--gavl-text);">
+                        <li style="margin-bottom: 0.5rem;">✓ Bayesian Evidence Evaluation</li>
+                        <li style="margin-bottom: 0.5rem;">✓ HHL Precedent Matching</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Quantum Dynamics Forecasting</li>
+                        <li style="margin-bottom: 0.5rem;">✓ VQE Verdict Optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+            <p><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> • <a href="#">Open Source Code</a></p>
+        </div>
+    </div>
+
+    <!-- Supabase Configuration -->
+    <script src="supabase-config.js"></script>
+
+    <script>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        let currentUser = null;
+        let currentProfile = null;
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            await checkAuthState();
+        });
+
+        // Check if user is already logged in
+        async function checkAuthState() {
+            const result = await getSession();
+
+            if (result.success && result.session) {
+                currentUser = result.session.user;
+                await loadUserDashboard();
+            } else {
+                showView('auth-view');
+            }
+        }
+
+        // Toggle between sign in and sign up forms
+        function toggleAuthForms() {
+            const signupForm = document.getElementById('signup-form');
+            const signinForm = document.getElementById('signin-form');
+
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                signinForm.style.display = 'none';
+            } else {
+                signupForm.style.display = 'none';
+                signinForm.style.display = 'block';
+            }
+
+            // Clear alert
+            document.getElementById('auth-alert').innerHTML = '';
+        }
+
+        // Handle sign up
+        async function handleSignUp() {
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+
+            if (!name || !email || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            showAlert('Creating your account...', 'success');
+
+            const result = await signUp(email, password, name);
+
+            if (result.success) {
+                showAlert('Account created! Check your email to verify your account.', 'success');
+                setTimeout(() => {
+                    toggleAuthForms(); // Switch to sign in form
+                }, 2000);
+            } else {
+                showAlert(result.error || 'Sign up failed. Please try again.', 'error');
+            }
+        }
+
+        // Handle sign in
+        async function handleSignIn() {
+            const email = document.getElementById('signin-email').value.trim();
+            const password = document.getElementById('signin-password').value;
+
+            if (!email || !password) {
+                showAlert('Please enter your email and password', 'error');
+                return;
+            }
+
+            showAlert('Signing in...', 'success');
+
+            const result = await signIn(email, password);
+
+            if (result.success) {
+                currentUser = result.data.user;
+                await loadUserDashboard();
+            } else {
+                showAlert(result.error || 'Sign in failed. Please check your credentials.', 'error');
+            }
+        }
+
+        // Handle sign out
+        async function handleSignOut() {
+            const result = await signOut();
+
+            if (result.success) {
+                currentUser = null;
+                currentProfile = null;
+                showView('auth-view');
+                showAlert('Signed out successfully', 'success');
+            }
+        }
+
+        // Load user dashboard
+        async function loadUserDashboard() {
+            if (!currentUser) return;
+
+            // Get user profile
+            const profileResult = await getUserProfile(currentUser.id);
+
+            if (profileResult.success) {
+                currentProfile = profileResult.profile;
+
+                // Update UI with user info
+                document.getElementById('user-name').textContent = currentProfile.full_name || 'User';
+                document.getElementById('user-email').textContent = currentProfile.email;
+
+                // Check trial status
+                await updateTrialBanner();
+
+                showView('dashboard-view');
+            } else {
+                showAlert('Error loading profile', 'error');
+            }
+        }
+
+        // Update trial banner
+        async function updateTrialBanner() {
+            if (!currentUser) return;
+
+            const trialResult = await checkTrialStatus(currentUser.id);
+
+            if (trialResult.success) {
+                const status = trialResult.status;
+                const bannerContainer = document.getElementById('trial-banner-container');
+
+                if (status.is_trial_active) {
+                    bannerContainer.innerHTML = `
+                        <div class="trial-banner">
+                            🎉 Free Trial Active: ${status.verdicts_remaining} verdict${status.verdicts_remaining !== 1 ? 's' : ''} remaining
+                            • ${Math.ceil(status.days_remaining)} day${Math.ceil(status.days_remaining) !== 1 ? 's' : ''} left
+                        </div>
+                    `;
+                } else {
+                    bannerContainer.innerHTML = `
+                        <div class="trial-banner" style="background: linear-gradient(135deg, #EF4444, #DC2626);">
+                            ⚠️ Trial Expired - Subscribe to continue using The GAVL
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Open court session
+        function openCourtSession() {
+            // Open court_session.html in a new window
+            window.open('court_session.html', '_blank', 'width=1200,height=900');
+        }
+
+        // View verdict history
+        async function viewVerdictHistory() {
+            if (!currentUser) return;
+
+            const result = await getUserVerdicts(currentUser.id);
+
+            if (result.success) {
+                if (result.verdicts.length === 0) {
+                    alert('No verdicts yet. Start a court session to analyze your first case!');
+                } else {
+                    alert(`You have ${result.verdicts.length} verdict${result.verdicts.length !== 1 ? 's' : ''} in your history.\n\nDetailed history view coming soon!`);
+                }
+            } else {
+                alert('Error loading verdict history');
+            }
+        }
+
+        // Show alert message
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.getElementById('auth-alert');
+            alertDiv.innerHTML = `<div class="alert ${type}">${message}</div>`;
+        }
+
+        // Show specific view
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // Listen for auth state changes
+        onAuthStateChange(async (event, session) => {
+            if (event === 'SIGNED_IN' && session) {
+                currentUser = session.user;
+                await loadUserDashboard();
+            } else if (event === 'SIGNED_OUT') {
+                currentUser = null;
+                currentProfile = null;
+                showView('auth-view');
+            }
+        });
+    </script>
+</body>
+</html>
