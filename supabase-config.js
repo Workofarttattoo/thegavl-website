@@ -14,10 +14,17 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
  */
 async function signUp(email, password, fullName) {
     try {
+        // Get current page URL for redirect (remove hash/query params)
+        const currentUrl = window.location.origin + window.location.pathname;
+        const redirectUrl = currentUrl.includes('localhost')
+            ? currentUrl  // Use actual localhost URL (port 8001 or 8000)
+            : currentUrl;
+
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
             options: {
+                emailRedirectTo: redirectUrl,
                 data: {
                     full_name: fullName
                 }
@@ -66,6 +73,30 @@ async function signOut() {
         return { success: true };
     } catch (error) {
         console.error('[GAVL Auth] Sign out error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Send password reset email
+ */
+async function resetPassword(email) {
+    try {
+        const currentUrl = window.location.origin + window.location.pathname;
+        const redirectUrl = currentUrl.includes('localhost')
+            ? currentUrl
+            : currentUrl;
+
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: redirectUrl
+        });
+
+        if (error) throw error;
+
+        console.log('[GAVL Auth] Password reset email sent');
+        return { success: true, data };
+    } catch (error) {
+        console.error('[GAVL Auth] Password reset error:', error);
         return { success: false, error: error.message };
     }
 }

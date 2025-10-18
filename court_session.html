@@ -520,21 +520,115 @@
             <!-- Step 1: Evidence Collection -->
             <div class="evidence-card hidden" id="step-1">
                 <h2>Evidence Collection</h2>
-                <p>Use voice recording to describe evidence. Our AI will transcribe and organize your statements.</p>
+                <p>Import evidence from multiple sources: voice recording, document upload, or PACER case data.</p>
 
-                <div class="recording-interface">
-                    <button class="record-button" id="record-button" onclick="toggleRecording()">
-                        <span class="record-icon" id="record-icon">🎤</span>
+                <!-- Evidence Source Tabs -->
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid #E5E7EB;">
+                    <button onclick="switchTab('voice')" id="tab-voice" class="evidence-tab active" style="padding: 1rem 1.5rem; background: none; border: none; font-weight: 600; cursor: pointer; border-bottom: 3px solid var(--gavl-gold); color: var(--gavl-navy);">
+                        🎤 Voice
                     </button>
-                    <div class="recording-status" id="recording-status">Click to start recording</div>
+                    <button onclick="switchTab('upload')" id="tab-upload" class="evidence-tab" style="padding: 1rem 1.5rem; background: none; border: none; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; color: #9CA3AF;">
+                        📄 Upload
+                    </button>
+                    <button onclick="switchTab('pacer')" id="tab-pacer" class="evidence-tab" style="padding: 1rem 1.5rem; background: none; border: none; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; color: #9CA3AF;">
+                        ⚖️ PACER
+                    </button>
+                    <button onclick="switchTab('manual')" id="tab-manual" class="evidence-tab" style="padding: 1rem 1.5rem; background: none; border: none; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; color: #9CA3AF;">
+                        ✍️ Manual
+                    </button>
                 </div>
 
-                <div class="transcription-box" id="transcription-box">
-                    <p style="color: #9CA3AF; font-style: italic;">Your transcription will appear here...</p>
+                <!-- Voice Tab -->
+                <div id="evidence-voice" class="evidence-tab-content">
+                    <div class="recording-interface">
+                        <button class="record-button" id="record-button" onclick="toggleRecording()">
+                            <span class="record-icon" id="record-icon">🎤</span>
+                        </button>
+                        <div class="recording-status" id="recording-status">Click to start recording</div>
+                    </div>
+
+                    <div class="transcription-box" id="transcription-box">
+                        <p style="color: #9CA3AF; font-style: italic;">Your transcription will appear here...</p>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="secondary" onclick="addEvidence('voice')">Add This Evidence</button>
+                    </div>
                 </div>
 
-                <div class="button-group">
-                    <button class="secondary" onclick="addEvidence()">Add This Evidence</button>
+                <!-- Upload Tab -->
+                <div id="evidence-upload" class="evidence-tab-content" style="display: none;">
+                    <div style="border: 2px dashed #D1D5DB; border-radius: 12px; padding: 3rem; text-align: center; background: #F9FAFB;">
+                        <input type="file" id="file-upload" accept=".pdf,.docx,.doc,.txt" multiple style="display: none;" onchange="handleFileUpload(event)">
+                        <button onclick="document.getElementById('file-upload').click()" style="background: var(--gavl-blue); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            📁 Choose Files
+                        </button>
+                        <p style="margin-top: 1rem; color: #6B7280; font-size: 0.9rem;">
+                            Upload PDF, DOCX, or TXT files<br>
+                            <span style="font-size: 0.8rem; opacity: 0.7;">Maximum 10MB per file</span>
+                        </p>
+                    </div>
+
+                    <div id="uploaded-files" style="margin-top: 2rem;">
+                        <!-- Uploaded files list will appear here -->
+                    </div>
+                </div>
+
+                <!-- PACER Tab -->
+                <div id="evidence-pacer" class="evidence-tab-content" style="display: none;">
+                    <div style="background: #F9FAFB; border-radius: 12px; padding: 2rem;">
+                        <h3 style="color: var(--gavl-navy); margin-bottom: 1rem;">Import from PACER</h3>
+                        <p style="margin-bottom: 1.5rem; color: #6B7280; font-size: 0.9rem;">
+                            Enter a PACER case number to automatically import case data and docket entries.
+                        </p>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--gavl-navy);">Court District</label>
+                            <select id="pacer-court" style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 1rem;">
+                                <option value="">Select court...</option>
+                                <option value="cacd">C.D. California</option>
+                                <option value="nysd">S.D. New York</option>
+                                <option value="txnd">N.D. Texas</option>
+                                <option value="flsd">S.D. Florida</option>
+                                <option value="ilnd">N.D. Illinois</option>
+                                <option value="other">Other (Manual Entry)</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--gavl-navy);">Case Number</label>
+                            <input type="text" id="pacer-case-number" placeholder="e.g., 1:21-cv-12345" style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 1rem;">
+                        </div>
+
+                        <div class="button-group">
+                            <button class="primary" onclick="importFromPACER()">🔍 Import Case Data</button>
+                        </div>
+
+                        <div id="pacer-results" style="margin-top: 2rem;">
+                            <!-- PACER import results will appear here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manual Tab -->
+                <div id="evidence-manual" class="evidence-tab-content" style="display: none;">
+                    <div style="background: #F9FAFB; border-radius: 12px; padding: 2rem;">
+                        <h3 style="color: var(--gavl-navy); margin-bottom: 1rem;">Manual Evidence Entry</h3>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--gavl-navy);">Evidence Title</label>
+                            <input type="text" id="manual-title" placeholder="e.g., Witness Statement, Physical Evidence" style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 1rem;">
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--gavl-navy);">Evidence Description</label>
+                            <textarea id="manual-description" rows="6" placeholder="Provide detailed description of the evidence..." style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 1rem;"></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button class="secondary" onclick="addEvidence('manual')">Add This Evidence</button>
+                        </div>
+                    </div>
                 </div>
 
                 <h3 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--gavl-navy);">Collected Evidence</h3>
@@ -705,26 +799,235 @@
             }
         }
 
-        function addEvidence() {
-            const transcriptionBox = document.getElementById('transcription-box');
-            const text = transcriptionBox.textContent;
+        function addEvidence(type = 'voice') {
+            let evidenceText = '';
+            let evidenceTitle = '';
 
-            if (!text || text.trim().length === 0) {
-                alert('Please record some evidence first.');
-                return;
+            if (type === 'voice') {
+                const transcriptionBox = document.getElementById('transcription-box');
+                const text = transcriptionBox.textContent;
+
+                if (!text || text.trim().length === 0 || text.includes('Your transcription will appear here')) {
+                    alert('Please record some evidence first.');
+                    return;
+                }
+
+                evidenceText = text;
+                evidenceTitle = 'Voice Recording';
+
+                // Clear transcription
+                transcriptionBox.innerHTML = '<p style="color: #9CA3AF; font-style: italic;">Your transcription will appear here...</p>';
+                currentTranscription = "";
+
+            } else if (type === 'manual') {
+                const title = document.getElementById('manual-title').value.trim();
+                const description = document.getElementById('manual-description').value.trim();
+
+                if (!title || !description) {
+                    alert('Please fill in both title and description.');
+                    return;
+                }
+
+                evidenceTitle = title;
+                evidenceText = description;
+
+                // Clear form
+                document.getElementById('manual-title').value = '';
+                document.getElementById('manual-description').value = '';
             }
 
             evidenceList.push({
                 id: Date.now(),
-                text: text,
+                title: evidenceTitle,
+                text: evidenceText,
+                type: type,
                 timestamp: new Date().toISOString()
             });
 
             updateEvidenceList();
+        }
 
-            // Clear transcription
-            transcriptionBox.innerHTML = '<p style="color: #9CA3AF; font-style: italic;">Your transcription will appear here...</p>';
-            currentTranscription = "";
+        // Tab switching function
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.evidence-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.style.borderBottom = '3px solid transparent';
+                tab.style.color = '#9CA3AF';
+            });
+
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.add('active');
+            activeTab.style.borderBottom = '3px solid var(--gavl-gold)';
+            activeTab.style.color = 'var(--gavl-navy)';
+
+            // Update tab content
+            document.querySelectorAll('.evidence-tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(`evidence-${tabName}`).style.display = 'block';
+        }
+
+        // File upload handler
+        async function handleFileUpload(event) {
+            const files = event.target.files;
+            const uploadedFilesDiv = document.getElementById('uploaded-files');
+
+            if (files.length === 0) return;
+
+            uploadedFilesDiv.innerHTML = '<h4 style="color: var(--gavl-navy); margin-bottom: 1rem;">📎 Uploaded Files</h4>';
+
+            for (const file of files) {
+                // Check file size (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert(`File "${file.name}" is too large. Maximum size is 10MB.`);
+                    continue;
+                }
+
+                // Read file content
+                const text = await readFileContent(file);
+
+                // Add to evidence list
+                evidenceList.push({
+                    id: Date.now() + Math.random(),
+                    title: `Document: ${file.name}`,
+                    text: text.substring(0, 5000), // Limit to 5000 chars for display
+                    type: 'upload',
+                    fileName: file.name,
+                    fileSize: file.size,
+                    timestamp: new Date().toISOString()
+                });
+
+                // Show file in uploaded list
+                uploadedFilesDiv.innerHTML += `
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #E5E7EB;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: var(--gavl-navy);">${file.name}</strong>
+                                <p style="font-size: 0.85rem; color: #6B7280; margin-top: 0.25rem;">
+                                    ${(file.size / 1024).toFixed(1)} KB • ${text.length} characters extracted
+                                </p>
+                            </div>
+                            <span style="color: var(--gavl-green); font-size: 1.5rem;">✓</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateEvidenceList();
+
+            // Show success message
+            alert(`Successfully imported ${files.length} file(s) as evidence!`);
+        }
+
+        // Read file content (simplified - in production would use proper PDF/DOCX parsers)
+        function readFileContent(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    let text = e.target.result;
+
+                    // For text files, use as-is
+                    // For PDF/DOCX, this would need proper parsing
+                    // Simplified: just extract whatever text we can
+                    resolve(text || `Content from ${file.name} (full parsing requires backend)`);
+                };
+
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+
+        // PACER import function
+        async function importFromPACER() {
+            const court = document.getElementById('pacer-court').value;
+            const caseNumber = document.getElementById('pacer-case-number').value.trim();
+            const resultsDiv = document.getElementById('pacer-results');
+
+            if (!court || !caseNumber) {
+                alert('Please select a court and enter a case number.');
+                return;
+            }
+
+            // Show loading
+            resultsDiv.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
+                    <p style="color: var(--gavl-navy); font-weight: 600;">Connecting to PACER...</p>
+                    <p style="color: #6B7280; font-size: 0.9rem; margin-top: 0.5rem;">Fetching case ${caseNumber} from ${court.toUpperCase()}</p>
+                </div>
+            `;
+
+            // Simulate PACER API call (in production, this would call actual PACER API)
+            setTimeout(() => {
+                // Simulated case data
+                const caseData = {
+                    caseNumber: caseNumber,
+                    court: court.toUpperCase(),
+                    title: 'Sample v. Example Corp.',
+                    filed: '2024-01-15',
+                    status: 'Active',
+                    docketEntries: [
+                        { date: '2024-01-15', entry: 'Complaint filed', document: 'Complaint.pdf' },
+                        { date: '2024-02-01', entry: 'Answer to Complaint', document: 'Answer.pdf' },
+                        { date: '2024-03-10', entry: 'Motion for Summary Judgment', document: 'MSJ.pdf' },
+                        { date: '2024-04-05', entry: 'Opposition to Motion', document: 'Opposition.pdf' }
+                    ]
+                };
+
+                // Display results
+                resultsDiv.innerHTML = `
+                    <div style="background: white; padding: 2rem; border-radius: 12px;">
+                        <h4 style="color: var(--gavl-navy); margin-bottom: 1rem;">✅ Case Found</h4>
+                        <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #E5E7EB;">
+                            <p><strong>Case:</strong> ${caseData.title}</p>
+                            <p><strong>Number:</strong> ${caseData.caseNumber}</p>
+                            <p><strong>Court:</strong> ${caseData.court}</p>
+                            <p><strong>Filed:</strong> ${caseData.filed}</p>
+                            <p><strong>Status:</strong> <span style="color: var(--gavl-green);">${caseData.status}</span></p>
+                        </div>
+
+                        <h5 style="color: var(--gavl-navy); margin-bottom: 1rem;">Docket Entries (${caseData.docketEntries.length})</h5>
+                        ${caseData.docketEntries.map(entry => `
+                            <div style="padding: 0.75rem; background: #F9FAFB; border-radius: 6px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <strong style="color: var(--gavl-navy);">${entry.date}</strong>
+                                    <span style="color: #6B7280; font-size: 0.9rem;">${entry.document}</span>
+                                </div>
+                                <p style="color: #6B7280; font-size: 0.9rem; margin-top: 0.25rem;">${entry.entry}</p>
+                            </div>
+                        `).join('')}
+
+                        <div class="button-group" style="margin-top: 1.5rem;">
+                            <button class="primary" onclick="importPACERData()">📥 Import All Data as Evidence</button>
+                        </div>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        // Import PACER data as evidence
+        function importPACERData() {
+            const court = document.getElementById('pacer-court').value;
+            const caseNumber = document.getElementById('pacer-case-number').value;
+
+            // Add PACER data as structured evidence
+            evidenceList.push({
+                id: Date.now(),
+                title: `PACER Import: ${caseNumber}`,
+                text: `Full case data imported from PACER including docket entries, filings, and case metadata.`,
+                type: 'pacer',
+                court: court,
+                caseNumber: caseNumber,
+                timestamp: new Date().toISOString()
+            });
+
+            updateEvidenceList();
+            alert('PACER case data successfully imported as evidence!');
+
+            // Switch back to main evidence list
+            switchTab('voice');
         }
 
         function updateEvidenceList() {
@@ -735,10 +1038,22 @@
                 return;
             }
 
+            const typeIcons = {
+                'voice': '🎤',
+                'upload': '📄',
+                'pacer': '⚖️',
+                'manual': '✍️'
+            };
+
             listContainer.innerHTML = evidenceList.map((item, index) => `
                 <div class="evidence-item">
-                    <div class="evidence-title">Evidence #${index + 1}</div>
-                    <div class="evidence-content">${item.text}</div>
+                    <div class="evidence-title">
+                        ${typeIcons[item.type] || '📌'} ${item.title || `Evidence #${index + 1}`}
+                    </div>
+                    <div class="evidence-content">${item.text.substring(0, 200)}${item.text.length > 200 ? '...' : ''}</div>
+                    <div style="font-size: 0.8rem; color: #9CA3AF; margin-top: 0.5rem;">
+                        ${new Date(item.timestamp).toLocaleString()}
+                    </div>
                 </div>
             `).join('');
         }
@@ -857,6 +1172,182 @@
             // In production, this would navigate back to index_v2.html
             alert('Returning to dashboard...\n\nIn production, this would navigate back to the main dashboard with updated verdict count.');
             window.location.href = 'index_v2.html';
+        }
+
+        // Generate simulated verdict with full courtroom cast
+        function generateSimulatedVerdict(caseData) {
+            return {
+                case_id: caseData.case_id,
+                title: caseData.title,
+                verdict: 'favorable',
+                confidence: 0.87,
+                reasoning: 'Evidence supports plaintiff claims',
+                courtroom: {
+                    judge: {
+                        name: 'Hon. Algorithmica Prime',
+                        thoughts: [
+                            'Reviewing the evidence... comprehensive documentation.',
+                            'This case presents interesting precedential questions.',
+                            'The quantum analysis shows 87% confidence in outcome.'
+                        ]
+                    },
+                    jury: [
+                        { id: 1, thoughts: ['Clear evidence on plaintiff side.', 'Defendant arguments lack support.'] },
+                        { id: 2, thoughts: ['Very compelling case.', 'Evidence is well-documented.'] },
+                        { id: 3, thoughts: ['This seems straightforward.', 'Agree with majority.'] },
+                        { id: 4, thoughts: ['Precedent strongly favors this outcome.', 'Well-presented case.'] },
+                        { id: 5, thoughts: ['Evidence is conclusive.', 'No reasonable doubt here.'] },
+                        { id: 6, thoughts: ['The documentation is thorough.', 'Clear liability established.'] }
+                    ],
+                    clerk: {
+                        name: 'Protocol Assistant Beta',
+                        actions: ['Case logged in quantum ledger', 'Evidence verified and indexed', 'Verdict prepared for transcription']
+                    },
+                    bailiff: {
+                        name: 'Security Module Gamma',
+                        status: 'Court order maintained. All protocols observed.'
+                    }
+                }
+            };
+        }
+
+        // Format verdict with full courtroom transcript including inner thoughts
+        function formatVerdictForDisplay(verdictResult) {
+            const transcript = [];
+
+            transcript.push('═══════════════════════════════════════════════════════════════════');
+            transcript.push('                    THE GAVL ALGORITHMIC COURT');
+            transcript.push('                        OFFICIAL TRANSCRIPT');
+            transcript.push('═══════════════════════════════════════════════════════════════════');
+            transcript.push('');
+            transcript.push(`Case No: ${verdictResult.case_id}`);
+            transcript.push(`Case: ${verdictResult.title}`);
+            transcript.push(`Date: ${new Date().toLocaleString()}`);
+            transcript.push('');
+            transcript.push('───────────────────────────────────────────────────────────────────');
+            transcript.push('');
+
+            // Clerk opening
+            transcript.push(`CLERK ${verdictResult.courtroom.clerk.name}:`);
+            transcript.push('  "All rise. The GAVL Algorithmic Court is now in session."');
+            transcript.push('  "The Honorable Algorithmica Prime presiding."');
+            transcript.push('');
+            transcript.push(`  [Inner Process: ${verdictResult.courtroom.clerk.actions[0]}]`);
+            transcript.push('');
+
+            // Judge opening
+            transcript.push(`JUDGE ${verdictResult.courtroom.judge.name}:`);
+            transcript.push('  "Good morning. Please be seated."');
+            transcript.push('  "We have before us case number ' + verdictResult.case_id + '."');
+            transcript.push('');
+            transcript.push(`  [Judge's Thought: "${verdictResult.courtroom.judge.thoughts[0]}"]`);
+            transcript.push('');
+
+            // Evidence review
+            transcript.push('CLERK:');
+            transcript.push(`  "Evidence has been processed and verified."`);
+            transcript.push(`  [Process Status: ${verdictResult.courtroom.clerk.actions[1]}]`);
+            transcript.push('');
+
+            // Judge deliberation
+            transcript.push('JUDGE:');
+            transcript.push('  "The court has reviewed all submitted evidence through our quantum');
+            transcript.push('   analysis framework. I will now review the findings."');
+            transcript.push('');
+            transcript.push(`  [Judge's Thought: "${verdictResult.courtroom.judge.thoughts[1]}"]`);
+            transcript.push('');
+
+            // Jury consultation
+            transcript.push('JURY DELIBERATION:');
+            transcript.push('');
+            transcript.push('  FOREPERSON (Juror #1):');
+            transcript.push('    "We have reviewed all evidence collectively."');
+            transcript.push(`    [Private Thought: "${verdictResult.courtroom.jury[0].thoughts[0]}"]`);
+            transcript.push('');
+
+            transcript.push('  JUROR #2:');
+            transcript.push('    "I concur with the foreperson\'s assessment."');
+            transcript.push(`    [Private Thought: "${verdictResult.courtroom.jury[1].thoughts[0]}"]`);
+            transcript.push('');
+
+            transcript.push('  JUROR #4:');
+            transcript.push('    "The precedent is quite clear on this matter."');
+            transcript.push(`    [Private Thought: "${verdictResult.courtroom.jury[3].thoughts[0]}"]`);
+            transcript.push('');
+
+            transcript.push('  JUROR #6:');
+            transcript.push('    "Documentation leaves no room for ambiguity."');
+            transcript.push(`    [Private Thought: "${verdictResult.courtroom.jury[5].thoughts[0]}"]`);
+            transcript.push('');
+
+            // Judge final thoughts
+            transcript.push(`  [Judge's Thought: "${verdictResult.courtroom.judge.thoughts[2]}"]`);
+            transcript.push('');
+
+            transcript.push('───────────────────────────────────────────────────────────────────');
+            transcript.push('');
+            transcript.push('JUDGE:');
+            transcript.push('  "Having reviewed all evidence and consulted with the jury panel,");
+            transcript.push('   this court is prepared to render its verdict."');
+            transcript.push('');
+
+            // Bailiff maintains order
+            transcript.push(`BAILIFF ${verdictResult.courtroom.bailiff.name}:`);
+            transcript.push(`  [Status: ${verdictResult.courtroom.bailiff.status}]`);
+            transcript.push('');
+
+            transcript.push('CLERK:');
+            transcript.push('  "The defendant will rise for the reading of the verdict."');
+            transcript.push('');
+
+            // The verdict
+            transcript.push('JUDGE:');
+            transcript.push('  "In the matter of case number ' + verdictResult.case_id + ',');
+            transcript.push('   this court finds the evidence compelling and the legal reasoning');
+            transcript.push('   sound."');
+            transcript.push('');
+            transcript.push('   "Based on our quantum analysis with ' + (verdictResult.confidence * 100).toFixed(1) + '% confidence,');
+            transcript.push('   considering all submitted evidence and applicable precedent..."');
+            transcript.push('');
+            transcript.push('   ⚖️  VERDICT: ' + verdictResult.verdict.toUpperCase());
+            transcript.push('');
+            transcript.push('   "' + verdictResult.reasoning + '"');
+            transcript.push('');
+
+            // Clerk closure
+            transcript.push('CLERK:');
+            transcript.push('  "The verdict has been recorded in the quantum ledger."');
+            transcript.push(`  [Action: ${verdictResult.courtroom.clerk.actions[2]}]`);
+            transcript.push('');
+
+            transcript.push('JUDGE:');
+            transcript.push('  "This court is adjourned. All parties may review the complete');
+            transcript.push('   analysis and supporting documentation."');
+            transcript.push('');
+            transcript.push('  *gavel sound*');
+            transcript.push('');
+
+            transcript.push('BAILIFF:');
+            transcript.push('  "All rise."');
+            transcript.push('');
+
+            transcript.push('═══════════════════════════════════════════════════════════════════');
+            transcript.push('              VERDICT DELIVERED VIA QUANTUM CONSENSUS');
+            transcript.push(`                  Confidence Level: ${(verdictResult.confidence * 100).toFixed(1)}%`);
+            transcript.push('═══════════════════════════════════════════════════════════════════');
+
+            return transcript.join('\n');
+        }
+
+        // Submit case to backend (placeholder for real API)
+        async function submitCaseForVerdict(caseData) {
+            // In production, this would call the actual GAVL quantum backend
+            // For now, simulate API delay and return simulated verdict
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(generateSimulatedVerdict(caseData));
+                }, 2000);
+            });
         }
 
         // Initialize

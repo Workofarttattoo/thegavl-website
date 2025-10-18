@@ -381,7 +381,10 @@
                             <input type="password" id="signin-password" placeholder="Your password" required>
                         </div>
                         <button class="primary" onclick="handleSignIn()">Sign In</button>
-                        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+                        <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">
+                            <span class="text-link" onclick="handleForgotPassword()">Forgot Password?</span>
+                        </p>
+                        <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">
                             Don't have an account? <span class="text-link" onclick="toggleAuthForms()">Start Free Trial</span>
                         </p>
                     </div>
@@ -499,10 +502,47 @@
             const result = await signUp(email, password, name);
 
             if (result.success) {
-                showAlert('Account created! Check your email to verify your account.', 'success');
-                setTimeout(() => {
-                    toggleAuthForms(); // Switch to sign in form
-                }, 2000);
+                // Show detailed signup success message with email confirmation instructions
+                const alertDiv = document.getElementById('auth-alert');
+                alertDiv.innerHTML = `
+                    <div class="alert success" style="text-align: left;">
+                        <h3 style="margin-bottom: 1rem; text-align: center;">✅ Account Created Successfully!</h3>
+                        <p style="margin-bottom: 1rem; text-align: center;">
+                            Welcome, <strong>${name}</strong>!
+                        </p>
+                        <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--gavl-navy);">⚠️ Important: Email Confirmation Required</p>
+                            <p style="color: var(--gavl-text); margin-bottom: 0.5rem;">
+                                Before you can sign in, you need to confirm your email address.
+                            </p>
+                            <ol style="margin-left: 1.2rem; line-height: 1.8; color: var(--gavl-text); font-size: 0.9rem;">
+                                <li>Check <strong>${email}</strong> for a confirmation email from Supabase</li>
+                                <li>Click the confirmation link in the email</li>
+                                <li>Return here and sign in with your credentials</li>
+                            </ol>
+                            <p style="color: var(--gavl-text); margin-top: 0.75rem; font-size: 0.85rem;">
+                                <strong>No email?</strong> Check your spam/junk folder, or contact support.
+                            </p>
+                        </div>
+                        <p style="text-align: center; margin-top: 1rem;">
+                            Switching to sign in form in <span id="countdown">5</span> seconds...
+                        </p>
+                    </div>
+                `;
+
+                // Countdown timer
+                let seconds = 5;
+                const countdownInterval = setInterval(() => {
+                    seconds--;
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = seconds;
+                    }
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        toggleAuthForms();
+                    }
+                }, 1000);
             } else {
                 showAlert(result.error || 'Sign up failed. Please try again.', 'error');
             }
@@ -526,8 +566,62 @@
                 currentUser = result.data.user;
                 await loadUserDashboard();
             } else {
-                showAlert(result.error || 'Sign in failed. Please check your credentials.', 'error');
+                // Check for email confirmation error
+                const errorMsg = result.error || '';
+                if (errorMsg.toLowerCase().includes('email') &&
+                    (errorMsg.toLowerCase().includes('confirm') ||
+                     errorMsg.toLowerCase().includes('verif') ||
+                     errorMsg.toLowerCase().includes('not confirmed'))) {
+                    showEmailConfirmationError(email);
+                } else {
+                    showAlert(result.error || 'Sign in failed. Please check your credentials.', 'error');
+                }
             }
+        }
+
+        // Show detailed email confirmation error with fix instructions
+        function showEmailConfirmationError(email) {
+            const alertDiv = document.getElementById('auth-alert');
+            alertDiv.innerHTML = `
+                <div class="alert error" style="text-align: left; max-width: 600px; margin: 0 auto 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; text-align: center;">📧 Email Confirmation Required</h3>
+                    <p style="margin-bottom: 1rem; text-align: center;">
+                        Your account was created but the email <strong>${email}</strong> needs to be confirmed.
+                    </p>
+
+                    <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--gavl-navy);">Quick Fix Options:</p>
+                        <ol style="margin-left: 1.2rem; line-height: 1.8; color: var(--gavl-text);">
+                            <li>Check your email inbox for "Confirm your email" from Supabase</li>
+                            <li>Check your spam/junk folder</li>
+                            <li>If no email received, contact support to manually confirm your account</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--gavl-navy);">For Admin/Developer:</p>
+                        <p style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--gavl-text);">
+                            Run this SQL in Supabase Dashboard → SQL Editor:
+                        </p>
+                        <code style="display: block; background: #1a1a1a; color: #0f0; padding: 0.75rem; border-radius: 6px; font-size: 0.8rem; overflow-x: auto; font-family: 'Courier New', monospace;">
+UPDATE auth.users<br>
+SET email_confirmed_at = now()<br>
+WHERE email_confirmed_at IS NULL;
+                        </code>
+                        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--gavl-text);">
+                            <a href="https://supabase.com/dashboard/project/urqlitnxxszwmeoscpxk/sql/new"
+                               target="_blank"
+                               style="color: var(--gavl-blue); text-decoration: underline; font-weight: 600;">
+                                → Open Supabase SQL Editor
+                            </a>
+                        </p>
+                    </div>
+
+                    <p style="text-align: center; font-size: 0.9rem; margin-top: 1rem;">
+                        <span class="text-link" onclick="toggleAuthForms()">← Back to Sign In</span>
+                    </p>
+                </div>
+            `;
         }
 
         // Handle sign out
@@ -539,6 +633,30 @@
                 currentProfile = null;
                 showView('auth-view');
                 showAlert('Signed out successfully', 'success');
+            }
+        }
+
+        // Handle forgot password
+        async function handleForgotPassword() {
+            const email = document.getElementById('signin-email').value.trim();
+
+            if (!email) {
+                showAlert('Please enter your email address first', 'error');
+                return;
+            }
+
+            if (!confirm(`Send password reset email to ${email}?`)) {
+                return;
+            }
+
+            showAlert('Sending password reset email...', 'success');
+
+            const result = await resetPassword(email);
+
+            if (result.success) {
+                showAlert('Password reset email sent! Check your inbox.', 'success');
+            } else {
+                showAlert(result.error || 'Failed to send reset email. Please try again.', 'error');
             }
         }
 
