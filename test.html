@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page</title>
+    <script>
+        console.log('Test page loaded successfully');
+        window.onload = function() {
+            fetch('index_with_supabase.html')
+                .then(r => r.text())
+                .then(html => {
+                    console.log('HTML loaded, length:', html.length);
+                    document.getElementById('status').textContent = 'HTML file loaded successfully (' + html.length + ' bytes)';
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    document.getElementById('status').textContent = 'Error: ' + err.message;
+                });
+        };
+    </script>
+</head>
+<body>
+    <h1>Server Test</h1>
+    <p id="status">Testing...</p>
+    <p><a href="index_with_supabase.html" target="_blank">Try opening main page</a></p>
+</body>
+</html>

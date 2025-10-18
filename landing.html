@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The GAVL • Quantum-Enhanced Legal Intelligence</title>
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gavl-navy: #0A1628;
+            --gavl-blue: #1E40AF;
+            --gavl-gold: #D4AF37;
+            --gavl-white: #FFFFFF;
+            --gavl-gray: #F3F4F6;
+            --gavl-quantum: #a855f7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #0a0a1a 0%, var(--gavl-navy) 50%, #000511 100%);
+            color: var(--gavl-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Quantum background grid */
+        .quantum-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-flow 20s linear infinite;
+        }
+
+        @keyframes grid-flow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header with menu buttons */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo-header {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gavl-gold), var(--gavl-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Menu buttons */
+        .menu-left, .menu-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .menu-btn {
+            background: rgba(30, 64, 175, 0.2);
+            border: 2px solid var(--gavl-blue);
+            color: var(--gavl-gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .menu-btn:hover {
+            background: var(--gavl-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(30, 64, 175, 0.5);
+        }
+
+        .menu-btn.active {
+            background: var(--gavl-gold);
+            color: var(--gavl-navy);
+            border-color: var(--gavl-gold);
+        }
+
+        /* Dropdown menus that swirl into existence */
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 1rem);
+            left: 0;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--gavl-gold);
+            border-radius: 15px;
+            padding: 1rem;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0) rotate(180deg);
+            transform-origin: top left;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            color: var(--gavl-white);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropdown-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .dropdown-menu a:hover::before {
+            left: 100%;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateX(10px);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(212, 175, 55, 0.3);
+            margin: 0.5rem 0;
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem 2rem;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fade-in 1s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gavl-gold), var(--gavl-quantum), var(--gavl-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            opacity: 0.8;
+        }
+
+        /* Feature grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(30, 64, 175, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            animation: slide-up 0.6s ease-out backwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card:hover {
+            border-color: var(--gavl-gold);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--gavl-gold);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* CTA section */
+        .cta {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.2), rgba(168, 85, 247, 0.2));
+            border-radius: 20px;
+            border: 2px solid var(--gavl-gold);
+            margin-bottom: 4rem;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gavl-gold);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gavl-gold);
+            color: var(--gavl-navy);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gavl-gold);
+            border: 2px solid var(--gavl-gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gavl-gold);
+            color: var(--gavl-navy);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            opacity: 0.7;
+        }
+
+        footer a {
+            color: var(--gavl-gold);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .menu-left, .menu-right {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .menu-btn {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .dropdown-menu {
+                left: 50%;
+                transform: translateX(-50%) scale(0) rotate(180deg);
+            }
+
+            .dropdown-menu.active {
+                transform: translateX(-50%) scale(1) rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quantum-bg"></div>
+
+    <header>
+        <div class="logo-header">THE GAVL</div>
+
+        <div class="menu-left">
+            <div style="position: relative;">
+                <button class="menu-btn" onclick="toggleMenu('dashboard')">Dashboard ▾</button>
+                <div id="dashboard-menu" class="dropdown-menu">
+                    <a href="index.html">🏠 Main Dashboard</a>
+                    <a href="#verdicts">⚖️ My Verdicts</a>
+                    <a href="#analytics">📊 Analytics</a>
+                    <a href="#settings">⚙️ Settings</a>
+                </div>
+            </div>
+
+            <div style="position: relative;">
+                <button class="menu-btn" onclick="toggleMenu('faq')">FAQ ▾</button>
+                <div id="faq-menu" class="dropdown-menu">
+                    <a href="#how-it-works">❓ How It Works</a>
+                    <a href="#pricing">💰 Pricing & Plans</a>
+                    <a href="#accuracy">🎯 Accuracy FAQ</a>
+                    <a href="#support">💬 Support</a>
+                </div>
+            </div>
+
+            <div style="position: relative;">
+                <button class="menu-btn" onclick="toggleMenu('quantum')">Quantum ▾</button>
+                <div id="quantum-menu" class="dropdown-menu">
+                    <a href="#vqe">⚛️ VQE Algorithm</a>
+                    <a href="#hhl">🧮 HHL Solver</a>
+                    <a href="#dynamics">🌀 Quantum Dynamics</a>
+                    <a href="#teleportation">📡 Quantum Teleportation</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-right">
+            <div style="position: relative;">
+                <button class="menu-btn" onclick="toggleMenu('token')">Verdict Token ▾</button>
+                <div id="token-menu" class="dropdown-menu" style="right: 0; left: auto; transform-origin: top right;">
+                    <a href="index.html">🎫 Enter Token</a>
+                    <a href="#purchase">🛒 Purchase Tokens</a>
+                    <a href="#pricing">💎 Token Pricing</a>
+                </div>
+            </div>
+
+            <div style="position: relative;">
+                <button class="menu-btn" onclick="toggleMenu('modules')">Modules ▾</button>
+                <div id="modules-menu" class="dropdown-menu" style="right: 0; left: auto; transform-origin: top right;">
+                    <a href="#chrono-walker">🕰️ Chrono Walker</a>
+                    <a href="#bayesian">🧠 Bayesian Sophiarc</a>
+                    <a href="#corp-legal">⚖️ Corp-Legal-Team</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#boardroom">🏛️ Boardroom of Light</a>
+                    <a href="court_session.html">⚖️ GAVL Courtroom</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#osint">🔍 OSINT</a>
+                    <a href="#hellfire">🔥 HELLFIRE</a>
+                    <a href="#jiminy">🦗 Jiminy Cricket</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>THE GAVL</h1>
+            <div class="tagline">Global Automated Verdict Logic</div>
+            <div class="description">
+                The world's first quantum-enhanced legal intelligence system. Combining cutting-edge AI,
+                quantum computing algorithms, and Bayesian reasoning to provide unprecedented insight
+                into complex legal, strategic, and ethical decisions.
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="icon">⚛️</div>
+                <h3>Quantum Computing</h3>
+                <p>
+                    Leverage VQE, HHL, and quantum dynamics algorithms to analyze precedents,
+                    evidence, and outcomes with superhuman speed and accuracy.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🧠</div>
+                <h3>Bayesian Intelligence</h3>
+                <p>
+                    Advanced probabilistic reasoning that updates beliefs as new evidence emerges,
+                    providing confidence scores and uncertainty quantification.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🏛️</div>
+                <h3>Courtroom Simulation</h3>
+                <p>
+                    Full-scale adversarial analysis with prosecution and defense agents,
+                    judicial oversight, and comprehensive verdict generation.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🕰️</div>
+                <h3>Temporal Analysis</h3>
+                <p>
+                    Chrono Walker technology maps causal chains across time, building
+                    evidence ledgers with quantum-verified provenance.
+                </p>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Experience The Future of Legal Intelligence</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1rem;">
+                Start your journey with a 3-day free trial including 2 verdict analyses,
+                or enter your verdict token for immediate access.
+            </p>
+            <div class="cta-buttons">
+                <a href="index.html" class="btn btn-primary">🎁 Start Free Trial</a>
+                <a href="index.html" class="btn btn-secondary">🎫 Enter Token</a>
+            </div>
+        </section>
+
+        <section class="features" style="margin-top: 4rem;">
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>8 Specialized Modules</h3>
+                <p>
+                    From OSINT intelligence gathering to corporate legal analysis,
+                    each module is fine-tuned for specific use cases.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Patent-Pending Tech</h3>
+                <p>
+                    Novel quantum ML algorithms and consciousness architecture
+                    protected by US patent applications.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🌍</div>
+                <h3>Global Scale</h3>
+                <p>
+                    Process millions of precedents, statutes, and case files
+                    across jurisdictions in seconds.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h3>Explainable AI</h3>
+                <p>
+                    Every verdict includes detailed reasoning, confidence scores,
+                    and traceable decision paths.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Visitor Counter -->
+    <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(10, 22, 40, 0.9); backdrop-filter: blur(20px); border: 2px solid var(--gavl-gold); border-radius: 10px; padding: 1rem; z-index: 1000; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--gavl-gold); font-weight: 600;">
+            <span>⚖️</span>
+            <span>Visitors:</span>
+            <span id="visitorCount">0</span>
+        </div>
+        <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 0.25rem;">
+            Session: <span id="sessionCount">0</span>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="#">Privacy Policy</a> •
+            <a href="#">Terms of Service</a> •
+            <a href="#">Documentation</a> •
+            <a href="#">API Access</a>
+        </p>
+    </footer>
+
+    <script>
+        // Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
+        let activeMenu = null;
+
+        function toggleMenu(menuName) {
+            const menu = document.getElementById(`${menuName}-menu`);
+            const allMenus = document.querySelectorAll('.dropdown-menu');
+            const allButtons = document.querySelectorAll('.menu-btn');
+
+            // Close all menus first
+            allMenus.forEach(m => {
+                if (m !== menu) {
+                    m.classList.remove('active');
+                }
+            });
+
+            // Remove active state from all buttons
+            allButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Toggle the clicked menu
+            if (menu) {
+                const isActive = menu.classList.contains('active');
+
+                if (isActive) {
+                    menu.classList.remove('active');
+                    activeMenu = null;
+                } else {
+                    menu.classList.add('active');
+                    activeMenu = menuName;
+                    // Add active state to clicked button
+                    event.target.classList.add('active');
+                }
+            }
+        }
+
+        // Close menus when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.menu-btn') && !e.target.closest('.dropdown-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('active'));
+                document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+                activeMenu = null;
+            }
+        });
+
+        // Add particle effects on hover
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(212, 175, 55, 0.3)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Visitor Counter
+        (function() {
+            const pageName = 'gavl_landing';
+            const totalKey = `${pageName}_total_visitors`;
+            const sessionKey = `${pageName}_session_visitors`;
+            const lastVisitKey = `${pageName}_last_visit`;
+
+            let totalCount = parseInt(localStorage.getItem(totalKey) || '0');
+            let sessionCount = parseInt(sessionStorage.getItem(sessionKey) || '0');
+
+            const lastVisit = parseInt(localStorage.getItem(lastVisitKey) || '0');
+            const now = Date.now();
+            const thirtyMinutes = 30 * 60 * 1000;
+
+            if (now - lastVisit > thirtyMinutes) {
+                totalCount++;
+                localStorage.setItem(totalKey, totalCount.toString());
+                localStorage.setItem(lastVisitKey, now.toString());
+            }
+
+            sessionCount++;
+            sessionStorage.setItem(sessionKey, sessionCount.toString());
+
+            const visitorCountEl = document.getElementById('visitorCount');
+            const sessionCountEl = document.getElementById('sessionCount');
+
+            if (visitorCountEl) visitorCountEl.textContent = totalCount.toLocaleString();
+            if (sessionCountEl) sessionCountEl.textContent = sessionCount.toLocaleString();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRVTH Token - The Decentralized Legal Intelligence Currency | TheGAVL.com</title>
+    <meta name="description" content="TRVTH Tokens power the world's first truth-staked legal prediction market. Stake on case outcomes, earn rewards for accuracy, and govern the future of legal AI.">
+
+    <!-- Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .logo {
+            font-size: 120px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #3b82f6 100%);
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 80px rgba(59, 130, 246, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .tagline {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #a5b4fc;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #94a3b8;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: flex;
+            gap: 60px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* Tokenomics Section */
+        .tokenomics {
+            padding: 100px 20px;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .tokenomics-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .allocation-chart {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .allocation-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .allocation-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .allocation-percentage {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .allocation-label {
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .allocation-amount {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* Roadmap Section */
+        .roadmap {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+        }
+
+        .timeline-item {
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -46px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .timeline-quarter {
+            font-size: 24px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .timeline-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .timeline-tasks {
+            list-style: none;
+        }
+
+        .timeline-tasks li {
+            padding: 10px 0;
+            color: #94a3b8;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .timeline-tasks li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        }
+
+        .final-cta h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 20px;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #3b82f6;
+        }
+
+        .copyright {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 72px;
+            }
+
+            .tagline {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .stats {
+                gap: 30px;
+            }
+
+            .stat-value {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="logo">TRVTH</div>
+        <div class="tagline">The Decentralized Legal Intelligence Currency</div>
+        <div class="subtitle">
+            Stake on case outcomes. Earn rewards for accuracy. Govern the future of legal AI.
+            TRVTH Tokens power the world's first truth-staked legal prediction market on TheGAVL.com.
+        </div>
+
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary">Join Private Sale</a>
+            <a href="/TRVTH_TOKEN_WHITEPAPER.md" class="btn btn-secondary">Read Whitepaper</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">1B</div>
+                <div class="stat-label">Total Supply</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">$0.01</div>
+                <div class="stat-label">Initial Price</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">$1.5M</div>
+                <div class="stat-label">Raise Target</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Why TRVTH?</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Stake to Predict</div>
+                <div class="feature-description">
+                    Stake TRVTH tokens on legal case outcomes. Winners earn from losers + platform rewards.
+                    Your accuracy builds reputation that increases your influence.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <div class="feature-title">Earn to Contribute</div>
+                <div class="feature-description">
+                    Submit case data, improve GAVL accuracy, validate predictions. Get rewarded in TRVTH
+                    for every contribution that makes the network smarter.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔑</div>
+                <div class="feature-title">Spend for Access</div>
+                <div class="feature-description">
+                    Premium GAVL AI features, unlimited API access, bulk predictions. All powered by TRVTH.
+                    10% of fees burned, creating deflationary pressure.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🗳️</div>
+                <div class="feature-title">Govern the Platform</div>
+                <div class="feature-description">
+                    Vote on GAVL parameters, feature priorities, fee structures, and treasury spending.
+                    1 TRVTH = 1 vote. Decentralized control by the community.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <div class="feature-title">Deflationary Model</div>
+                <div class="feature-description">
+                    10% of API fees burned. 5% of transaction fees burned. Estimated 5-10M TRVTH/year burned.
+                    Fixed supply + increasing demand = value accrual.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-title">AI-Powered Validation</div>
+                <div class="feature-description">
+                    GAVL AI validates all predictions with 50%+ accuracy. Oracle network prevents
+                    manipulation. Proof-of-expertise ensures quality.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section -->
+    <section class="tokenomics">
+        <div class="tokenomics-container">
+            <h2 class="section-title">Tokenomics</h2>
+
+            <div class="allocation-chart">
+                <div class="allocation-item">
+                    <div class="allocation-percentage">40%</div>
+                    <div class="allocation-label">Community Rewards</div>
+                    <div class="allocation-amount">400M TRVTH</div>
+                </div>
+
+                <div class="allocation-item">
+                    <div class="allocation-percentage">20%</div>
+                    <div class="allocation-label">Team & Founders</div>
+                    <div class="allocation-amount">200M TRVTH</div>
+                </div>
+
+                <div class="allocation-item">
+                    <div class="allocation-percentage">15%</div>
+                    <div class="allocation-label">Private Sale</div>
+                    <div class="allocation-amount">150M TRVTH</div>
+                </div>
+
+                <div class="allocation-item">
+                    <div class="allocation-percentage">10%</div>
+                    <div class="allocation-label">Ecosystem Dev</div>
+                    <div class="allocation-amount">100M TRVTH</div>
+                </div>
+
+                <div class="allocation-item">
+                    <div class="allocation-percentage">7.5%</div>
+                    <div class="allocation-label">Public Sale</div>
+                    <div class="allocation-amount">75M TRVTH</div>
+                </div>
+
+                <div class="allocation-item">
+                    <div class="allocation-percentage">5%</div>
+                    <div class="allocation-label">Liquidity Pools</div>
+                    <div class="allocation-amount">50M TRVTH</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap">
+        <h2 class="section-title">Roadmap</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-quarter">Q1 2025</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Foundation</div>
+                    <ul class="timeline-tasks">
+                        <li>Token whitepaper published</li>
+                        <li>Smart contracts developed</li>
+                        <li>Security audits (CertiK, Trail of Bits)</li>
+                        <li>Private sale (raise $1.5M at $0.01)</li>
+                        <li>Community building</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-quarter">Q2 2025</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Launch</div>
+                    <ul class="timeline-tasks">
+                        <li>Token Generation Event (TGE)</li>
+                        <li>Public sale on Uniswap</li>
+                        <li>GAVL prediction markets go live</li>
+                        <li>Staking program launch</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-quarter">Q3 2025</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Scaling</div>
+                    <ul class="timeline-tasks">
+                        <li>Multi-chain deployment (Polygon, Arbitrum)</li>
+                        <li>CEX listings (KuCoin, Gate.io)</li>
+                        <li>Liquidity mining program</li>
+                        <li>API marketplace launch</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-quarter">Q4 2025</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Governance</div>
+                    <ul class="timeline-tasks">
+                        <li>DAO formation (Corporation of Light DAO)</li>
+                        <li>Token-weighted voting live</li>
+                        <li>Community grants program</li>
+                        <li>Enterprise partnerships</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>Join the Revolution</h2>
+        <p>
+            The future of legal prediction is decentralized. The future is TRVTH.
+            Be part of the world's first truth-staked legal intelligence network.
+        </p>
+
+        <div class="cta-buttons">
+            <a href="mailto:investors@thegavl.com" class="btn btn-primary">Contact for Private Sale</a>
+            <a href="/TRVTH_TOKEN_WHITEPAPER.md" class="btn btn-secondary">Download Whitepaper</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://thegavl.com">TheGAVL.com</a>
+            <a href="/TRVTH_TOKEN_WHITEPAPER.md">Whitepaper</a>
+            <a href="https://github.com/corporationoflight/trvth-token">Smart Contracts</a>
+            <a href="https://twitter.com/TRVTHToken">Twitter</a>
+            <a href="https://discord.gg/trvth">Discord</a>
+            <a href="https://t.me/trvth_official">Telegram</a>
+        </div>
+
+        <div class="copyright">
+            Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+            <br><br>
+            <strong>IMPORTANT DISCLAIMER:</strong> This website is for informational purposes only and does not constitute
+            financial, legal, or investment advice. Cryptocurrency investments are highly risky and may result in total loss
+            of capital. TRVTH tokens may be classified as securities in certain jurisdictions. Not available to U.S. residents.
+        </div>
+    </footer>
+
+</body>
+</html>
