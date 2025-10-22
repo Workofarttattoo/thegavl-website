@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The GAVL • Latest Updates</title>
+  <meta name="description" content="Release notes and milestones for The GAVL, the legal AI platform validated in court.">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap");
+
+    :root {
+      --gavl-navy: #0a1628;
+      --gavl-blue: #1e40af;
+      --gavl-gold: #d4af37;
+      --gavl-white: #ffffff;
+      --gavl-gray: #f3f4f6;
+      --gavl-text: #1f2937;
+      --gavl-border: #e5e7eb;
+      --gavl-accent: #10b981;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--gavl-navy);
+      color: var(--gavl-white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 20px;
+    }
+
+    .background-pattern {
+      position: fixed;
+      inset: 0;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .background-pattern::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, var(--gavl-gold) 1px, transparent 1px),
+        linear-gradient(0deg, var(--gavl-gold) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: pattern-scroll 20s linear infinite;
+    }
+
+    @keyframes pattern-scroll {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(50px, 50px);
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 960px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gavl-gold), var(--gavl-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      opacity: 0.85;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: var(--gavl-white);
+      color: var(--gavl-text);
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: var(--gavl-navy);
+    }
+
+    .card > p {
+      margin-bottom: 24px;
+      opacity: 0.75;
+    }
+
+    .milestone {
+      border-left: 4px solid var(--gavl-blue);
+      padding: 20px;
+      margin-bottom: 24px;
+      background: var(--gavl-gray);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .milestone::before {
+      content: "";
+      position: absolute;
+      top: 24px;
+      left: -12px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gavl-gold);
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    }
+
+    .milestone-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .milestone-date {
+      font-weight: 700;
+      color: var(--gavl-blue);
+      letter-spacing: 0.02em;
+    }
+
+    .milestone-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gavl-navy);
+    }
+
+    .milestone-body {
+      line-height: 1.7;
+    }
+
+    .milestone-body ul {
+      margin-top: 12px;
+      padding-left: 20px;
+    }
+
+    .milestone-body li {
+      margin-bottom: 6px;
+    }
+
+    .status-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .status-card {
+      background: #0f172a;
+      color: var(--gavl-white);
+      border-radius: 14px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .status-card h3 {
+      font-size: 0.95rem;
+      opacity: 0.7;
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .status-card p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gavl-gold);
+    }
+
+    .nav-links {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--gavl-gold);
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        padding: 28px;
+      }
+
+      .logo {
+        font-size: 2.4rem;
+      }
+
+      .milestone {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+  <div class="container">
+    <header class="header">
+      <div class="logo">The GAVL</div>
+      <p class="tagline">Operational journal for Global Automated Verdict Logic</p>
+    </header>
+
+    <main class="card">
+      <h1>Launch Notes & Progress</h1>
+      <p>Snapshot of shipping activity, investor-facing milestones, and the next work items that keep the courthouse-grade AI running smoothly.</p>
+
+      <section class="status-banner">
+        <article class="status-card">
+          <h3>Production Status</h3>
+          <p>🟢 Live • GitHub Pages</p>
+        </article>
+        <article class="status-card">
+          <h3>Last Site Update</h3>
+          <p>18 Oct 2025</p>
+        </article>
+        <article class="status-card">
+          <h3>Next Target</h3>
+          <p>Mobile polish & CTA</p>
+        </article>
+      </section>
+
+      <section>
+        <article class="milestone">
+          <div class="milestone-header">
+            <span class="milestone-date">18 Oct 2025</span>
+            <span class="milestone-title">DNS migration locked & 404 regression closed</span>
+          </div>
+          <div class="milestone-body">
+            <p>Rebuilt the static hosting stack on GitHub Pages, re-pointed GoDaddy DNS to the 185.199.x.x edge, and verified HTTPS enforcement. Manual curl checks now return <strong>HTTP 200</strong> with GitHub certificates on root and www.</p>
+            <ul>
+              <li>Captured verification in <em>THEGAVL_PRODUCTION_TEST_REPORT.md</em></li>
+              <li>Published this updates log to eliminate dead navigation links</li>
+              <li>Added browser cache guidance to the operations checklist</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="milestone">
+          <div class="milestone-header">
+            <span class="milestone-date">18 Oct 2025</span>
+            <span class="milestone-title">Free trial flow refreshed for law firm onboarding</span>
+          </div>
+          <div class="milestone-body">
+            <p>Shipped the redesigned trial funnel showcased in <em>THEGAVL_TRIAL_SYSTEM_CHANGES.html</em>, clarifying the 90-day program and removing friction from the contact-to-login path.</p>
+            <ul>
+              <li>Updated hero messaging to emphasize 94% case accuracy & court acceptance</li>
+              <li>Documented transition steps for existing trial users</li>
+              <li>Prepped support scripts for manual onboarding while automation finalizes</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="milestone">
+          <div class="milestone-header">
+            <span class="milestone-date">17 Oct 2025</span>
+            <span class="milestone-title">1,000 case validation run completed</span>
+          </div>
+          <div class="milestone-body">
+            <p>Finished a full-scale evaluation against 1,000 historic cases. Accuracy, burden of proof calibration, and evidence extraction insights are captured in <em>GAVL_VALIDATION_FINAL_REPORT.md</em>.</p>
+            <ul>
+              <li>Identified evidence-strength thresholds that drive criminal case performance</li>
+              <li>Documented accuracy deltas by practice area for investor Q&A</li>
+              <li>Queued follow-up work on defendant-win predictions and multi-outcome modeling</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section>
+        <article class="milestone">
+          <div class="milestone-header">
+            <span class="milestone-date">Queue</span>
+            <span class="milestone-title">Immediate next actions</span>
+          </div>
+          <div class="milestone-body">
+            <ul>
+              <li>Ship the prominent “Start Free 90-Day Trial” CTA recommended in production QA</li>
+              <li>Finalize mobile layout verification from <em>THEGAVL_PRODUCTION_TEST_REPORT.md</em></li>
+              <li>Generate Open Graph and Twitter card assets for LinkedIn launch</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <div class="nav-links" aria-label="Site navigation">
+        <a href="index.html">← Back to Home</a> |
+        <a href="testing.html">Testing Documentation</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

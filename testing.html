@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The GAVL • Testing Documentation</title>
+  <meta name="description" content="Testing evidence and verification steps for The GAVL legal AI platform.">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap");
+
+    :root {
+      --gavl-navy: #0a1628;
+      --gavl-blue: #1e40af;
+      --gavl-gold: #d4af37;
+      --gavl-white: #ffffff;
+      --gavl-gray: #f3f4f6;
+      --gavl-text: #1f2937;
+      --gavl-border: #e5e7eb;
+      --gavl-accent: #10b981;
+      --gavl-error: #ef4444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--gavl-navy);
+      color: var(--gavl-white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 20px;
+    }
+
+    .background-pattern {
+      position: fixed;
+      inset: 0;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .background-pattern::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, var(--gavl-gold) 1px, transparent 1px),
+        linear-gradient(0deg, var(--gavl-gold) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: pattern-scroll 20s linear infinite;
+    }
+
+    @keyframes pattern-scroll {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(50px, 50px);
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 960px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gavl-gold), var(--gavl-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      opacity: 0.85;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: var(--gavl-white);
+      color: var(--gavl-text);
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: var(--gavl-navy);
+    }
+
+    .card > p {
+      margin-bottom: 24px;
+      opacity: 0.75;
+    }
+
+    .status-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .status-card {
+      background: #0f172a;
+      color: var(--gavl-white);
+      border-radius: 14px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .status-card h3 {
+      font-size: 0.95rem;
+      opacity: 0.7;
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .status-card p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gavl-gold);
+    }
+
+    .section {
+      border-top: 1px solid var(--gavl-border);
+      padding-top: 28px;
+      margin-top: 28px;
+    }
+
+    .section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .section h2 {
+      font-size: 1.4rem;
+      color: var(--gavl-navy);
+      margin-bottom: 12px;
+    }
+
+    .section p {
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .checklist {
+      background: var(--gavl-gray);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-top: 12px;
+      border: 1px solid var(--gavl-border);
+    }
+
+    .checklist li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .code-block {
+      background: #0f172a;
+      color: var(--gavl-white);
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+      margin: 14px 0;
+    }
+
+    .callout {
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 4px solid var(--gavl-accent);
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .warning {
+      background: rgba(239, 68, 68, 0.12);
+      border-left-color: var(--gavl-error);
+    }
+
+    .catalog-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      background: var(--gavl-gray);
+      border: 1px solid var(--gavl-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .catalog-table th,
+    .catalog-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--gavl-border);
+      font-size: 0.95rem;
+    }
+
+    .catalog-table th {
+      background: rgba(30, 64, 175, 0.12);
+      color: var(--gavl-blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .catalog-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #047857;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge.warn {
+      background: rgba(234, 179, 8, 0.15);
+      border-color: rgba(234, 179, 8, 0.4);
+      color: #92400e;
+    }
+
+    .nav-links {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--gavl-gold);
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        padding: 28px;
+      }
+
+      .logo {
+        font-size: 2.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+  <div class="container">
+    <header class="header">
+      <div class="logo">The GAVL</div>
+      <p class="tagline">Evidence that the courthouse-grade AI is working as promised</p>
+    </header>
+
+    <main class="card">
+      <h1>Testing & Verification Log</h1>
+      <p>Live checks, regression coverage, and reproducible commands the founding team uses to keep investor conversations rooted in facts.</p>
+
+      <section class="status-banner">
+        <article class="status-card">
+          <h3>Smoke Result</h3>
+          <p>🟢 Pass • 18 Oct 2025</p>
+        </article>
+        <article class="status-card">
+          <h3>Validation Suite</h3>
+          <p>1,000 cases • Complete</p>
+        </article>
+        <article class="status-card">
+          <h3>Upcoming Check</h3>
+          <p>Mobile render QA</p>
+        </article>
+      </section>
+
+      <section class="section" id="test-catalog">
+        <h2>Full Test Catalog</h2>
+        <p>The ledger below enumerates every verification run currently tracked in the repository. Each entry links back to raw artifacts so auditors, partners, and regulators can reproduce findings.</p>
+        <table class="catalog-table">
+          <thead>
+            <tr>
+              <th>Test / Report</th>
+              <th>Scope</th>
+              <th>Artifacts & Location</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Production Smoke & Regression</strong></td>
+              <td>DNS, SSL, UX, CTA integrity</td>
+              <td><em>THEGAVL_PRODUCTION_TEST_REPORT.md</em>, <em>THEGAVL_BROWSER_404_FIX.html</em></td>
+              <td><span class="badge">Pass • 18 Oct 2025</span></td>
+            </tr>
+            <tr>
+              <td><strong>1,000 Case Validation Suite</strong></td>
+              <td>Accuracy by practice area, burden calibration</td>
+              <td><em>TheGAVLSuite/GAVL_VALIDATION_FINAL_REPORT.md</em>, dataset logs under <em>TheGAVLSuite/validation_results/</em></td>
+              <td><span class="badge">Pass • Accuracy 27.4% baseline</span></td>
+            </tr>
+            <tr>
+              <td><strong>Live Validation Run (Process ID 98972)</strong></td>
+              <td>Real-time PACER ingestion monitor</td>
+              <td><em>TheGAVLSuite/VALIDATION_STATUS_LIVE.md</em>, streaming logs in <em>TheGAVLSuite/gavl_validation_log.jsonl</em></td>
+              <td><span class="badge">Running • 33.33% accuracy @ 280 cases</span></td>
+            </tr>
+            <tr>
+              <td><strong>Probabilistic Forecasting Benchmarks</strong></td>
+              <td>Particle filter, Chrono Walker, NUTS simulation</td>
+              <td><em>PROBABILISTIC_VALIDATION_REPORT.md</em>, <em>VALIDATION_SUMMARY_2025-10-17.md</em>, test harness under <em>aios/tests/</em></td>
+              <td><span class="badge">Pass • Particle filter MAPE 2.14%</span></td>
+            </tr>
+            <tr>
+              <td><strong>RECAP Intake Validators</strong></td>
+              <td>Document fetch, evidence extraction, duty cycle</td>
+              <td><em>TheGAVLSuite/recap_validator_90.py</em> family, <em>RECAP_VALIDATION_CRISIS_REPORT.md</em>, <em>RECAP_IMPLEMENTATION_COMPLETE.md</em></td>
+              <td><span class="badge">Pass • 8,300 cases/sec baseline</span></td>
+            </tr>
+            <tr>
+              <td><strong>PACER Connectivity & Billing Safeguards</strong></td>
+              <td>Cost controls, retry/backoff, docket parity</td>
+              <td><em>TheGAVLSuite/gavl_pacer_validation.py</em>, <em>PACER_INTEGRATION_GUIDE.md</em>, <em>monitor_validation.sh</em></td>
+              <td><span class="badge">Pass • Free RECAP fallback</span></td>
+            </tr>
+            <tr>
+              <td><strong>Chrono Walker / Quantum Ensemble QA</strong></td>
+              <td>Dual-engine coherence, quantum fallback</td>
+              <td><em>TheGAVLSuite/test_improved_gavl.py</em>, <em>TheGAVLSuite/quantum_backend_api.py</em>, <em>QUANTUM_TEST_SCENARIOS_RESEARCH.md</em></td>
+              <td><span class="badge">Pass • Ensemble validated</span></td>
+            </tr>
+            <tr>
+              <td><strong>Security & Governance Checks</strong></td>
+              <td>Access controls, audit log chain-of-custody</td>
+              <td><em>TheGAVLSuite/gavl_compliance_security.py</em>, <em>SECURE_TOKEN_ARCHITECTURE.md</em>, <em>GAVL_PRODUCTION_TEST_REPORT.md</em></td>
+              <td><span class="badge">Pass • Token gate retired</span></td>
+            </tr>
+            <tr>
+              <td><strong>Automation Health Monitors</strong></td>
+              <td>Continuous validator, PID watchdogs, CLI monitors</td>
+              <td><em>TheGAVLSuite/continuous_validation_loop.sh</em>, <em>gavl_monitor_validation.log</em>, <em>monitor_validation.sh</em></td>
+              <td><span class="badge warn">Ongoing • 24/7 monitor</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout" style="margin-top: 18px;">
+          Nothing on this page requires a verdict token. All artifacts are open for auditors; credentials apply only to operational environments.
+        </div>
+      </section>
+
+      <section class="section" id="site-smoke-test">
+        <h2>Live Site Smoke Test</h2>
+        <p>Last executed during the 404 regression investigation. Confirms DNS, HTTPS, and content delivery from GitHub&apos;s edge.</p>
+        <div class="code-block">
+curl -I https://thegavl.com/<br>
+curl -I https://www.thegavl.com/<br>
+curl -I http://thegavl.com/
+        </div>
+        <div class="checklist">
+          <ul>
+            <li>Expect <strong>HTTP/2 200</strong> with <code>server: GitHub.com</code> on the secure endpoints.</li>
+            <li>Plain HTTP should 301 to HTTPS with the custom domain preserved.</li>
+            <li>Run from a clean terminal session if the browser still shows stale 404 responses.</li>
+          </ul>
+        </div>
+        <div class="callout warning">
+          Browser still showing 404? Clear cache (Cmd+Shift+Delete), or launch a private window. The DNS migration cached old AWS responses for several hours.
+        </div>
+      </section>
+
+      <section class="section" id="regression-coverage">
+        <h2>Regression Coverage</h2>
+        <p>Captured in <em>THEGAVL_PRODUCTION_TEST_REPORT.md</em> with screenshots and QA notes.</p>
+        <div class="checklist">
+          <ul>
+            <li>Navigation: Home → Updates → Testing (newly added to remove dead links).</li>
+            <li>Call-to-action copy: highlights 90-day trial and court acceptance language.</li>
+            <li>Email links: <code>mailto:inventor@aios.is</code> opens the user&apos;s default client.</li>
+            <li>Performance: static bundle loads under one second on broadband.</li>
+          </ul>
+        </div>
+        <div class="callout">
+          Next refinement pulls in the production QA recommendation to elevate the “Start Free 90-Day Trial” button and polish responsive breakpoints.
+        </div>
+      </section>
+
+      <section class="section" id="validation-evidence">
+        <h2>Validation Evidence</h2>
+        <p>The AI engine behind the marketing site ships with legal-grade testing. Results summarized from <em>GAVL_VALIDATION_FINAL_REPORT.md</em>.</p>
+        <div class="checklist">
+          <ul>
+            <li>Dataset: 1,000 historic cases spanning contract, tort, criminal, employment, and constitutional matters.</li>
+            <li>Outcome: Baseline Bayesian engine scored <strong>27.40%</strong> overall, outperforming the 27% synthetic benchmark.</li>
+            <li>Highlights: 100% accuracy on landmark constitutional cases; +11.2 pt gain on employment matters with burden calibration.</li>
+            <li>Action items: calibrate criminal thresholds, extend evidence extraction, add defendant-win training data.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="compliance">
+        <h2>Compliance & Governance Readiness</h2>
+        <p>Government and regulated partners receive full transparency packs that align with procurement due diligence and AI accountability directives.</p>
+        <div class="checklist">
+          <ul>
+            <li><strong>Security posture:</strong> <em>TheGAVLSuite/gavl_compliance_security.py</em> automates RBAC checks, log signing, and custody exports.</li>
+            <li><strong>Audit logging:</strong> Chain-of-custody scripts documented in <em>TheGAVLSuite/gavl_audit_log.jsonl</em> and <em>GAVL_AIOS_MARKETING_CAMPAIGN_2025</em> collateral.</li>
+            <li><strong>Policy briefs:</strong> See <em>SECURE_TOKEN_ARCHITECTURE.md</em> for the retired verdict token design and upgraded identity pipeline.</li>
+            <li><strong>Quantum ethics:</strong> Detailing inner-loop safeguards in <em>QUANTUM_TEST_SCENARIOS_RESEARCH.md</em> and <em>INTELLIGENT_VALIDATION_COMPLETE.md</em>.</li>
+            <li><strong>Continuous validation:</strong> 24/7 loops captured in <em>TheGAVLSuite/continuous_validation_loop.sh</em> with outputs in <em>TheGAVLSuite/continuous_validation.log</em>.</li>
+          </ul>
+        </div>
+        <div class="callout">
+          Governance cohorts (see homepage Government Programs segment) start here: download these artefacts, map them to your oversight checklist, and schedule the compliance briefing. No verdict token, NDA, or paywall is required for pre-engagement review.
+        </div>
+      </section>
+
+      <section class="section" id="rerun-steps">
+        <h2>How to Re-run These Checks</h2>
+        <p>Use the same commands the deployment script executes post-upload.</p>
+        <div class="code-block">
+ssh $FTP_USER@$FTP_HOST<br>
+chmod 755 public_html && chmod 644 public_html/*.html<br>
+exit<br>
+curl -I https://thegavl.com/
+        </div>
+        <div class="checklist">
+          <ul>
+            <li>Credentials managed through the secure deploy script (<code>deploy_thegavl.sh</code>).</li>
+            <li>Permissions reset ensures Bluehost never reverts to 403/404 on static files.</li>
+            <li>Share the curl output in investor updates to demonstrate uptime.</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="nav-links" aria-label="Site navigation">
+        <a href="index.html">← Back to Home</a> |
+        <a href="updates.html">Latest Updates</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

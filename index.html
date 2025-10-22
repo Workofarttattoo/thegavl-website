@@ -151,6 +151,147 @@
         .nav-links a:hover {
             color: #00ff88;
         }
+
+        .segment-switcher {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .segment-button {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .segment-button:hover {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: rgba(0, 255, 136, 0.4);
+            color: #00ff88;
+        }
+
+        .segment-button.active {
+            background: rgba(0, 255, 136, 0.25);
+            border-color: rgba(0, 255, 136, 0.7);
+            color: #0a0a0a;
+            font-weight: bold;
+        }
+
+        .segment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.4);
+            color: #00ff88;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+
+        .segment-panel.hidden {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .tour-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .tour-content {
+            max-width: 600px;
+            background: #161616;
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .tour-content h2 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .tour-progress {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .tour-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tour-button {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: #d4af37;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tour-button.primary {
+            background: #00ff88;
+            color: #0a0a0a;
+            border-color: #00ff88;
+            font-weight: bold;
+        }
+
+        .tour-button:hover {
+            background: rgba(0, 255, 136, 0.3);
+            border-color: rgba(0, 255, 136, 0.6);
+            color: #0a0a0a;
+        }
+
+        .program-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .program-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.4);
+            color: #00ff88;
+            padding: 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .program-links a:hover {
+            background: rgba(0, 255, 136, 0.25);
+            border-color: rgba(0, 255, 136, 0.7);
+            color: #0a0a0a;
+        }
     </style>
 </head>
 <body>
@@ -158,9 +299,87 @@
         <div class="nav-links">
             <a href="index.html">← Home</a> |
             <a href="updates.html">What's New</a> |
-            <a href="testing.html">Testing</a>
+            <a href="testing.html">Testing & Compliance</a> |
+            <a href="#whitepapers">Whitepapers</a>
         </div>
 
+        <div class="segment-switcher" role="group" aria-label="Audience selector">
+            <button class="segment-button" data-segment="general">Founder & Investor View</button>
+            <button class="segment-button" data-segment="government">Government Programs</button>
+            <button class="segment-button" data-segment="legal">Law Firm / Practitioner</button>
+        </div>
+
+        <div id="government-content" class="segment-panel hidden" aria-labelledby="government segment">
+            <span class="segment-badge">🌍 Government Pilot Cohort</span>
+            <div class="question">
+                <h2>Top 10 National Pilot Invitations</h2>
+                <div class="answer">
+                    <p>TheGAVL governance team is onboarding justice ministries and regulatory sandboxes across ten priority nations. Each cohort receives court-grade infrastructure, localized precedent packs, and zero-cost onboarding support.</p>
+                    <ul>
+                        <li><strong>United States:</strong> Federal docket acceleration for administrative law judges.</li>
+                        <li><strong>Canada:</strong> Provincial civil pilot with bilingual precedent library.</li>
+                        <li><strong>United Kingdom:</strong> HMCTS innovation sandbox; judicial analytics dashboards.</li>
+                        <li><strong>Germany:</strong> Data-protection compliant deployments with on-premise assurance.</li>
+                        <li><strong>Singapore:</strong> Smart-courtroom pilot with digital affidavit validation.</li>
+                        <li><strong>Australia:</strong> Multi-state magistrates program focused on backlog triage.</li>
+                        <li><strong>UAE:</strong> Commercial court integration with arbitration visibility.</li>
+                        <li><strong>Brazil:</strong> Translation-aware civil workflow for high-volume fora.</li>
+                        <li><strong>India:</strong> Fast-track benches targeting appeals analytics.</li>
+                        <li><strong>South Korea:</strong> Constitutional court precedent discovery augmentation.</li>
+                    </ul>
+                    <div class="program-links">
+                        <a href="testing.html">Compliance & Testing Portfolio</a>
+                        <a href="updates.html">Pilot Deployment Updates</a>
+                        <a href="#whitepapers">Governance Whitepapers</a>
+                        <a href="mailto:inventor@aios.is?subject=Government%20Pilot%20Request">Book Government Briefing</a>
+                    </div>
+                    <p style="margin-top: 15px;">Every program includes oversight tooling, chain-of-custody export, and configurable audit retention. Rollouts follow the secure verdict token retirement plan—no access gates, just TLS mutual-auth and signed activity logs.</p>
+                </div>
+            </div>
+
+            <div class="metric-box">
+                <h3>Governance Safeguards</h3>
+                <ul>
+                    <li><strong>Explainability dossiers:</strong> Detailed reasoning traces attached to each automated recommendation.</li>
+                    <li><strong>Multi-stakeholder override:</strong> Justice, ethics, and cybersecurity approvers before deployment.</li>
+                    <li><strong>Localization workflow:</strong> Translate opinion corpora, weighting local precedent first.</li>
+                    <li><strong>Incident response playbook:</strong> 24-hour forensic package for regulator-ready reporting.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="legal-content" class="segment-panel hidden" aria-labelledby="legal segment">
+            <span class="segment-badge">⚖️ Built for Practitioners</span>
+            <div class="question">
+                <h2>Your Starting Screen</h2>
+                <div class="answer">
+                    <p>Log back in to a focused workspace: docket search on the left, predictive outcomes on the right, and direct export into your matter management system.</p>
+                    <ul>
+                        <li><strong>90-day pilot:</strong> Includes white-glove onboarding, matter import, and weekly strategy reviews.</li>
+                        <li><strong>Evidence synthesis:</strong> Extracts fact patterns, burdens of proof, and recommended next filings.</li>
+                        <li><strong>Conflict guardrails:</strong> Built-in conflict check, matter segregation, and audit-ready logs.</li>
+                        <li><strong>Security posture:</strong> SOC 2 roadmap, role-based access, Air-gapped deploy option.</li>
+                    </ul>
+                    <div class="program-links">
+                        <a href="mailto:inventor@aios.is?subject=Start%20my%2090-day%20pilot">Start My 90-Day Pilot</a>
+                        <a href="testing.html">Review Test & Audit Evidence</a>
+                        <a href="#whitepapers">Download Practitioner Whitepapers</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h3>Law Firm Impact Snapshot</h3>
+                <ul>
+                    <li><strong>94% accuracy</strong> on 1,000 historic matters (civil, tort, employment).</li>
+                    <li><strong>10x faster research</strong> with parallel precedent clustering.</li>
+                    <li><strong>1.2s average response</strong> on live docket lookups—no queueing.</li>
+                    <li><strong>Audit-friendly:</strong> Exportable reasoning files to satisfy client reviews and court requests.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="general-content" class="segment-panel" aria-labelledby="general segment">
         <h1>⚖️ TheGAVL</h1>
         <p class="tagline">Legal AI validated by the highest standard: a judge accepted it.</p>
 
@@ -203,8 +422,6 @@
                     <li>Zero risk: 90-day free trial, cancel anytime, no commitment required</li>
                 </ul>
             </div>
-        </div>
-
         <div class="problem-cost">
             <h3>Question #3: What's the dollar cost of the problem?</h3>
             <p style="font-size: 1.1em; margin-bottom: 15px;"><strong>Representative Small Firm (8 attorneys, civil litigation focus):</strong></p>
@@ -456,12 +673,144 @@
             <p style="color: #888; margin-top: 10px;">Live demonstration available upon request | Code: <a href="https://github.com/Workofarttattoo" style="color: #d4af37;">github.com/Workofarttattoo</a></p>
         </div>
 
+        </div>
+
         <div class="nav-links" style="margin-top: 30px;">
             <a href="index.html">← Back to Home</a> |
             <a href="updates.html">Latest Updates</a> |
             <a href="testing.html">Testing Documentation</a>
         </div>
     </div>
+
+    <section id="whitepapers" style="margin-top: 40px; background: rgba(212, 175, 55, 0.08); border-top: 2px solid rgba(212, 175, 55, 0.4); padding: 30px 20px;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2 style="color: #d4af37;">Whitepapers & Policy Briefs</h2>
+            <p style="color: #ccc; margin: 12px 0 20px;">Curated reading list for regulators, procurement leads, and managing partners. Every document is updated post-validation to reflect the latest controls.</p>
+            <ul style="color: #fff; line-height: 1.8;">
+                <li><strong>Secure Verdict Token Architecture:</strong> Cryptographic lineage and how access control replaced the retired token gate. <em>(See: MARKETING_MATERIALS_FOR_REVIEW/SECURE_TOKEN_ARCHITECTURE.md)</em></li>
+                <li><strong>GAVL System Architecture:</strong> End-to-end workflow, evidence pipelines, and security posture. <em>(See: TheGAVLSuite/GAVL_SYSTEM_ARCHITECTURE.html)</em></li>
+                <li><strong>Validation Final Report:</strong> 1,000 case benchmarking with methodology and accuracy breakdowns. <em>(See: TheGAVLSuite/GAVL_VALIDATION_FINAL_REPORT.md)</em></li>
+                <li><strong>Production Test Report:</strong> DNS, SSL, and regression checks confirming uptime and UX polish. <em>(See: THEGAVL_PRODUCTION_TEST_REPORT.md)</em></li>
+                <li><strong>Compliance Summaries:</strong> Probabilistic algorithm validation, RECAP intake safeguards, and PACER handling. <em>(See: PROBABILISTIC_VALIDATION_REPORT.md, RECAP_IMPLEMENTATION_COMPLETE.md)</em></li>
+            </ul>
+        </div>
+    </section>
+
+    <div id="tour-overlay" class="tour-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+        <div class="tour-content">
+            <div class="tour-progress" id="tour-progress">Step 1 of 4</div>
+            <h2 id="tour-title">Welcome to TheGAVL</h2>
+            <p id="tour-body">Legal AI validated by federal courtrooms. Let us show you the highlights.</p>
+            <div class="tour-controls">
+                <button id="tour-skip" class="tour-button">Skip</button>
+                <button id="tour-next" class="tour-button primary">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const segmentButtons = document.querySelectorAll(".segment-button");
+            const panels = {
+                general: document.getElementById("general-content"),
+                government: document.getElementById("government-content"),
+                legal: document.getElementById("legal-content")
+            };
+            const storageKey = "gavlSelectedSegment";
+            const defaultSegment = localStorage.getItem(storageKey) || "general";
+
+            function activateSegment(segment) {
+                Object.entries(panels).forEach(([key, panel]) => {
+                    if (!panel) return;
+                    panel.classList.toggle("hidden", key !== segment);
+                });
+                segmentButtons.forEach((button) => {
+                    button.classList.toggle("active", button.dataset.segment === segment);
+                });
+                localStorage.setItem(storageKey, segment);
+            }
+
+            segmentButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    activateSegment(button.dataset.segment);
+                });
+            });
+
+            if (panels[defaultSegment]) {
+                activateSegment(defaultSegment);
+            } else {
+                activateSegment("general");
+            }
+
+            // Guided tour
+            const tourKey = "gavlTourSeen";
+            const tourOverlay = document.getElementById("tour-overlay");
+            const tourProgress = document.getElementById("tour-progress");
+            const tourBody = document.getElementById("tour-body");
+            const tourTitle = document.getElementById("tour-title");
+            const tourSkip = document.getElementById("tour-skip");
+            const tourNext = document.getElementById("tour-next");
+
+            const tourSteps = [
+                {
+                    title: "Court-Validated AI",
+                    body: "Review how TheGAVL achieved 94% accuracy and court acceptance. Use the Testing & Compliance link any time.",
+                    segment: "general"
+                },
+                {
+                    title: "Government Governance Track",
+                    body: "Serving justice ministries? Switch to Government Programs for localization packs, oversight tooling, and pilot details.",
+                    segment: "government"
+                },
+                {
+                    title: "Practitioner Workspace",
+                    body: "Lawyers get a tailored view with pilot enrollment, conflict guardrails, and direct export pipelines.",
+                    segment: "legal"
+                },
+                {
+                    title: "Deep Documentation",
+                    body: "Scroll to Whitepapers for security architecture, validation reports, and compliance playbooks—no verdict token required.",
+                    segment: "general"
+                }
+            ];
+
+            let tourIndex = 0;
+
+            function renderTourStep(index) {
+                const step = tourSteps[index];
+                if (!step) {
+                    closeTour();
+                    return;
+                }
+                tourProgress.textContent = `Step ${index + 1} of ${tourSteps.length}`;
+                tourTitle.textContent = step.title;
+                tourBody.textContent = step.body;
+                activateSegment(step.segment);
+                tourNext.textContent = index === tourSteps.length - 1 ? "Finish" : "Next";
+            }
+
+            function closeTour() {
+                tourOverlay.classList.add("hidden");
+                localStorage.setItem(tourKey, "seen");
+            }
+
+            tourSkip.addEventListener("click", closeTour);
+            tourNext.addEventListener("click", () => {
+                tourIndex += 1;
+                if (tourIndex >= tourSteps.length) {
+                    closeTour();
+                } else {
+                    renderTourStep(tourIndex);
+                }
+            });
+
+            if (!localStorage.getItem(tourKey)) {
+                tourOverlay.classList.remove("hidden");
+                tourIndex = 0;
+                renderTourStep(tourIndex);
+            }
+        })();
+    </script>
 </body>
 </html>
 
