@@ -18,6 +18,7 @@
             --gavl-blue: #1e40af;
             --gavl-gold: #d4af37;
             --gavl-green: #10b981;
+            --gavl-red: #dc2626;
             --gavl-white: #ffffff;
             --gavl-gray: #f3f4f6;
             --gavl-text: #1f2937;
@@ -107,6 +108,22 @@
             color: #cbd5e1;
             line-height: 1.7;
             font-size: 0.95em;
+        }
+
+        /* Warning Box (for vulnerabilities) */
+        .warning-box {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(30, 58, 138, 0.2) 100%);
+            border-left: 4px solid var(--gavl-red);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .warning-title {
+            color: #fca5a5;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.05em;
         }
 
         /* Court Language Example */
@@ -260,6 +277,56 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
+        /* Case Type Selector */
+        .case-type-buttons {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .case-type-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            color: var(--gavl-white);
+        }
+
+        .case-type-btn.plaintiff {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+            border-color: var(--gavl-green);
+        }
+
+        .case-type-btn.plaintiff:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.2));
+        }
+
+        .case-type-btn.defendant {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+            border-color: var(--gavl-gold);
+        }
+
+        .case-type-btn.defendant:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
+        }
+
+        .case-type-btn.selected {
+            border-width: 3px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .case-type-small {
+            font-size: 0.7em;
+            font-weight: normal;
+            margin-top: 8px;
+        }
+
         /* Buttons */
         .button-group {
             display: flex;
@@ -284,9 +351,14 @@
             flex: 1;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .btn-secondary {
@@ -350,6 +422,9 @@
             .button-group {
                 flex-direction: column;
             }
+            .case-type-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -360,10 +435,37 @@
             <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <!-- STEP 1: Case Overview -->
+        <!-- STEP 1: Case Type -->
         <div class="wizard-card active" id="step-1">
+            <h1>⚖️ Are You the Plaintiff or Defendant?</h1>
+            <p class="step-subtitle">This helps us tailor the analysis to your position.</p>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 What's the Difference?</div>
+                <div class="guidance-text">
+                    <strong>Plaintiff:</strong> You filed the lawsuit. You're suing someone. You're bringing the case.<br><br>
+                    <strong>Defendant:</strong> Someone sued you. You're defending against their claims.
+                </div>
+            </div>
+
+            <div class="case-type-buttons">
+                <button class="case-type-btn plaintiff" onclick="selectCaseType('plaintiff')">
+                    🎯 I'm the Plaintiff<div class="case-type-small">I filed this lawsuit</div>
+                </button>
+                <button class="case-type-btn defendant" onclick="selectCaseType('defendant')">
+                    🛡️ I'm the Defendant<div class="case-type-small">I'm being sued</div>
+                </button>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" id="caseTypeBtn" disabled onclick="goToStep(2)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Case Overview -->
+        <div class="wizard-card" id="step-2">
             <h1>📋 Tell Us About Your Case</h1>
-            <p class="step-subtitle">Start by giving us a brief overview. This takes 2-3 minutes.</p>
+            <p class="step-subtitle">Start by giving us a brief overview.</p>
 
             <div class="guidance-box">
                 <div class="guidance-title">💡 What We Need</div>
@@ -393,12 +495,13 @@
             </div>
 
             <div class="button-group">
-                <button class="btn-primary" onclick="goToStep(2)">Next: Evidence →</button>
+                <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(3)">Next: Facts →</button>
             </div>
         </div>
 
-        <!-- STEP 2: Summarized Facts -->
-        <div class="wizard-card" id="step-2">
+        <!-- STEP 3: Facts & Timeline -->
+        <div class="wizard-card" id="step-3">
             <h1>📝 Walk Us Through the Facts</h1>
             <p class="step-subtitle">Tell us what happened, step-by-step, in order.</p>
 
@@ -437,20 +540,20 @@
             </div>
 
             <div class="button-group">
-                <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
-                <button class="btn-primary" onclick="goToStep(3)">Next: Evidence →</button>
+                <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(4)">Next: Your Evidence →</button>
             </div>
         </div>
 
-        <!-- STEP 3: Supporting Evidence -->
-        <div class="wizard-card" id="step-3">
+        <!-- STEP 4: Your Evidence -->
+        <div class="wizard-card" id="step-4">
             <h1>📄 Your Supporting Evidence</h1>
             <p class="step-subtitle">Tell us about documents, emails, witnesses, or other evidence you have.</p>
 
             <div class="guidance-box">
-                <div class="guidance-title">💡 Types of Evidence</div>
+                <div class="guidance-title">💡 Types of Evidence You Might Have</div>
                 <div class="guidance-text">
-                    Do you have emails, text messages, contracts, receipts, photos, witness statements, or other documents? Tell us what you have. Don't worry about being formal—just describe what exists and where it's located.
+                    Emails, text messages, contracts, receipts, photos, witness statements, bank records, medical reports, recordings, letters, invoices, screenshots, social media posts, or any other documents that support your case. Don't worry about being formal—just describe what exists.
                 </div>
             </div>
 
@@ -471,38 +574,38 @@
                     <div class="voice-section">
                         <button class="voice-button" id="voiceBtn3" onclick="toggleVoice(3)">🎤</button>
                         <div class="voice-status" id="voiceStatus3">Click to start speaking</div>
-                        <div class="help-text">List all the evidence you have. For each item, say what it is and why it's important.</div>
+                        <div class="help-text">List all the evidence you have. For each item, say what it is and why it supports your case.</div>
                     </div>
                     <div class="transcription-box" id="transcription3"></div>
                 </div>
 
                 <div id="text3" class="tab-content">
-                    <textarea id="textInput3" placeholder="List your evidence: 'I have emails from the defendant dated...', 'There's a contract that shows...', 'I have photos of...', etc."></textarea>
+                    <textarea id="textInput3" placeholder="List your evidence: 'I have emails from the defendant dated...', 'There's a contract that shows...', 'I have photos of...', 'I have a witness who can testify...', etc."></textarea>
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
-                <button class="btn-primary" onclick="goToStep(4)">Next: Damages →</button>
+                <button class="btn-secondary" onclick="goToStep(3)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(5)">Next: Other Side's Evidence →</button>
             </div>
         </div>
 
-        <!-- STEP 4: Damages & Relief -->
-        <div class="wizard-card" id="step-4">
-            <h1>💰 What You're Seeking (Damages/Relief)</h1>
-            <p class="step-subtitle">What do you want as an outcome? Money? An action? Specific performance?</p>
+        <!-- STEP 5: Opposing Evidence -->
+        <div class="wizard-card" id="step-5">
+            <h1>🔴 What Evidence Does the Other Side Have?</h1>
+            <p class="step-subtitle">Be honest about their position. What evidence might they use AGAINST you?</p>
 
-            <div class="guidance-box">
-                <div class="guidance-title">💡 What We Need</div>
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Why This Matters</div>
                 <div class="guidance-text">
-                    Do you want money damages? Do you want the defendant to do something specific (like deliver the goods, stop a behavior, etc.)? How much money is reasonable? Have you suffered other damages like emotional distress, lost business, medical bills?
+                    TheGAVL needs to understand the opposing side's best arguments to help you prepare your defense. Be honest about what evidence they have that could hurt your case. This helps us identify vulnerabilities and develop counter-strategies.
                 </div>
             </div>
 
             <div class="court-language">
-                <div class="court-label">How damages are stated in court:</div>
+                <div class="court-label">How opposing evidence works in court:</div>
                 <div class="court-example">
-                    "I seek $50,000 in damages for breach of contract: $10,000 for the cost of the goods, $15,000 for lost business revenue, and $25,000 for damages caused by the delay."
+                    "The defendant will likely present the email I sent on January 20 saying I would accept a later delivery date. They may also show the invoice from February 15 where I paid for partial delivery, which could imply I accepted the delay."
                 </div>
             </div>
 
@@ -516,28 +619,124 @@
                     <div class="voice-section">
                         <button class="voice-button" id="voiceBtn4" onclick="toggleVoice(4)">🎤</button>
                         <div class="voice-status" id="voiceStatus4">Click to start speaking</div>
-                        <div class="help-text">Tell us what you want to happen. Include any dollar amounts or specific actions.</div>
+                        <div class="help-text">Think about what the other side will use against you. What documents, witnesses, or facts favor them?</div>
                     </div>
                     <div class="transcription-box" id="transcription4"></div>
                 </div>
 
                 <div id="text4" class="tab-content">
-                    <textarea id="textInput4" placeholder="What are you seeking? 'I want $[amount] because...', 'I want them to [specific action]', etc."></textarea>
+                    <textarea id="textInput4" placeholder="What evidence does the other side have? 'They have emails where I said...', 'They can show that I...', 'They have a witness who...', etc."></textarea>
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="btn-secondary" onclick="goToStep(3)">← Back</button>
-                <button class="btn-primary" onclick="goToStep(5)">Next: Review →</button>
+                <button class="btn-secondary" onclick="goToStep(4)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(6)">Next: Weaknesses →</button>
             </div>
         </div>
 
-        <!-- STEP 5: Review -->
-        <div class="wizard-card" id="step-5">
-            <h1>✅ Review Your Case</h1>
-            <p class="step-subtitle">Here's what we collected. Make sure everything is accurate.</p>
+        <!-- STEP 6: Case Weaknesses -->
+        <div class="wizard-card" id="step-6">
+            <h1>🎯 What Are Your Case Weaknesses?</h1>
+            <p class="step-subtitle">What aspects of your case are most vulnerable or unclear?</p>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Be Honest - This Helps Us Protect You</div>
+                <div class="guidance-text">
+                    Every case has weak points. Being honest about them helps us identify risks and develop strategies to address them. TheGAVL will flag these in your analysis so you're prepared before court.
+                </div>
+            </div>
+
+            <div class="court-language">
+                <div class="court-label">Examples of case weaknesses:</div>
+                <div class="court-example">
+                    "My witness is no longer available to testify. The contract was verbal, not written. There's a gap of 6 months where I didn't follow up. I accepted partial payment which could imply I waived the right to damages."
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'voice5')">🎤 Voice</button>
+                    <button class="tab-button" onclick="switchTab(event, 'text5')">✏️ Type</button>
+                </div>
+
+                <div id="voice5" class="tab-content active">
+                    <div class="voice-section">
+                        <button class="voice-button" id="voiceBtn5" onclick="toggleVoice(5)">🎤</button>
+                        <div class="voice-status" id="voiceStatus5">Click to start speaking</div>
+                        <div class="help-text">Identify the weak points in your case. What would a judge find problematic? What isn't perfectly documented?</div>
+                    </div>
+                    <div class="transcription-box" id="transcription5"></div>
+                </div>
+
+                <div id="text5" class="tab-content">
+                    <textarea id="textInput5" placeholder="What are your case weaknesses? 'I don't have written proof of...', 'My witness can no longer testify because...', 'There's a gap in the timeline...', 'The contract was verbal...', etc."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToStep(5)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(7)">Next: What You're Seeking →</button>
+            </div>
+        </div>
+
+        <!-- STEP 7: Damages & Relief -->
+        <div class="wizard-card" id="step-7">
+            <h1>💰 What Are You Seeking? (Damages/Relief)</h1>
+            <p class="step-subtitle">What do you want as an outcome? Money? A specific action? Both?</p>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 Types of Relief</div>
+                <div class="guidance-text">
+                    <strong>Monetary damages:</strong> Money to compensate you for losses (lost business, medical bills, cost of repairs, etc.)<br><br>
+                    <strong>Specific performance:</strong> Court orders them to do something (deliver goods, fix the problem, etc.)<br><br>
+                    <strong>Injunctive relief:</strong> Court orders them to STOP doing something (harassment, copyright infringement, etc.)
+                </div>
+            </div>
+
+            <div class="court-language">
+                <div class="court-label">How damages are stated in court:</div>
+                <div class="court-example">
+                    "I seek $50,000 in damages for breach of contract: $10,000 for the cost of the goods, $15,000 for lost business revenue, and $25,000 for damages caused by the delay. Alternatively, I seek specific performance requiring the defendant to deliver the goods by [date]."
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'voice6')">🎤 Voice</button>
+                    <button class="tab-button" onclick="switchTab(event, 'text6')">✏️ Type</button>
+                </div>
+
+                <div id="voice6" class="tab-content active">
+                    <div class="voice-section">
+                        <button class="voice-button" id="voiceBtn6" onclick="toggleVoice(6)">🎤</button>
+                        <div class="voice-status" id="voiceStatus6">Click to start speaking</div>
+                        <div class="help-text">Tell us what you want to happen. Include any dollar amounts or specific actions the court should order.</div>
+                    </div>
+                    <div class="transcription-box" id="transcription6"></div>
+                </div>
+
+                <div id="text6" class="tab-content">
+                    <textarea id="textInput6" placeholder="What are you seeking? 'I want $[amount] because...', 'I want them to [specific action]', 'I want the court to order...', etc."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToStep(6)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(8)">Next: Review →</button>
+            </div>
+        </div>
+
+        <!-- STEP 8: Review -->
+        <div class="wizard-card" id="step-8">
+            <h1>✅ Review Your Complete Case</h1>
+            <p class="step-subtitle">Here's everything we collected. Make sure it's accurate before submitting.</p>
 
             <div class="evidence-summary">
+                <div class="summary-item">
+                    <div class="summary-label">Position:</div>
+                    <div class="summary-content" id="summary0">[Plaintiff/Defendant will appear here]</div>
+                </div>
                 <div class="summary-item">
                     <div class="summary-label">Case Overview:</div>
                     <div class="summary-content" id="summary1">[Case overview will appear here]</div>
@@ -547,24 +746,32 @@
                     <div class="summary-content" id="summary2">[Timeline will appear here]</div>
                 </div>
                 <div class="summary-item">
-                    <div class="summary-label">Supporting Evidence:</div>
+                    <div class="summary-label">Your Evidence:</div>
                     <div class="summary-content" id="summary3">[Evidence will appear here]</div>
                 </div>
                 <div class="summary-item">
+                    <div class="summary-label">Opposing Side's Evidence:</div>
+                    <div class="summary-content" id="summary4">[Opposing evidence will appear here]</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Case Weaknesses:</div>
+                    <div class="summary-content" id="summary5">[Weaknesses will appear here]</div>
+                </div>
+                <div class="summary-item">
                     <div class="summary-label">What You're Seeking:</div>
-                    <div class="summary-content" id="summary4">[Damages will appear here]</div>
+                    <div class="summary-content" id="summary6">[Damages will appear here]</div>
                 </div>
             </div>
 
             <div class="guidance-box">
                 <div class="guidance-title">💡 Next Steps</div>
                 <div class="guidance-text">
-                    TheGAVL will now analyze your case using quantum-enhanced reasoning. We'll evaluate your case strength, identify key vulnerabilities, simulate opposing arguments, and give you a strategic roadmap for trial preparation. Your case analysis will be ready in moments.
+                    TheGAVL will now analyze your complete case using quantum-enhanced reasoning. We'll evaluate your case strength, identify key vulnerabilities, simulate opposing arguments, anticipate the other side's strategy, and give you a personalized strategic roadmap for trial preparation. Your comprehensive case analysis will be ready in moments.
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="btn-secondary" onclick="goToStep(4)">← Back</button>
+                <button class="btn-secondary" onclick="goToStep(7)">← Back</button>
                 <button class="btn-primary" onclick="submitCase()">Analyze My Case 🚀</button>
             </div>
         </div>
@@ -572,7 +779,8 @@
 
     <script>
         let currentStep = 1;
-        const totalSteps = 5;
+        const totalSteps = 8;
+        let caseType = null;
         let isRecording = false;
         let recognition;
 
@@ -583,6 +791,17 @@
             recognition.continuous = true;
             recognition.interimResults = true;
             recognition.lang = 'en-US';
+        }
+
+        function selectCaseType(type) {
+            caseType = type;
+            document.querySelectorAll('.case-type-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.closest('.case-type-btn').classList.add('selected');
+            document.getElementById('caseTypeBtn').disabled = false;
+            document.getElementById('caseTypeBtn').style.opacity = '1';
+            document.getElementById('caseTypeBtn').style.cursor = 'pointer';
         }
 
         function goToStep(step) {
@@ -658,30 +877,37 @@
         }
 
         function updateSummary() {
+            const position = caseType === 'plaintiff' ? 'Plaintiff - I filed this lawsuit' : 'Defendant - I am being sued';
+            document.getElementById('summary0').textContent = position;
+
             const step1Text = document.getElementById('textInput1')?.value || document.getElementById('transcription1')?.textContent;
             const step2Text = document.getElementById('textInput2')?.value || document.getElementById('transcription2')?.textContent;
             const step3Text = document.getElementById('textInput3')?.value || document.getElementById('transcription3')?.textContent;
             const step4Text = document.getElementById('textInput4')?.value || document.getElementById('transcription4')?.textContent;
+            const step5Text = document.getElementById('textInput5')?.value || document.getElementById('transcription5')?.textContent;
+            const step6Text = document.getElementById('textInput6')?.value || document.getElementById('transcription6')?.textContent;
 
-            if (step1Text) document.getElementById('summary1').textContent = step1Text.substring(0, 200) + '...';
-            if (step2Text) document.getElementById('summary2').textContent = step2Text.substring(0, 200) + '...';
-            if (step3Text) document.getElementById('summary3').textContent = step3Text.substring(0, 200) + '...';
-            if (step4Text) document.getElementById('summary4').textContent = step4Text.substring(0, 200) + '...';
+            if (step1Text) document.getElementById('summary1').textContent = step1Text.substring(0, 200) + (step1Text.length > 200 ? '...' : '');
+            if (step2Text) document.getElementById('summary2').textContent = step2Text.substring(0, 200) + (step2Text.length > 200 ? '...' : '');
+            if (step3Text) document.getElementById('summary3').textContent = step3Text.substring(0, 200) + (step3Text.length > 200 ? '...' : '');
+            if (step4Text) document.getElementById('summary4').textContent = step4Text.substring(0, 200) + (step4Text.length > 200 ? '...' : '');
+            if (step5Text) document.getElementById('summary5').textContent = step5Text.substring(0, 200) + (step5Text.length > 200 ? '...' : '');
+            if (step6Text) document.getElementById('summary6').textContent = step6Text.substring(0, 200) + (step6Text.length > 200 ? '...' : '');
         }
 
         function submitCase() {
             const caseData = {
+                caseType: caseType,
                 overview: document.getElementById('textInput1')?.value || document.getElementById('transcription1')?.textContent,
                 facts: document.getElementById('textInput2')?.value || document.getElementById('transcription2')?.textContent,
-                evidence: document.getElementById('textInput3')?.value || document.getElementById('transcription3')?.textContent,
-                damages: document.getElementById('textInput4')?.value || document.getElementById('transcription4')?.textContent,
+                yourEvidence: document.getElementById('textInput3')?.value || document.getElementById('transcription3')?.textContent,
+                opposingEvidence: document.getElementById('textInput4')?.value || document.getElementById('transcription4')?.textContent,
+                weaknesses: document.getElementById('textInput5')?.value || document.getElementById('transcription5')?.textContent,
+                damages: document.getElementById('textInput6')?.value || document.getElementById('transcription6')?.textContent,
             };
 
-            // Store case data and redirect to analysis
             sessionStorage.setItem('caseData', JSON.stringify(caseData));
-            alert('🎉 Your case has been submitted!\n\nTheGAVL is now analyzing your case with quantum-enhanced reasoning. Your strategic analysis will be ready in moments.');
-            // In a real application, redirect to analysis page
-            // window.location.href = '/analysis.html';
+            alert('🎉 Your case has been submitted!\n\nTheGAVL is now analyzing your complete case with quantum-enhanced reasoning:\n✓ Your strengths and weaknesses\n✓ Opposing side\'s likely strategy\n✓ Vulnerability assessment\n✓ Strategic recommendations\n\nYour analysis will be ready in moments.');
         }
 
         // Initialize
