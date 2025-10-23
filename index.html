@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a1428 0%, #1a2847 50%, #0d1f3c 100%);
+            background: linear-gradient(135deg, #0a0f1f 0%, #0d1a35 50%, #000b15 100%);
             color: #e8eef7;
             line-height: 1.6;
             min-height: 100vh;
@@ -21,8 +21,8 @@
 
         /* Navigation Header */
         nav {
-            background: linear-gradient(135deg, rgba(10, 20, 40, 0.95) 0%, rgba(26, 40, 71, 0.9) 100%);
-            border-bottom: 2px solid rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, rgba(10, 15, 31, 0.98) 0%, rgba(13, 26, 53, 0.95) 100%);
+            border-bottom: 2px solid #00d4ff;
             padding: 15px 40px;
             display: flex;
             justify-content: space-between;
@@ -35,7 +35,7 @@
         .nav-logo {
             font-size: 1.5em;
             font-weight: 800;
-            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            background: linear-gradient(135deg, #00d4ff 0%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -62,12 +62,12 @@
         }
 
         .nav-link:hover {
-            color: #60a5fa;
+            color: #00d4ff;
         }
 
         .nav-link.active {
-            color: #60a5fa;
-            border-bottom: 2px solid #60a5fa;
+            color: #d4af37;
+            border-bottom: 2px solid #d4af37;
             padding-bottom: 3px;
         }
 
@@ -80,19 +80,19 @@
         /* Header & Hero */
         header {
             padding: 60px 20px;
-            background: linear-gradient(135deg, rgba(13, 71, 161, 0.8) 0%, rgba(21, 128, 204, 0.6) 100%);
-            border-bottom: 3px solid rgba(59, 130, 246, 0.5);
+            background: linear-gradient(135deg, rgba(13, 26, 53, 0.9) 0%, rgba(10, 15, 31, 0.85) 100%);
+            border: 3px solid #00d4ff;
             border-radius: 15px;
             margin-bottom: 50px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(13, 71, 161, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
         }
 
         h1 {
             font-size: 3.5em;
             font-weight: 800;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            background: linear-gradient(135deg, #00d4ff 0%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -126,31 +126,32 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+            font-weight: bold;
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
         }
 
         .btn-secondary {
-            background: rgba(148, 163, 184, 0.2);
-            color: #93c5fd;
-            border: 2px solid #3b82f6;
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            border: 2px solid #d4af37;
         }
 
         .btn-secondary:hover {
-            background: rgba(59, 130, 246, 0.3);
+            background: rgba(212, 175, 55, 0.3);
             transform: translateY(-3px);
         }
 
         /* Proof & Validation Section */
         .proof-section {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
-            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(13, 26, 53, 0.5) 0%, rgba(10, 15, 31, 0.4) 100%);
+            border: 2px solid #00d4ff;
             border-radius: 15px;
             padding: 50px 30px;
             margin-bottom: 50px;
@@ -158,7 +159,10 @@
 
         .section-title {
             font-size: 2.5em;
-            color: #93c5fd;
+            background: linear-gradient(135deg, #00d4ff 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 40px;
             text-align: center;
             font-weight: 700;
@@ -172,8 +176,8 @@
         }
 
         .metric-card {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(96, 165, 250, 0.08) 100%);
-            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(212, 175, 55, 0.08) 100%);
+            border: 2px solid #00d4ff;
             border-radius: 12px;
             padding: 30px;
             text-align: center;
@@ -181,15 +185,15 @@
         }
 
         .metric-card:hover {
-            border-color: rgba(96, 165, 250, 0.7);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: #d4af37;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
             transform: translateY(-5px);
         }
 
         .metric-value {
             font-size: 2.8em;
             font-weight: 800;
-            color: #60a5fa;
+            color: #00d4ff;
             margin-bottom: 10px;
         }
 
@@ -206,40 +210,40 @@
             background: rgba(15, 23, 42, 0.8);
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            border: 2px solid #00d4ff;
         }
 
         .accuracy-table th {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
-            color: #93c5fd;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, rgba(212, 175, 55, 0.2) 100%);
+            color: #00d4ff;
             padding: 20px;
             text-align: left;
             font-weight: 700;
-            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+            border-bottom: 2px solid #00d4ff;
         }
 
         .accuracy-table td {
             padding: 18px 20px;
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
             color: #cbd5e1;
         }
 
         .accuracy-table tr:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(0, 212, 255, 0.1);
         }
 
         .accuracy-bar {
             display: inline-block;
             height: 8px;
-            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+            background: linear-gradient(90deg, #0099ff 0%, #00d4ff 100%);
             border-radius: 4px;
             margin-right: 10px;
         }
 
         /* Competitive Advantages */
         .advantages-section {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
-            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(13, 26, 53, 0.5) 0%, rgba(10, 15, 31, 0.4) 100%);
+            border: 2px solid #00d4ff;
             border-radius: 15px;
             padding: 50px 30px;
             margin-bottom: 50px;
@@ -253,19 +257,19 @@
 
         .advantage-card {
             background: rgba(15, 23, 42, 0.6);
-            border-left: 4px solid #3b82f6;
+            border-left: 4px solid #00d4ff;
             padding: 25px;
             border-radius: 8px;
             transition: all 0.3s ease;
         }
 
         .advantage-card:hover {
-            border-left-color: #60a5fa;
+            border-left-color: #d4af37;
             transform: translateX(5px);
         }
 
         .advantage-title {
-            color: #60a5fa;
+            color: #00d4ff;
             font-size: 1.3em;
             font-weight: 700;
             margin-bottom: 12px;
@@ -279,8 +283,8 @@
 
         /* Whitepapers & Resources */
         .resources-section {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
-            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(13, 26, 53, 0.5) 0%, rgba(10, 15, 31, 0.4) 100%);
+            border: 2px solid #00d4ff;
             border-radius: 15px;
             padding: 50px 30px;
             margin-bottom: 50px;
@@ -294,7 +298,7 @@
 
         .resource-card {
             background: rgba(15, 23, 42, 0.8);
-            border: 2px solid rgba(59, 130, 246, 0.2);
+            border: 2px solid #00d4ff;
             border-radius: 10px;
             padding: 25px;
             text-align: center;
@@ -302,8 +306,8 @@
         }
 
         .resource-card:hover {
-            border-color: rgba(96, 165, 250, 0.6);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: #d4af37;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
         }
 
         .resource-icon {
@@ -312,7 +316,7 @@
         }
 
         .resource-title {
-            color: #93c5fd;
+            color: #00d4ff;
             font-weight: 700;
             margin-bottom: 10px;
             font-size: 1.1em;
@@ -325,9 +329,9 @@
         }
 
         .resource-btn {
-            background: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.4);
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            border: 1px solid #00d4ff;
             padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
@@ -338,8 +342,9 @@
         }
 
         .resource-btn:hover {
-            background: rgba(59, 130, 246, 0.4);
-            border-color: rgba(96, 165, 250, 0.7);
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            color: #d4af37;
         }
 
         /* Valuation Badge */
@@ -357,8 +362,8 @@
 
         /* Pricing Section */
         .pricing-section {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
-            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(13, 26, 53, 0.5) 0%, rgba(10, 15, 31, 0.4) 100%);
+            border: 2px solid #00d4ff;
             border-radius: 15px;
             padding: 50px 30px;
             margin-bottom: 50px;
@@ -373,7 +378,7 @@
 
         .pricing-card {
             background: rgba(15, 23, 42, 0.8);
-            border: 2px solid rgba(59, 130, 246, 0.2);
+            border: 2px solid #00d4ff;
             border-radius: 12px;
             padding: 35px;
             text-align: center;
@@ -381,18 +386,18 @@
         }
 
         .pricing-card:hover {
-            border-color: rgba(96, 165, 250, 0.7);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+            border-color: #d4af37;
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
             transform: translateY(-5px);
         }
 
         .pricing-card.featured {
-            border: 2px solid rgba(96, 165, 250, 0.8);
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 58, 138, 0.6) 100%);
+            border: 2px solid #d4af37;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(0, 212, 255, 0.15) 100%);
         }
 
         .price-tier {
-            color: #93c5fd;
+            color: #00d4ff;
             font-size: 1.5em;
             font-weight: 700;
             margin-bottom: 15px;
@@ -400,7 +405,7 @@
 
         .price {
             font-size: 2.5em;
-            color: #60a5fa;
+            color: #d4af37;
             font-weight: 800;
             margin: 15px 0;
         }
@@ -419,7 +424,7 @@
 
         .price-features li {
             padding: 8px 0;
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
         }
 
         /* Footer */
@@ -427,7 +432,7 @@
             text-align: center;
             padding: 40px 20px;
             color: #64748b;
-            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            border-top: 2px solid #00d4ff;
             margin-top: 50px;
         }
 
@@ -436,11 +441,12 @@
         }
 
         footer a {
-            color: #60a5fa;
+            color: #d4af37;
             text-decoration: none;
         }
 
         footer a:hover {
+            color: #00d4ff;
             text-decoration: underline;
         }
 
