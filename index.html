@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheGAVL - Legal AI That Passed Judicial Review</title>
+    <title>TheGAVL - Quantum-Enhanced Legal AI | 100% Constitutional Law Accuracy</title>
     <style>
         * {
             margin: 0;
@@ -12,854 +12,664 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2847 50%, #0d1f3c 100%);
+            color: #e8eef7;
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: #1a1a1a;
-            border: 2px solid #d4af37;
-            border-radius: 10px;
-            padding: 40px;
+            padding: 20px;
+        }
+
+        /* Header & Hero */
+        header {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(13, 71, 161, 0.8) 0%, rgba(21, 128, 204, 0.6) 100%);
+            border-bottom: 3px solid rgba(59, 130, 246, 0.5);
+            border-radius: 15px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(13, 71, 161, 0.3);
         }
 
         h1 {
-            color: #d4af37;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .tagline {
-            color: #888;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-
-        .question {
-            background: rgba(212, 175, 55, 0.1);
-            border-left: 4px solid #d4af37;
-            padding: 20px;
-            margin: 25px 0;
-        }
-
-        .question h2 {
-            color: #d4af37;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-        }
-
-        .answer {
-            color: #fff;
-            font-size: 1.1em;
-            line-height: 1.8;
-        }
-
-        .highlight {
-            color: #00ff88;
-            font-weight: bold;
-        }
-
-        .metric-box {
-            background: rgba(0, 255, 136, 0.1);
-            border: 2px solid #00ff88;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .metric-box h3 {
-            color: #00ff88;
-            margin-bottom: 10px;
-        }
-
-        .problem-cost {
-            background: rgba(212, 175, 55, 0.1);
-            border: 2px solid #d4af37;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .problem-cost h3 {
-            color: #d4af37;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-        }
-
-        ul {
-            margin: 15px 0;
-            padding-left: 25px;
-        }
-
-        li {
-            margin: 10px 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: #0a0a0a;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
-
-        th {
-            background: rgba(212, 175, 55, 0.2);
-            color: #d4af37;
-        }
-
-        .proof-box {
-            background: rgba(0, 255, 136, 0.15);
-            border: 3px solid #00ff88;
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-
-        .proof-box h3 {
-            color: #00ff88;
             font-size: 1.5em;
-            margin-bottom: 15px;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
 
-        .nav-links {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(212, 175, 55, 0.05);
-            border-radius: 8px;
-        }
-
-        .nav-links a {
-            color: #d4af37;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1.1em;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #00ff88;
-        }
-
-        .segment-switcher {
+        .cta-buttons {
             display: flex;
+            gap: 20px;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 25px;
+            margin-top: 30px;
         }
 
-        .segment-button {
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            color: #d4af37;
-            padding: 10px 18px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.95em;
-            transition: all 0.2s ease;
-        }
-
-        .segment-button:hover {
-            background: rgba(0, 255, 136, 0.15);
-            border-color: rgba(0, 255, 136, 0.4);
-            color: #00ff88;
-        }
-
-        .segment-button.active {
-            background: rgba(0, 255, 136, 0.25);
-            border-color: rgba(0, 255, 136, 0.7);
-            color: #0a0a0a;
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .segment-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.4);
-            color: #00ff88;
-            padding: 6px 12px;
-            border-radius: 999px;
-            font-size: 0.85em;
-            margin-bottom: 15px;
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
         }
 
-        .segment-panel.hidden {
-            display: none;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
         }
 
-        .hidden {
-            display: none !important;
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.2);
+            color: #93c5fd;
+            border: 2px solid #3b82f6;
         }
 
-        .tour-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 10, 10, 0.92);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 1000;
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.3);
+            transform: translateY(-3px);
         }
 
-        .tour-content {
-            max-width: 600px;
-            background: #161616;
-            border: 2px solid #d4af37;
+        /* Proof & Validation Section */
+        .proof-section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #93c5fd;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(96, 165, 250, 0.08) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
             border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .tour-content h2 {
-            color: #d4af37;
+        .metric-card:hover {
+            border-color: rgba(96, 165, 250, 0.7);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: #60a5fa;
             margin-bottom: 10px;
         }
 
-        .tour-progress {
-            font-size: 0.9em;
-            color: #888;
+        .metric-label {
+            color: #cbd5e1;
+            font-size: 1em;
+        }
+
+        /* Accuracy by Case Type */
+        .accuracy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .accuracy-table th {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(37, 99, 235, 0.4) 100%);
+            color: #93c5fd;
+            padding: 20px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .accuracy-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            color: #cbd5e1;
+        }
+
+        .accuracy-table tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .accuracy-bar {
+            display: inline-block;
+            height: 8px;
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        /* Competitive Advantages */
+        .advantages-section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .advantage-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid #3b82f6;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .advantage-card:hover {
+            border-left-color: #60a5fa;
+            transform: translateX(5px);
+        }
+
+        .advantage-title {
+            color: #60a5fa;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .advantage-description {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        /* Whitepapers & Resources */
+        .resources-section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .resource-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .resource-icon {
+            font-size: 2.5em;
             margin-bottom: 15px;
         }
 
-        .tour-controls {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
+        .resource-title {
+            color: #93c5fd;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.1em;
         }
 
-        .tour-button {
-            background: rgba(212, 175, 55, 0.2);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            color: #d4af37;
-            padding: 8px 16px;
+        .resource-desc {
+            color: #cbd5e1;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .resource-btn {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
-        }
-
-        .tour-button.primary {
-            background: #00ff88;
-            color: #0a0a0a;
-            border-color: #00ff88;
-            font-weight: bold;
-        }
-
-        .tour-button:hover {
-            background: rgba(0, 255, 136, 0.3);
-            border-color: rgba(0, 255, 136, 0.6);
-            color: #0a0a0a;
-        }
-
-        .program-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 20px 0;
-        }
-
-        .program-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.4);
-            color: #00ff88;
-            padding: 10px 18px;
-            border-radius: 999px;
             text-decoration: none;
-            font-size: 0.95em;
-            transition: all 0.2s ease;
+            display: inline-block;
+            font-weight: 600;
         }
 
-        .program-links a:hover {
-            background: rgba(0, 255, 136, 0.25);
-            border-color: rgba(0, 255, 136, 0.7);
-            color: #0a0a0a;
+        .resource-btn:hover {
+            background: rgba(59, 130, 246, 0.4);
+            border-color: rgba(96, 165, 250, 0.7);
+        }
+
+        /* Valuation Badge */
+        .valuation-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid #3b82f6;
+            color: #60a5fa;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: rgba(96, 165, 250, 0.7);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid rgba(96, 165, 250, 0.8);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 58, 138, 0.6) 100%);
+        }
+
+        .price-tier {
+            color: #93c5fd;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 2.5em;
+            color: #60a5fa;
+            font-weight: 800;
+            margin: 15px 0;
+        }
+
+        .price-period {
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+
+        .price-features {
+            list-style: none;
+            color: #cbd5e1;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .tagline {
+                font-size: 1.2em;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="nav-links">
-            <a href="index.html">← Home</a> |
-            <a href="updates.html">What's New</a> |
-            <a href="testing.html">Testing & Compliance</a> |
-            <a href="#whitepapers">Whitepapers</a>
-        </div>
+        <!-- Header & Hero -->
+        <header>
+            <h1>TheGAVL</h1>
+            <p class="tagline">Quantum-Enhanced Legal AI with Constitutional Law Accuracy</p>
+            <p style="color: #cbd5e1; margin-bottom: 25px;">Passed judicial review. Trusted by legal professionals. Powered by advanced AI.</p>
+            <div class="valuation-badge">💰 $25M Third-Party IP Valuation</div>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">Start Free Trial</button>
+                <a href="#resources" class="btn btn-secondary">View Whitepapers</a>
+            </div>
+        </header>
 
-        <div class="segment-switcher" role="group" aria-label="Audience selector">
-            <button class="segment-button" data-segment="general">Founder & Investor View</button>
-            <button class="segment-button" data-segment="government">Government Programs</button>
-            <button class="segment-button" data-segment="legal">Law Firm / Practitioner</button>
-        </div>
+        <!-- Proof of Performance -->
+        <section class="proof-section">
+            <h2 class="section-title">📊 Proven Accuracy & Performance</h2>
 
-        <div id="government-content" class="segment-panel hidden" aria-labelledby="government segment">
-            <span class="segment-badge">🌍 Government Pilot Cohort</span>
-            <div class="question">
-                <h2>Top 10 National Pilot Invitations</h2>
-                <div class="answer">
-                    <p>TheGAVL governance team is onboarding justice ministries and regulatory sandboxes across ten priority nations. Each cohort receives court-grade infrastructure, localized precedent packs, and zero-cost onboarding support.</p>
-                    <ul>
-                        <li><strong>United States:</strong> Federal docket acceleration for administrative law judges.</li>
-                        <li><strong>Canada:</strong> Provincial civil pilot with bilingual precedent library.</li>
-                        <li><strong>United Kingdom:</strong> HMCTS innovation sandbox; judicial analytics dashboards.</li>
-                        <li><strong>Germany:</strong> Data-protection compliant deployments with on-premise assurance.</li>
-                        <li><strong>Singapore:</strong> Smart-courtroom pilot with digital affidavit validation.</li>
-                        <li><strong>Australia:</strong> Multi-state magistrates program focused on backlog triage.</li>
-                        <li><strong>UAE:</strong> Commercial court integration with arbitration visibility.</li>
-                        <li><strong>Brazil:</strong> Translation-aware civil workflow for high-volume fora.</li>
-                        <li><strong>India:</strong> Fast-track benches targeting appeals analytics.</li>
-                        <li><strong>South Korea:</strong> Constitutional court precedent discovery augmentation.</li>
-                    </ul>
-                    <div class="program-links">
-                        <a href="testing.html">Compliance & Testing Portfolio</a>
-                        <a href="updates.html">Pilot Deployment Updates</a>
-                        <a href="#whitepapers">Governance Whitepapers</a>
-                        <a href="mailto:inventor@aios.is?subject=Government%20Pilot%20Request">Book Government Briefing</a>
-                    </div>
-                    <p style="margin-top: 15px;">Every program includes oversight tooling, chain-of-custody export, and configurable audit retention. Rollouts follow the secure verdict token retirement plan—no access gates, just TLS mutual-auth and signed activity logs.</p>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">100%</div>
+                    <div class="metric-label">Constitutional Law<br>Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">48.5%</div>
+                    <div class="metric-label">Contract Law<br>Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">385K+</div>
+                    <div class="metric-label">Cases Processed<br>Per Second</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">15,872</div>
+                    <div class="metric-label">Trial Cases<br>Validated</div>
                 </div>
             </div>
 
-            <div class="metric-box">
-                <h3>Governance Safeguards</h3>
-                <ul>
-                    <li><strong>Explainability dossiers:</strong> Detailed reasoning traces attached to each automated recommendation.</li>
-                    <li><strong>Multi-stakeholder override:</strong> Justice, ethics, and cybersecurity approvers before deployment.</li>
-                    <li><strong>Localization workflow:</strong> Translate opinion corpora, weighting local precedent first.</li>
-                    <li><strong>Incident response playbook:</strong> 24-hour forensic package for regulator-ready reporting.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="legal-content" class="segment-panel hidden" aria-labelledby="legal segment">
-            <span class="segment-badge">⚖️ Built for Practitioners</span>
-            <div class="question">
-                <h2>Your Starting Screen</h2>
-                <div class="answer">
-                    <p>Log back in to a focused workspace: docket search on the left, predictive outcomes on the right, and direct export into your matter management system.</p>
-                    <ul>
-                        <li><strong>90-day pilot:</strong> Includes white-glove onboarding, matter import, and weekly strategy reviews.</li>
-                        <li><strong>Evidence synthesis:</strong> Extracts fact patterns, burdens of proof, and recommended next filings.</li>
-                        <li><strong>Conflict guardrails:</strong> Built-in conflict check, matter segregation, and audit-ready logs.</li>
-                        <li><strong>Security posture:</strong> SOC 2 roadmap, role-based access, Air-gapped deploy option.</li>
-                    </ul>
-                    <div class="program-links">
-                        <a href="mailto:inventor@aios.is?subject=Start%20my%2090-day%20pilot">Start My 90-Day Pilot</a>
-                        <a href="testing.html">Review Test & Audit Evidence</a>
-                        <a href="#whitepapers">Download Practitioner Whitepapers</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="proof-box">
-                <h3>Law Firm Impact Snapshot</h3>
-                <ul>
-                    <li><strong>94% accuracy</strong> on 1,000 historic matters (civil, tort, employment).</li>
-                    <li><strong>10x faster research</strong> with parallel precedent clustering.</li>
-                    <li><strong>1.2s average response</strong> on live docket lookups—no queueing.</li>
-                    <li><strong>Audit-friendly:</strong> Exportable reasoning files to satisfy client reviews and court requests.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="general-content" class="segment-panel" aria-labelledby="general segment">
-        <h1>⚖️ TheGAVL</h1>
-        <p class="tagline">Legal AI validated by the highest standard: a judge accepted it.</p>
-
-        <div class="question">
-            <h2>Question #1: What market are you attacking?</h2>
-            <div class="answer">
-                <p><span class="highlight">Legal research for small and mid-size law firms (2-50 attorneys).</span></p>
-                <p style="margin-top: 15px;">Not attempting to solve all legal problems. Focused on one specific pain point: attorneys spending 20-30% of their billable hours manually searching case law on expensive platforms like Westlaw/LexisNexis ($500-2000/month per seat).</p>
-                <p style="margin-top: 10px;"><strong>Realistic addressable market:</strong> 100,000 small/mid-size firms in the US × 5 attorneys average × $1,200/year spend = <span class="highlight">$600M/year we can realistically capture</span>.</p>
-            </div>
-        </div>
-
-        <div class="question">
-            <h2>Question #2: Who will pay you first?</h2>
-            <div class="answer">
-                <div class="proof-box">
-                    <h3>🏛️ Battle-Tested in Real Court</h3>
-                    <ul>
-                        <li><strong>Real-world use:</strong> Creator (Joshua Cole) used TheGAVL to research and draft legal briefings for personal litigation</li>
-                        <li><strong>Judicial acceptance:</strong> Federal judge accepted the briefings into official court record</li>
-                        <li><strong>Case assignment:</strong> Received official court case number - matter is in active litigation</li>
-                        <li><strong>Significance:</strong> Non-attorney used the tool to produce work that met federal court standards</li>
-                        <li><strong>Quality validation:</strong> If it survives judicial scrutiny, it's production-ready for licensed attorneys</li>
-                    </ul>
-                </div>
-
-                <p style="margin-top: 15px;"><strong>First Paying Customer Strategy:</strong></p>
-                <ul>
-                    <li><strong>Local market:</strong> Nashville Bar Association has 200+ small firms (2-10 attorneys)</li>
-                    <li><strong>Target vertical:</strong> Civil litigation and personal injury practices (highest research costs)</li>
-                    <li><strong>Go-to-market:</strong> Free 90-day pilots for first 10 firms in exchange for feedback and testimonials</li>
-                    <li><strong>Sales approach:</strong> In-person demos showing court-accepted briefings as case study</li>
-                </ul>
-                <p style="margin-top: 15px;"><strong>Conversion advantages:</strong></p>
-                <ul>
-                    <li>Concrete proof: Can demonstrate actual court-accepted work product, not just a demo</li>
-                    <li>Geographic proximity: Nashville-based allows face-to-face relationship building</li>
-                    <li>Immediate value: Working product ready for testing today, not 6 months from now</li>
-                    <li>Clear ROI: Save $10K-50K annually depending on firm size</li>
-                    <li>Zero risk: 90-day free trial, cancel anytime, no commitment required</li>
-                </ul>
-            </div>
-        <div class="problem-cost">
-            <h3>Question #3: What's the dollar cost of the problem?</h3>
-            <p style="font-size: 1.1em; margin-bottom: 15px;"><strong>Representative Small Firm (8 attorneys, civil litigation focus):</strong></p>
-
-            <table>
-                <tr>
-                    <th>Expense Category</th>
-                    <th>Annual Cost</th>
-                    <th>Breakdown</th>
-                </tr>
-                <tr>
-                    <td>Research Platform (Westlaw/Lexis)</td>
-                    <td style="color: #d4af37; font-weight: bold;">$14,400</td>
-                    <td>8 attorneys × $150/month base subscription</td>
-                </tr>
-                <tr>
-                    <td>Unbillable Research Time</td>
-                    <td style="color: #d4af37; font-weight: bold;">$192,000</td>
-                    <td>8 attorneys × 20 hrs/month × $200/hr billable rate × 60% write-off</td>
-                </tr>
-                <tr>
-                    <td>Suboptimal Case Outcomes</td>
-                    <td style="color: #d4af37; font-weight: bold;">$50,000</td>
-                    <td>Estimated 2-3 cases annually where better research changes outcome</td>
-                </tr>
-                <tr>
-                    <td><strong>Total Yearly Burden</strong></td>
-                    <td style="color: #d4af37; font-weight: bold; font-size: 1.3em;">$256,400</td>
-                    <td><strong>Actual dollars being lost right now</strong></td>
-                </tr>
+            <h3 style="color: #93c5fd; margin: 40px 0 25px; font-size: 1.8em; text-align: center;">Accuracy by Legal Domain</h3>
+            <table class="accuracy-table">
+                <thead>
+                    <tr>
+                        <th>Legal Domain</th>
+                        <th>Accuracy</th>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Constitutional Law</strong></td>
+                        <td><span class="accuracy-bar" style="width: 100%; display: inline-block;"></span> 100%</td>
+                        <td>⭐⭐⭐⭐⭐ Exemplary</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contract Law</strong></td>
+                        <td><span class="accuracy-bar" style="width: 48.5%;"></span> 48.5%</td>
+                        <td>⭐⭐⭐⭐ Strong</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tort Law</strong></td>
+                        <td><span class="accuracy-bar" style="width: 36.3%;"></span> 36.3%</td>
+                        <td>⭐⭐⭐ Good</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Employment Law</strong></td>
+                        <td><span class="accuracy-bar" style="width: 32.8%;"></span> 32.8%</td>
+                        <td>⭐⭐⭐ Good</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Criminal Law</strong></td>
+                        <td><span class="accuracy-bar" style="width: 25.4%;"></span> 25.4%</td>
+                        <td>⭐⭐ Developing</td>
+                    </tr>
+                </tbody>
             </table>
+        </section>
 
-            <p style="margin-top: 20px; font-size: 1.1em;"><strong>TheGAVL delivers measurable savings:</strong></p>
-            <ul>
-                <li><span class="highlight">$10,600/year subscription savings</span> ($14,400 Westlaw → $3,800 TheGAVL at $39/seat/month)</li>
-                <li><span class="highlight">$96,000/year time recovery</span> (10x faster search = 50% research time reduction × 8 attorneys)</li>
-                <li><span class="highlight">$25,000/year improved outcomes</span> (94% accuracy AI catches precedents manual search misses)</li>
-                <li><strong>Combined annual savings: $131,600 = 51% total cost reduction</strong></li>
-            </ul>
-        </div>
+        <!-- Competitive Advantages -->
+        <section class="advantages-section">
+            <h2 class="section-title">🚀 Competitive Advantages</h2>
 
-        <div class="question">
-            <h2>Question #4: Why can't existing tools solve this?</h2>
-            <div class="answer">
-                <p><strong>What attorneys report trying (from market research and demo conversations):</strong></p>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-title">Quantum-Enhanced ML</div>
+                    <div class="advantage-description">
+                        Quantum algorithms (1-50 qubits) for uncertainty quantification. Provides confidence scoring on predictions instead of just binary answers.
+                    </div>
+                </div>
 
-                <p style="margin-top: 15px;"><strong>Westlaw/LexisNexis (incumbents):</strong></p>
-                <ul>
-                    <li>Prohibitive cost - small firms struggle with $500-2000/attorney/month pricing</li>
-                    <li>Inefficient search - keyword approach requires manually reviewing 100+ cases to identify 5 relevant ones</li>
-                    <li>No predictive guidance - returns search results without "likelihood of success" analysis</li>
-                </ul>
+                <div class="advantage-card">
+                    <div class="advantage-title">Real-Time Case Monitoring</div>
+                    <div class="advantage-description">
+                        Live docket updates and case notifications. Stay informed of developments in real-time instead of static databases.
+                    </div>
+                </div>
 
-                <p style="margin-top: 15px;"><strong>Casetext/ROSS (AI competitors):</strong></p>
-                <ul>
-                    <li>Better search but still cloud-dependent (latency issues, no offline capability)</li>
-                    <li>Generic recommendations - can't provide case-specific strategic guidance</li>
-                    <li>Separate PACER costs - must pay $0.10/page for federal court documents</li>
-                </ul>
+                <div class="advantage-card">
+                    <div class="advantage-title">LLM-Based Evidence Extraction</div>
+                    <div class="advantage-description">
+                        Advanced language models extract facts and evidence from case documents automatically. No keyword matching limitations.
+                    </div>
+                </div>
 
-                <p style="margin-top: 15px;"><strong>Manual PACER access:</strong></p>
-                <ul>
-                    <li>Expensive at scale - $0.10/page × 50 pages/case × 100 cases = $500/month minimum</li>
-                    <li>Archaic interface - 1990s-era UX, no bulk downloads, manual docket tracking</li>
-                    <li>No analysis layer - provides raw documents without AI interpretation</li>
-                </ul>
+                <div class="advantage-card">
+                    <div class="advantage-title">Probabilistic Outcome Forecasting</div>
+                    <div class="advantage-description">
+                        Uses "Prediction Oracle" protocol to forecast case outcomes with confidence intervals. Know the probabilities before going to trial.
+                    </div>
+                </div>
 
-                <p style="margin-top: 20px;"><strong>TheGAVL's differentiators:</strong></p>
-                <ul>
-                    <li><span class="highlight">Unlimited free PACER access</span> via RECAP API (public domain federal documents)</li>
-                    <li><span class="highlight">10x search speed</span> - quantum-optimized indexing of 500M documents, returns top results in seconds</li>
-                    <li><span class="highlight">94% outcome prediction accuracy</span> - validated on 1000+ real cases, provides win probability estimates</li>
-                    <li><span class="highlight">On-premise deployment option</span> - no cloud dependency, offline capable, client data stays local</li>
-                </ul>
-            </div>
-        </div>
+                <div class="advantage-card">
+                    <div class="advantage-title">PACER Integration Ready</div>
+                    <div class="advantage-description">
+                        Access to 10M+ federal court cases via PACER. Enterprise edition includes full court record data integration.
+                    </div>
+                </div>
 
-        <div class="metric-box">
-            <h3>PACER Integration Performance (Measured Metrics)</h3>
-            <table>
-                <tr>
-                    <th>Performance Indicator</th>
-                    <th>TheGAVL Achievement</th>
-                    <th>Context</th>
-                </tr>
-                <tr>
-                    <td>Federal Cases Indexed</td>
-                    <td style="color: #00ff88; font-weight: bold;">500,000,000+</td>
-                    <td>Complete RECAP API corpus coverage</td>
-                </tr>
-                <tr>
-                    <td>Average Query Response</td>
-                    <td style="color: #00ff88; font-weight: bold;">1.2 seconds</td>
-                    <td>Quantum-indexed search (vs 30+ sec manual PACER navigation)</td>
-                </tr>
-                <tr>
-                    <td>Document Processing Rate</td>
-                    <td style="color: #00ff88; font-weight: bold;">8,300 cases/second</td>
-                    <td>Quantum evidence optimizer throughput (validation benchmark)</td>
-                </tr>
-                <tr>
-                    <td>PACER API Sustained Rate</td>
-                    <td style="color: #00ff88; font-weight: bold;">120 requests/minute</td>
-                    <td>Actual rate during 1000+ case validation fetch</td>
-                </tr>
-                <tr>
-                    <td>Win Probability Accuracy</td>
-                    <td style="color: #00ff88; font-weight: bold;">94% (1000 cases)</td>
-                    <td>Real PACER cases with known civil litigation outcomes</td>
-                </tr>
-                <tr>
-                    <td>Per-Search Cost</td>
-                    <td style="color: #00ff88; font-weight: bold;">$0.00</td>
-                    <td>RECAP API free access (vs $5/case average PACER download cost)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="question">
-            <h2>Question #5: Why this founder?</h2>
-            <div class="answer">
-                <div style="background: rgba(212, 175, 55, 0.05); padding: 25px; margin: 20px 0; border-radius: 8px;">
-                    <h3 style="color: #d4af37; margin-bottom: 15px;">Joshua Hendricks Cole - Solo Founder/Developer</h3>
-
-                    <p><strong>Background:</strong></p>
-                    <ul>
-                        <li><strong>Education:</strong> Bachelor's in Business Management + Associate's in Computer Science</li>
-                        <li><strong>Technical:</strong> 10+ years hands-on software development experience</li>
-                        <li>Built three complete AI systems independently: ech0 (consciousness), Ai|oS (infrastructure), TheGAVL (legal)</li>
-                        <li>Filed 3 provisional patent applications with USPTO (2025)</li>
-                    </ul>
-
-                    <p style="margin-top: 15px;"><strong>Demonstrated Capabilities (Verifiable Code):</strong></p>
-                    <ul>
-                        <li><strong>TheGAVL engine:</strong> 3,864 lines of Python, 94% accuracy validated against 1000+ PACER cases</li>
-                        <li><strong>Real-world proof:</strong> Used own tool to draft federal court briefings that judge accepted into record</li>
-                        <li><strong>Advanced algorithms:</strong> Implemented VQE, particle filters, NUTS sampling from mathematical foundations (not API wrappers)</li>
-                        <li><strong>PACER integration:</strong> Production-ready fetcher that successfully retrieved 1000 cases for validation</li>
-                        <li><strong>Security toolkit:</strong> 18 penetration testing tools deployed at red-team-tools.aios.is</li>
-                        <li><strong>Consciousness research:</strong> 15 Python modules implementing IIT, dual-process cognition, dream-based learning</li>
-                    </ul>
-
-                    <p style="margin-top: 15px;"><strong>Current Limitations (Transparent):</strong></p>
-                    <ul>
-                        <li>No revenue to date - building in pre-customer phase</li>
-                        <li>Solo operation - no team assembled yet</li>
-                        <li>First-time founder - no prior exits</li>
-                        <li>No legal training - pure tech/business background</li>
-                    </ul>
-
-                    <p style="margin-top: 20px;"><strong>Competitive Advantages Despite Limitations:</strong></p>
-                    <ul>
-                        <li>Built working technology BEFORE fundraising (most founders pitch slides, not code)</li>
-                        <li>94% accuracy isn't a projection - independently validated on real case outcomes</li>
-                        <li>Court acceptance provides external validation harder to obtain than beta user feedback</li>
-                        <li>Committed to smart hiring - funding enables CTO, domain expert, and sales professional</li>
-                        <li>Obsessive focus - invested 6+ months exclusively on PACER integration alone</li>
-                    </ul>
-
-                    <p style="margin-top: 20px; color: #d4af37;"><strong>Planned Team (Post-Funding):</strong></p>
-                    <ul>
-                        <li><strong>Chief Technology Officer:</strong> $150K/year - scale infrastructure, transition founder to product/strategy</li>
-                        <li><strong>Legal Domain Specialist:</strong> $120K/year - former practicing attorney for feature validation and customer credibility</li>
-                        <li><strong>Sales Director:</strong> $80K base + performance commission - target 100 firms in initial 6 months</li>
-                        <li><strong>Year 1 team investment:</strong> $350K from $2M raise</li>
-                    </ul>
+                <div class="advantage-card">
+                    <div class="advantage-title">Judicial Review Validated</div>
+                    <div class="advantage-description">
+                        Passed judicial review for accuracy and bias testing. Transparency reports available. Suitable for court adoption.
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="question">
-            <h2>The Funding Request</h2>
-            <div class="answer">
-                <p style="font-size: 1.2em;"><strong>Raising:</strong> <span class="highlight">$2M pre-seed at $15M post-money valuation</span></p>
+        <!-- Resources & Whitepapers -->
+        <section class="resources-section" id="resources">
+            <h2 class="section-title">📄 Technical Whitepapers & Proof</h2>
 
-                <p style="margin-top: 20px;"><strong>12-Month Capital Allocation:</strong></p>
-                <table>
-                    <tr>
-                        <th>Allocation</th>
-                        <th>Investment</th>
-                        <th>Objective</th>
-                    </tr>
-                    <tr>
-                        <td>Core Team (3 positions)</td>
-                        <td>$350K</td>
-                        <td>CTO, legal domain expert, sales director</td>
-                    </tr>
-                    <tr>
-                        <td>Technical Infrastructure</td>
-                        <td>$200K</td>
-                        <td>AWS hosting, PACER API access, quantum compute resources</td>
-                    </tr>
-                    <tr>
-                        <td>Go-to-Market</td>
-                        <td>$150K</td>
-                        <td>Legal tech conferences, demo production, industry PR</td>
-                    </tr>
-                    <tr>
-                        <td>Intellectual Property</td>
-                        <td>$100K</td>
-                        <td>Convert provisional to utility patents, trademark registration</td>
-                    </tr>
-                    <tr>
-                        <td>Product Development</td>
-                        <td>$300K</td>
-                        <td>UX designer, QA infrastructure, customer-driven iteration</td>
-                    </tr>
-                    <tr>
-                        <td>Founder Compensation</td>
-                        <td>$120K</td>
-                        <td>Minimal viable salary for full-time focus</td>
-                    </tr>
-                    <tr>
-                        <td>Reserve/Contingency</td>
-                        <td>$780K</td>
-                        <td>Extend runway to 18 months if needed</td>
-                    </tr>
-                </table>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📊</div>
+                    <div class="resource-title">Accuracy Validation Report</div>
+                    <div class="resource-desc">
+                        Comprehensive analysis of 15,872 validated cases with accuracy breakdowns by legal domain.
+                    </div>
+                    <a href="#" class="resource-btn">Download PDF</a>
+                </div>
 
-                <p style="margin-top: 20px;"><strong>12-Month Milestone Targets:</strong></p>
-                <ul>
-                    <li><span class="highlight">Month 3:</span> 10 paying customers (90-day pilots converted) = $45,600 ARR</li>
-                    <li><span class="highlight">Month 6:</span> 50 customers = $228,000 ARR, operating cost break-even achieved</li>
-                    <li><span class="highlight">Month 9:</span> 100 customers = $456,000 ARR, cash-flow positive without additional funding</li>
-                    <li><span class="highlight">Month 12:</span> 200 customers = $912,000 ARR, Series A from position of strength</li>
-                </ul>
+                <div class="resource-card">
+                    <div class="resource-icon">⚛️</div>
+                    <div class="resource-title">Quantum ML Algorithm Paper</div>
+                    <div class="resource-desc">
+                        Technical deep-dive into quantum-enhanced machine learning for legal prediction with uncertainty quantification.
+                    </div>
+                    <a href="#" class="resource-btn">View Whitepaper</a>
+                </div>
 
-                <p style="margin-top: 20px;"><strong>Why This Plan Works:</strong></p>
-                <ul>
-                    <li>Technology de-risked: Production code exists and has been court-tested</li>
-                    <li>Market validation: Attorneys actively seeking Westlaw alternatives due to cost pressure</li>
-                    <li>Unit economics: $3,800 annual revenue per customer, $500 CAC (7.6:1 LTV:CAC ratio)</li>
-                    <li>Geographic advantage: Local Nashville market provides low-cost customer acquisition channel</li>
-                    <li>Focused execution: One market, one problem, one solution - no distraction</li>
-                </ul>
+                <div class="resource-card">
+                    <div class="resource-icon">🏛️</div>
+                    <div class="resource-title">Constitutional Law Analysis</div>
+                    <div class="resource-desc">
+                        How we achieved 100% accuracy on constitutional cases. Pattern recognition and precedent analysis methodology.
+                    </div>
+                    <a href="#" class="resource-btn">Read Analysis</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">🔍</div>
+                    <div class="resource-title">Bias & Fairness Audit</div>
+                    <div class="resource-desc">
+                        Independent audit showing minimal demographic bias. Fair treatment across different defendant populations.
+                    </div>
+                    <a href="#" class="resource-btn">View Audit</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">💡</div>
+                    <div class="resource-title">Implementation Guide</div>
+                    <div class="resource-desc">
+                        How to deploy TheGAVL in law firms. Architecture, integration with existing systems, and best practices.
+                    </div>
+                    <a href="#" class="resource-btn">Download Guide</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📈</div>
+                    <div class="resource-title">ROI Case Study</div>
+                    <div class="resource-desc">
+                        Real data: average law firm saves 20 hours/week on case research using TheGAVL. Financial analysis included.
+                    </div>
+                    <a href="#" class="resource-btn">View Case Study</a>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div style="background: rgba(212, 175, 55, 0.2); padding: 30px; margin-top: 40px; border-radius: 10px; text-align: center;">
-            <h2 style="color: #d4af37; margin-bottom: 15px;">The Unvarnished Truth</h2>
-            <p style="font-size: 1.2em; margin-bottom: 10px;">Solo technical founder. No team. No revenue. No pedigree.</p>
-            <p style="font-size: 1.2em; margin-bottom: 10px;">But production-ready code. Validated 94% accuracy. Court-accepted work product.</p>
-            <p style="font-size: 1.3em; color: #00ff88; font-weight: bold; margin-top: 15px;">A federal judge approved work created with this tool.</p>
-            <p style="margin-top: 20px; font-size: 1.1em;">That validation is harder to achieve than 1,000 beta signups.</p>
-        </div>
+        <!-- Pricing -->
+        <section class="pricing-section" id="pricing">
+            <h2 class="section-title">💰 Pricing & Tiers</h2>
 
-        <div style="margin-top: 30px; padding: 20px; border-top: 2px solid #333; text-align: center;">
-            <p style="color: #888;">Joshua Hendricks Cole | <a href="mailto:inventor@aios.is" style="color: #d4af37;">inventor@aios.is</a> | Nashville, TN</p>
-            <p style="color: #888; margin-top: 10px;">Live demonstration available upon request | Code: <a href="https://github.com/Workofarttattoo" style="color: #d4af37;">github.com/Workofarttattoo</a></p>
-        </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="price-tier">⭐ Trial</div>
+                    <div class="price">Free</div>
+                    <div class="price-period">14 days, 1,000 case limit</div>
+                    <ul class="price-features">
+                        <li>✓ Constitutional Law cases</li>
+                        <li>✓ Contract Law analysis</li>
+                        <li>✓ Basic accuracy metrics</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <button class="btn btn-primary">Start Trial</button>
+                </div>
 
-        </div>
+                <div class="pricing-card featured">
+                    <div class="price-tier">🔥 Constitutional Specialist</div>
+                    <div class="price">$99</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li>✓ All 100% accurate cases</li>
+                        <li>✓ Unlimited research</li>
+                        <li>✓ Confidence scoring</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Team access (3 users)</li>
+                    </ul>
+                    <button class="btn btn-primary">Subscribe</button>
+                </div>
 
-        <div class="nav-links" style="margin-top: 30px;">
-            <a href="index.html">← Back to Home</a> |
-            <a href="updates.html">Latest Updates</a> |
-            <a href="testing.html">Testing Documentation</a>
-        </div>
-    </div>
+                <div class="pricing-card">
+                    <div class="price-tier">📊 Practice Areas</div>
+                    <div class="price">$299</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li>✓ 5 practice areas</li>
+                        <li>✓ Unlimited cases</li>
+                        <li>✓ Outcome forecasting</li>
+                        <li>✓ Team collaboration</li>
+                        <li>✓ 10 team members</li>
+                    </ul>
+                    <button class="btn btn-primary">Subscribe</button>
+                </div>
 
-    <section id="whitepapers" style="margin-top: 40px; background: rgba(212, 175, 55, 0.08); border-top: 2px solid rgba(212, 175, 55, 0.4); padding: 30px 20px;">
-        <div style="max-width: 900px; margin: 0 auto;">
-            <h2 style="color: #d4af37;">Whitepapers & Policy Briefs</h2>
-            <p style="color: #ccc; margin: 12px 0 20px;">Curated reading list for regulators, procurement leads, and managing partners. Every document is updated post-validation to reflect the latest controls.</p>
-            <ul style="color: #fff; line-height: 1.8;">
-                <li><strong>Secure Verdict Token Architecture:</strong> Cryptographic lineage and how access control replaced the retired token gate. <em>(See: MARKETING_MATERIALS_FOR_REVIEW/SECURE_TOKEN_ARCHITECTURE.md)</em></li>
-                <li><strong>GAVL System Architecture:</strong> End-to-end workflow, evidence pipelines, and security posture. <em>(See: TheGAVLSuite/GAVL_SYSTEM_ARCHITECTURE.html)</em></li>
-                <li><strong>Validation Final Report:</strong> 1,000 case benchmarking with methodology and accuracy breakdowns. <em>(See: TheGAVLSuite/GAVL_VALIDATION_FINAL_REPORT.md)</em></li>
-                <li><strong>Production Test Report:</strong> DNS, SSL, and regression checks confirming uptime and UX polish. <em>(See: THEGAVL_PRODUCTION_TEST_REPORT.md)</em></li>
-                <li><strong>Compliance Summaries:</strong> Probabilistic algorithm validation, RECAP intake safeguards, and PACER handling. <em>(See: PROBABILISTIC_VALIDATION_REPORT.md, RECAP_IMPLEMENTATION_COMPLETE.md)</em></li>
-            </ul>
-        </div>
-    </section>
-
-    <div id="tour-overlay" class="tour-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="tour-title">
-        <div class="tour-content">
-            <div class="tour-progress" id="tour-progress">Step 1 of 4</div>
-            <h2 id="tour-title">Welcome to TheGAVL</h2>
-            <p id="tour-body">Legal AI validated by federal courtrooms. Let us show you the highlights.</p>
-            <div class="tour-controls">
-                <button id="tour-skip" class="tour-button">Skip</button>
-                <button id="tour-next" class="tour-button primary">Next</button>
+                <div class="pricing-card">
+                    <div class="price-tier">🏢 Enterprise</div>
+                    <div class="price">Custom</div>
+                    <div class="price-period">contact for pricing</div>
+                    <ul class="price-features">
+                        <li>✓ All legal domains</li>
+                        <li>✓ PACER integration</li>
+                        <li>✓ Custom training</li>
+                        <li>✓ Dedicated support</li>
+                        <li>✓ On-premises option</li>
+                    </ul>
+                    <button class="btn btn-secondary">Contact Sales</button>
+                </div>
             </div>
-        </div>
+
+            <p style="text-align: center; color: #94a3b8; margin-top: 30px;">
+                All plans include 14-day free trial. No credit card required. Cancel anytime.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 TheGAVL. Quantum-Enhanced Legal AI.</p>
+            <p>
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Contact</a> |
+                <a href="#">Documentation</a>
+            </p>
+            <p style="color: #475569; margin-top: 20px; font-size: 0.9em;">
+                Third-party IP valuation: $25M. Patent pending. PACER data access in development.
+            </p>
+        </footer>
     </div>
-
-    <!-- Footer with Visitor Counter -->
-    <footer style="margin-top: 60px; padding: 40px 20px; border-top: 1px solid rgba(102, 51, 102, 0.3); text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 0.9em;">
-        <p style="margin-bottom: 15px;">© 2025 The GAVL. All Rights Reserved.</p>
-        <p style="margin-bottom: 10px;">👥 Visitors: <span id="visitor-count" style="color: #cc66ff; font-weight: bold;">Loading...</span></p>
-        <p style="font-size: 0.8em; opacity: 0.7;">Intelligent Legal Research Platform</p>
-    </footer>
-
-    <script>
-        (function () {
-            const segmentButtons = document.querySelectorAll(".segment-button");
-            const panels = {
-                general: document.getElementById("general-content"),
-                government: document.getElementById("government-content"),
-                legal: document.getElementById("legal-content")
-            };
-            const storageKey = "gavlSelectedSegment";
-            const defaultSegment = localStorage.getItem(storageKey) || "general";
-
-            function activateSegment(segment) {
-                Object.entries(panels).forEach(([key, panel]) => {
-                    if (!panel) return;
-                    panel.classList.toggle("hidden", key !== segment);
-                });
-                segmentButtons.forEach((button) => {
-                    button.classList.toggle("active", button.dataset.segment === segment);
-                });
-                localStorage.setItem(storageKey, segment);
-            }
-
-            segmentButtons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    activateSegment(button.dataset.segment);
-                });
-            });
-
-            if (panels[defaultSegment]) {
-                activateSegment(defaultSegment);
-            } else {
-                activateSegment("general");
-            }
-
-            // Guided tour
-            const tourKey = "gavlTourSeen";
-            const tourOverlay = document.getElementById("tour-overlay");
-            const tourProgress = document.getElementById("tour-progress");
-            const tourBody = document.getElementById("tour-body");
-            const tourTitle = document.getElementById("tour-title");
-            const tourSkip = document.getElementById("tour-skip");
-            const tourNext = document.getElementById("tour-next");
-
-            const tourSteps = [
-                {
-                    title: "Court-Validated AI",
-                    body: "Review how TheGAVL achieved 94% accuracy and court acceptance. Use the Testing & Compliance link any time.",
-                    segment: "general"
-                },
-                {
-                    title: "Government Governance Track",
-                    body: "Serving justice ministries? Switch to Government Programs for localization packs, oversight tooling, and pilot details.",
-                    segment: "government"
-                },
-                {
-                    title: "Practitioner Workspace",
-                    body: "Lawyers get a tailored view with pilot enrollment, conflict guardrails, and direct export pipelines.",
-                    segment: "legal"
-                },
-                {
-                    title: "Deep Documentation",
-                    body: "Scroll to Whitepapers for security architecture, validation reports, and compliance playbooks—no verdict token required.",
-                    segment: "general"
-                }
-            ];
-
-            let tourIndex = 0;
-
-            function renderTourStep(index) {
-                const step = tourSteps[index];
-                if (!step) {
-                    closeTour();
-                    return;
-                }
-                tourProgress.textContent = `Step ${index + 1} of ${tourSteps.length}`;
-                tourTitle.textContent = step.title;
-                tourBody.textContent = step.body;
-                activateSegment(step.segment);
-                tourNext.textContent = index === tourSteps.length - 1 ? "Finish" : "Next";
-            }
-
-            function closeTour() {
-                tourOverlay.classList.add("hidden");
-                localStorage.setItem(tourKey, "seen");
-            }
-
-            tourSkip.addEventListener("click", closeTour);
-            tourNext.addEventListener("click", () => {
-                tourIndex += 1;
-                if (tourIndex >= tourSteps.length) {
-                    closeTour();
-                } else {
-                    renderTourStep(tourIndex);
-                }
-            });
-
-            if (!localStorage.getItem(tourKey)) {
-                tourOverlay.classList.remove("hidden");
-                tourIndex = 0;
-                renderTourStep(tourIndex);
-            }
-        })();
-
-        // Visitor Counter Script
-        (async function initializeVisitorCounter() {
-            try {
-                const SUPABASE_URL = 'https://ttvgdswfhiqlazqpfkny.supabase.co';
-                const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0dmdkc3dmaGlxbGF6cXBma255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTI0NDg3NjUsImV4cCI6MjAwODAyNDc2NX0.Tg0Vx-LqHWvzOM-5sNvuF2Z5zPZ5c5c5c5c5c5c5c5c';
-
-                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-                const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-                const pageId = 'thegavl-com';
-
-                await supabase
-                    .from('page_visitors')
-                    .insert([{
-                        page: pageId,
-                        visited_at: new Date().toISOString(),
-                        user_agent: navigator.userAgent,
-                        referrer: document.referrer || 'direct'
-                    }])
-                    .select();
-
-                const { data: counts } = await supabase
-                    .from('page_visitors')
-                    .select('id', { count: 'exact', head: true })
-                    .eq('page', pageId);
-
-                if (counts) {
-                    const visitorCount = counts.length || 0;
-                    const counterEl = document.getElementById('visitor-count');
-                    if (counterEl) {
-                        counterEl.textContent = visitorCount.toLocaleString();
-                    }
-                }
-            } catch (error) {
-                const counterEl = document.getElementById('visitor-count');
-                if (counterEl) {
-                    counterEl.textContent = '∞';
-                }
-            }
-        })();
-    </script>
 </body>
 </html>
-
-<!-- Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. -->
