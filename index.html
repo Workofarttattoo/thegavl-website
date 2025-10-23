@@ -708,6 +708,13 @@
         </div>
     </div>
 
+    <!-- Footer with Visitor Counter -->
+    <footer style="margin-top: 60px; padding: 40px 20px; border-top: 1px solid rgba(102, 51, 102, 0.3); text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 0.9em;">
+        <p style="margin-bottom: 15px;">© 2025 The GAVL. All Rights Reserved.</p>
+        <p style="margin-bottom: 10px;">👥 Visitors: <span id="visitor-count" style="color: #cc66ff; font-weight: bold;">Loading...</span></p>
+        <p style="font-size: 0.8em; opacity: 0.7;">Intelligent Legal Research Platform</p>
+    </footer>
+
     <script>
         (function () {
             const segmentButtons = document.querySelectorAll(".segment-button");
@@ -808,6 +815,47 @@
                 tourOverlay.classList.remove("hidden");
                 tourIndex = 0;
                 renderTourStep(tourIndex);
+            }
+        })();
+
+        // Visitor Counter Script
+        (async function initializeVisitorCounter() {
+            try {
+                const SUPABASE_URL = 'https://ttvgdswfhiqlazqpfkny.supabase.co';
+                const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0dmdkc3dmaGlxbGF6cXBma255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTI0NDg3NjUsImV4cCI6MjAwODAyNDc2NX0.Tg0Vx-LqHWvzOM-5sNvuF2Z5zPZ5c5c5c5c5c5c5c5c';
+
+                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+                const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+                const pageId = 'thegavl-com';
+
+                await supabase
+                    .from('page_visitors')
+                    .insert([{
+                        page: pageId,
+                        visited_at: new Date().toISOString(),
+                        user_agent: navigator.userAgent,
+                        referrer: document.referrer || 'direct'
+                    }])
+                    .select();
+
+                const { data: counts } = await supabase
+                    .from('page_visitors')
+                    .select('id', { count: 'exact', head: true })
+                    .eq('page', pageId);
+
+                if (counts) {
+                    const visitorCount = counts.length || 0;
+                    const counterEl = document.getElementById('visitor-count');
+                    if (counterEl) {
+                        counterEl.textContent = visitorCount.toLocaleString();
+                    }
+                }
+            } catch (error) {
+                const counterEl = document.getElementById('visitor-count');
+                if (counterEl) {
+                    counterEl.textContent = '∞';
+                }
             }
         })();
     </script>
