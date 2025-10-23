@@ -31,6 +31,58 @@
             min-height: 100vh;
         }
 
+        /* Navigation Header */
+        nav {
+            background: linear-gradient(135deg, rgba(10, 20, 40, 0.95) 0%, rgba(26, 40, 71, 0.9) 100%);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-size: 1.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gavl-gold);
+        }
+
+        .nav-link.active {
+            color: var(--gavl-gold);
+            border-bottom: 2px solid var(--gavl-gold);
+            padding-bottom: 3px;
+        }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -429,6 +481,19 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav>
+        <a href="index.html" class="nav-logo">⚖️ TheGAVL</a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="index.html#pricing" class="nav-link">Pricing</a></li>
+            <li><a href="index.html#modules" class="nav-link">Modules</a></li>
+            <li><a href="pilot-countries.html" class="nav-link">Government</a></li>
+            <li><a href="index.html#resources" class="nav-link">Resources</a></li>
+            <li><a href="onboarding.html" class="nav-link active">Analyze</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
         <!-- Progress Bar -->
         <div class="progress-bar">
