@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheGAVL Evidence Collection - Court Preparation</title>
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gavl-navy: #0a1428;
+            --gavl-blue: #1e40af;
+            --gavl-gold: #d4af37;
+            --gavl-green: #10b981;
+            --gavl-white: #ffffff;
+            --gavl-gray: #f3f4f6;
+            --gavl-text: #1f2937;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--gavl-navy) 0%, #1a3a52 100%);
+            color: var(--gavl-white);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--gavl-gold) 0%, var(--gavl-blue) 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        /* Card Layout */
+        .wizard-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .wizard-card.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Headers */
+        h1 {
+            font-size: 2.5em;
+            color: var(--gavl-gold);
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .step-subtitle {
+            font-size: 1.1em;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Guidance Box */
+        .guidance-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 58, 138, 0.2) 100%);
+            border-left: 4px solid var(--gavl-green);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .guidance-title {
+            color: var(--gavl-green);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .guidance-text {
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        /* Court Language Example */
+        .court-language {
+            background: rgba(30, 58, 138, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .court-label {
+            color: var(--gavl-gold);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .court-example {
+            color: #cbd5e1;
+            font-style: italic;
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        /* Voice Interface */
+        .voice-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .voice-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gavl-green) 0%, #059669 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+            font-size: 3em;
+        }
+
+        .voice-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.5);
+        }
+
+        .voice-button.recording {
+            animation: pulse-recording 1.5s ease-in-out infinite;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.4);
+        }
+
+        @keyframes pulse-recording {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .voice-status {
+            color: #cbd5e1;
+            margin-top: 15px;
+            font-size: 1em;
+        }
+
+        .voice-status.recording {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        /* Input Area */
+        .input-area {
+            margin: 30px 0;
+        }
+
+        .input-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-button.active {
+            color: var(--gavl-gold);
+            border-bottom-color: var(--gavl-gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Transcription Box */
+        .transcription-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 150px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            resize: vertical;
+        }
+
+        /* Text Input */
+        textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 150px;
+            font-family: inherit;
+            font-size: 1em;
+            color: var(--gavl-white);
+            resize: vertical;
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--gavl-gold);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gavl-gold) 0%, #b8860b 100%);
+            color: var(--gavl-navy);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gavl-white);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Help Text */
+        .help-text {
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        /* Evidence Summary */
+        .evidence-summary {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--gavl-green);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .summary-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: var(--gavl-gold);
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .summary-content {
+            color: #cbd5e1;
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .wizard-card {
+                padding: 30px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- STEP 1: Case Overview -->
+        <div class="wizard-card active" id="step-1">
+            <h1>📋 Tell Us About Your Case</h1>
+            <p class="step-subtitle">Start by giving us a brief overview. This takes 2-3 minutes.</p>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 What We Need</div>
+                <div class="guidance-text">
+                    Just describe your case in simple terms. What's the case about? What type of legal issue is it? (For example: "This is a contract dispute over a business agreement" or "I'm suing for personal injury from a car accident")
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'voice1')">🎤 Voice</button>
+                    <button class="tab-button" onclick="switchTab(event, 'text1')">✏️ Type</button>
+                </div>
+
+                <div id="voice1" class="tab-content active">
+                    <div class="voice-section">
+                        <button class="voice-button" id="voiceBtn1" onclick="toggleVoice(1)">🎤</button>
+                        <div class="voice-status" id="voiceStatus1">Click to start speaking</div>
+                        <div class="help-text">Just tell us about your case. We'll listen and write it down.</div>
+                    </div>
+                    <div class="transcription-box" id="transcription1"></div>
+                </div>
+
+                <div id="text1" class="tab-content">
+                    <textarea id="textInput1" placeholder="Describe your case here... For example: 'I have a dispute with my landlord over security deposit.' Be as detailed as you want."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="goToStep(2)">Next: Evidence →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Summarized Facts -->
+        <div class="wizard-card" id="step-2">
+            <h1>📝 Walk Us Through the Facts</h1>
+            <p class="step-subtitle">Tell us what happened, step-by-step, in order.</p>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 What We Need</div>
+                <div class="guidance-text">
+                    Tell us the timeline of events. Start from the beginning and walk through what happened. Include dates, who was involved, what was said, and what was done. The more detail, the better.
+                </div>
+            </div>
+
+            <div class="court-language">
+                <div class="court-label">How this appears in court:</div>
+                <div class="court-example">
+                    "On January 15, 2024, the defendant agreed to deliver the goods by February 1. On February 3, I had not received them. I contacted the defendant, and they said..."
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'voice2')">🎤 Voice</button>
+                    <button class="tab-button" onclick="switchTab(event, 'text2')">✏️ Type</button>
+                </div>
+
+                <div id="voice2" class="tab-content active">
+                    <div class="voice-section">
+                        <button class="voice-button" id="voiceBtn2" onclick="toggleVoice(2)">🎤</button>
+                        <div class="voice-status" id="voiceStatus2">Click to start speaking</div>
+                        <div class="help-text">Tell the story like you're explaining it to a friend. Include dates and details.</div>
+                    </div>
+                    <div class="transcription-box" id="transcription2"></div>
+                </div>
+
+                <div id="text2" class="tab-content">
+                    <textarea id="textInput2" placeholder="Describe what happened in order... Start with dates and details: 'On [date], [who did what]. Then on [date], [next event]...'"></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(3)">Next: Evidence →</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Supporting Evidence -->
+        <div class="wizard-card" id="step-3">
+            <h1>📄 Your Supporting Evidence</h1>
+            <p class="step-subtitle">Tell us about documents, emails, witnesses, or other evidence you have.</p>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 Types of Evidence</div>
+                <div class="guidance-text">
+                    Do you have emails, text messages, contracts, receipts, photos, witness statements, or other documents? Tell us what you have. Don't worry about being formal—just describe what exists and where it's located.
+                </div>
+            </div>
+
+            <div class="court-language">
+                <div class="court-label">How evidence is presented in court:</div>
+                <div class="court-example">
+                    "I have an email dated February 3, 2024, from the defendant stating 'The shipment is delayed.' I also have a signed contract showing the February 1 delivery date, and a screenshot of my bank transaction showing payment on January 10."
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'voice3')">🎤 Voice</button>
+                    <button class="tab-button" onclick="switchTab(event, 'text3')">✏️ Type</button>
+                </div>
+
+                <div id="voice3" class="tab-content active">
+                    <div class="voice-section">
+                        <button class="voice-button" id="voiceBtn3" onclick="toggleVoice(3)">🎤</button>
+                        <div class="voice-status" id="voiceStatus3">Click to start speaking</div>
+                        <div class="help-text">List all the evidence you have. For each item, say what it is and why it's important.</div>
+                    </div>
+                    <div class="transcription-box" id="transcription3"></div>
+                </div>
+
+                <div id="text3" class="tab-content">
+                    <textarea id="textInput3" placeholder="List your evidence: 'I have emails from the defendant dated...', 'There's a contract that shows...', 'I have photos of...', etc."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(4)">Next: Damages →</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: Damages & Relief -->
+        <div class="wizard-card" id="step-4">
+            <h1>💰 What You're Seeking (Damages/Relief)</h1>
+            <p class="step-subtitle">What do you want as an outcome? Money? An action? Specific performance?</p>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 What We Need</div>
+                <div class="guidance-text">
+                    Do you want money damages? Do you want the defendant to do something specific (like deliver the goods, stop a behavior, etc.)? How much money is reasonable? Have you suffered other damages like emotional distress, lost business, medical bills?
+                </div>
+            </div>
+
+            <div class="court-language">
+                <div class="court-label">How damages are stated in court:</div>
+                <div class="court-example">
+                    "I seek $50,000 in damages for breach of contract: $10,000 for the cost of the goods, $15,000 for lost business revenue, and $25,000 for damages caused by the delay."
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'voice4')">🎤 Voice</button>
+                    <button class="tab-button" onclick="switchTab(event, 'text4')">✏️ Type</button>
+                </div>
+
+                <div id="voice4" class="tab-content active">
+                    <div class="voice-section">
+                        <button class="voice-button" id="voiceBtn4" onclick="toggleVoice(4)">🎤</button>
+                        <div class="voice-status" id="voiceStatus4">Click to start speaking</div>
+                        <div class="help-text">Tell us what you want to happen. Include any dollar amounts or specific actions.</div>
+                    </div>
+                    <div class="transcription-box" id="transcription4"></div>
+                </div>
+
+                <div id="text4" class="tab-content">
+                    <textarea id="textInput4" placeholder="What are you seeking? 'I want $[amount] because...', 'I want them to [specific action]', etc."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToStep(3)">← Back</button>
+                <button class="btn-primary" onclick="goToStep(5)">Next: Review →</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Review -->
+        <div class="wizard-card" id="step-5">
+            <h1>✅ Review Your Case</h1>
+            <p class="step-subtitle">Here's what we collected. Make sure everything is accurate.</p>
+
+            <div class="evidence-summary">
+                <div class="summary-item">
+                    <div class="summary-label">Case Overview:</div>
+                    <div class="summary-content" id="summary1">[Case overview will appear here]</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Facts & Timeline:</div>
+                    <div class="summary-content" id="summary2">[Timeline will appear here]</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Supporting Evidence:</div>
+                    <div class="summary-content" id="summary3">[Evidence will appear here]</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">What You're Seeking:</div>
+                    <div class="summary-content" id="summary4">[Damages will appear here]</div>
+                </div>
+            </div>
+
+            <div class="guidance-box">
+                <div class="guidance-title">💡 Next Steps</div>
+                <div class="guidance-text">
+                    TheGAVL will now analyze your case using quantum-enhanced reasoning. We'll evaluate your case strength, identify key vulnerabilities, simulate opposing arguments, and give you a strategic roadmap for trial preparation. Your case analysis will be ready in moments.
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToStep(4)">← Back</button>
+                <button class="btn-primary" onclick="submitCase()">Analyze My Case 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        let isRecording = false;
+        let recognition;
+
+        // Initialize Speech Recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.wizard-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.getElementById(`step-${step}`).classList.add('active');
+            currentStep = step;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateSummary();
+        }
+
+        function updateProgress() {
+            const percent = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        function switchTab(event, tabId) {
+            event.preventDefault();
+            const step = currentStep;
+            document.querySelectorAll(`#step-${step} .tab-content`).forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll(`#step-${step} .tab-button`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function toggleVoice(step) {
+            if (!recognition) {
+                alert('Voice recording not supported in this browser. Please use a modern browser like Chrome, Edge, or Safari.');
+                return;
+            }
+
+            const button = document.getElementById(`voiceBtn${step}`);
+            const status = document.getElementById(`voiceStatus${step}`);
+            const box = document.getElementById(`transcription${step}`);
+
+            if (!isRecording) {
+                isRecording = true;
+                button.classList.add('recording');
+                status.textContent = '🔴 Recording... Speak now';
+                status.classList.add('recording');
+                box.innerHTML = '';
+
+                recognition.onstart = () => {
+                    console.log('Recording started');
+                };
+
+                recognition.onresult = (event) => {
+                    let transcript = '';
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        transcript += event.results[i][0].transcript;
+                    }
+                    box.innerHTML = transcript;
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                };
+
+                recognition.start();
+            } else {
+                isRecording = false;
+                button.classList.remove('recording');
+                status.textContent = 'Click to start speaking';
+                status.classList.remove('recording');
+                recognition.stop();
+            }
+        }
+
+        function updateSummary() {
+            const step1Text = document.getElementById('textInput1')?.value || document.getElementById('transcription1')?.textContent;
+            const step2Text = document.getElementById('textInput2')?.value || document.getElementById('transcription2')?.textContent;
+            const step3Text = document.getElementById('textInput3')?.value || document.getElementById('transcription3')?.textContent;
+            const step4Text = document.getElementById('textInput4')?.value || document.getElementById('transcription4')?.textContent;
+
+            if (step1Text) document.getElementById('summary1').textContent = step1Text.substring(0, 200) + '...';
+            if (step2Text) document.getElementById('summary2').textContent = step2Text.substring(0, 200) + '...';
+            if (step3Text) document.getElementById('summary3').textContent = step3Text.substring(0, 200) + '...';
+            if (step4Text) document.getElementById('summary4').textContent = step4Text.substring(0, 200) + '...';
+        }
+
+        function submitCase() {
+            const caseData = {
+                overview: document.getElementById('textInput1')?.value || document.getElementById('transcription1')?.textContent,
+                facts: document.getElementById('textInput2')?.value || document.getElementById('transcription2')?.textContent,
+                evidence: document.getElementById('textInput3')?.value || document.getElementById('transcription3')?.textContent,
+                damages: document.getElementById('textInput4')?.value || document.getElementById('transcription4')?.textContent,
+            };
+
+            // Store case data and redirect to analysis
+            sessionStorage.setItem('caseData', JSON.stringify(caseData));
+            alert('🎉 Your case has been submitted!\n\nTheGAVL is now analyzing your case with quantum-enhanced reasoning. Your strategic analysis will be ready in moments.');
+            // In a real application, redirect to analysis page
+            // window.location.href = '/analysis.html';
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
