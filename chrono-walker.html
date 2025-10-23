@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrono-Walker Temporal Forecasting | TheGAVL</title>
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gavl-navy: #0a1428;
+            --gavl-blue: #1e40af;
+            --gavl-gold: #d4af37;
+            --gavl-white: #ffffff;
+            --gavl-purple: #a855f7;
+            --gavl-gray: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2847 50%, #0d1f3c 100%);
+            color: #e8eef7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(30, 58, 138, 0.3) 100%);
+            border-bottom: 3px solid rgba(168, 85, 247, 0.4);
+            border-radius: 15px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #a855f7;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #a855f7;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #93c5fd;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid #a855f7;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-left-color: #d8b4fe;
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.1);
+        }
+
+        .feature-title {
+            color: #a855f7;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.5);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #93c5fd;
+            text-decoration: none;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to TheGAVL</a>
+
+        <header>
+            <h1>⏳ Chrono-Walker</h1>
+            <p class="tagline">Temporal Forecasting & Probabilistic Future Modeling</p>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">Project case trajectories and probable outcomes across future time horizons</p>
+        </header>
+
+        <section class="section">
+            <h2>See the Future of Your Case</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 25px;">
+                Chrono-Walker uses advanced temporal forecasting and probabilistic modeling to project how your case will likely evolve over time. Understand probable outcomes at different stages—discovery, summary judgment, trial—and prepare strategies for various future scenarios.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Temporal Trajectory Modeling</div>
+                    <div class="feature-desc">
+                        Models how your case strength changes as discovery proceeds, motions are filed, and trial approaches. See when you're strongest and weakest.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Multi-Scenario Forecasting</div>
+                    <div class="feature-desc">
+                        Generate 10-50+ probable future scenarios. See optimistic, realistic, and pessimistic case outcomes with confidence intervals.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Probability Timeline</div>
+                    <div class="feature-desc">
+                        Track likelihood of case resolution at each stage: settlement during discovery, SJ grant, trial win probability, appellate reversal risk.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Decision Point Analysis</div>
+                    <div class="feature-desc">
+                        Identify critical moments where decisions have outsized impact. Know when to push hard and when to consider settlement.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Timeline Optimization</div>
+                    <div class="feature-desc">
+                        Forecast how case strength changes with time delays. Determine whether delay benefits or hurts your position.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Evidence Value Projection</div>
+                    <div class="feature-desc">
+                        Model how new evidence discovered later will likely impact case trajectory. Plan evidence gathering strategy accordingly.
+                    </div>
+                </div>
+            </div>
+
+            <h3>How It Works</h3>
+            <p style="color: #cbd5e1; margin-bottom: 15px;">
+                Chrono-Walker applies temporal reasoning to your case:
+            </p>
+            <ol style="color: #cbd5e1; margin-left: 20px;">
+                <li>Ingests current case state and historical case progression data</li>
+                <li>Models how likely events (discovery, motions, settlement) will impact case</li>
+                <li>Projects probability distributions across multiple future timelines</li>
+                <li>Identifies high-probability branch points and decision windows</li>
+                <li>Delivers actionable timeline for maximizing case strength</li>
+            </ol>
+        </section>
+
+        <section class="section">
+            <h2>Use Cases</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Settlement Timing</div>
+                    <div class="feature-desc">
+                        Determine optimal timing for settlement negotiations. Know when your case is strongest and when momentum shifts.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Discovery Strategy</div>
+                    <div class="feature-desc">
+                        Plan discovery strategy to maximize information advantage before key decision points. Time motions for maximum effect.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Contingency Planning</div>
+                    <div class="feature-desc">
+                        Prepare contingency strategies for likely future scenarios. Know what to do if key evidence is excluded or witness fails.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Client Management</div>
+                    <div class="feature-desc">
+                        Set realistic client expectations for case trajectory. Explain probable timelines and probable outcomes with data.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="text-align: center;">
+            <h2>Ready to See Your Case's Future?</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 30px;">
+                Let Chrono-Walker forecast your case trajectory and guide your strategy.
+            </p>
+            <a href="index.html#pricing" class="btn btn-primary">Get Started with TheGAVL</a>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 TheGAVL. Chrono-Walker Temporal Forecasting Module.</p>
+            <p>Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+        </footer>
+    </div>
+</body>
+</html>

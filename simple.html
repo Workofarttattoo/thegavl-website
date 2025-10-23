@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAVL Courtroom Lens — Simple Assistant</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050914;
+      --surface: rgba(11, 17, 32, 0.82);
+      --surface-strong: rgba(13, 22, 44, 0.92);
+      --border: rgba(98, 132, 234, 0.45);
+      --accent: #6a8dff;
+      --text-primary: #e8edff;
+      --text-muted: rgba(216, 224, 255, 0.72);
+      --font-heading: "Segoe UI", "IBM Plex Sans", system-ui, sans-serif;
+      --font-body: "IBM Plex Serif", Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 12% 18%, rgba(74, 106, 255, 0.32), transparent 60%),
+        radial-gradient(circle at 82% 26%, rgba(255, 142, 92, 0.25), transparent 62%),
+        linear-gradient(120deg, rgba(7, 12, 28, 0.9), rgba(3, 5, 12, 0.95));
+      z-index: 0;
+      pointer-events: none;
+      filter: saturate(120%);
+    }
+
+    .ambient-gradient {
+      position: fixed;
+      inset: -40% -30% auto -40%;
+      height: 400px;
+      background: radial-gradient(circle at 60% 40%, rgba(118, 148, 255, 0.28), transparent 75%);
+      filter: blur(90px);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+      transform: translateZ(0);
+    }
+
+    .court-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(560px, 2fr);
+      gap: 32px;
+      padding: 40px 48px;
+      align-items: stretch;
+    }
+
+    .dimension-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 26px;
+      box-shadow: 0 28px 70px rgba(6, 9, 24, 0.65);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dimension-column::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(92, 120, 230, 0.25), transparent 58%);
+      pointer-events: none;
+    }
+
+    .dimension-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      font-family: var(--font-heading);
+      position: relative;
+      z-index: 1;
+    }
+
+    .room-label {
+      display: block;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .dimension-title {
+      margin: 0;
+      font-size: 1.55rem;
+      letter-spacing: 0.04em;
+    }
+
+    .status-indicator {
+      background: rgba(74, 106, 255, 0.25);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .status-indicator.listening {
+      background: rgba(231, 76, 60, 0.35);
+      color: #ffe9e3;
+      box-shadow: 0 0 24px rgba(231, 76, 60, 0.55);
+    }
+
+    .scene-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 280px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(19, 28, 58, 0.88), rgba(7, 10, 24, 0.95));
+      border: 1px solid rgba(118, 144, 240, 0.35);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .scene-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 28% 22%, rgba(78, 110, 230, 0.4), transparent 58%),
+        radial-gradient(circle at 78% 78%, rgba(255, 153, 94, 0.28), transparent 52%);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    #courtCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 26px 40px rgba(8, 12, 26, 0.75));
+    }
+
+    .scene-grid {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(122, 146, 238, 0.08) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(122, 146, 238, 0.08) 1px, transparent 1px);
+      background-size: 120px 120px;
+      opacity: 0.3;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .simple-figures {
+      position: absolute;
+      inset: auto 0 28px;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      align-items: flex-end;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .figure {
+      width: 68px;
+      height: 150px;
+      border-radius: 34px 34px 18px 18px;
+      background: linear-gradient(180deg, rgba(122, 144, 220, 0.65), rgba(64, 76, 124, 0.95));
+      position: relative;
+      animation: sway 8s ease-in-out infinite;
+      box-shadow: 0 18px 40px rgba(16, 22, 52, 0.55);
+    }
+
+    .figure::before {
+      content: "";
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(236, 219, 203, 0.95);
+      box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .figure::after {
+      content: "";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(30, 40, 70, 0.92);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .figure:nth-child(2) {
+      animation-delay: -4s;
+    }
+
+    .figure:nth-child(3) {
+      animation-delay: -2s;
+    }
+
+    .figure.judge {
+      height: 165px;
+      background: linear-gradient(180deg, rgba(52, 62, 118, 0.85), rgba(22, 28, 74, 0.98));
+    }
+
+    .figure.judge::after {
+      background: rgba(18, 24, 52, 0.95);
+    }
+
+    .figure.defendant {
+      background: linear-gradient(180deg, rgba(168, 82, 82, 0.72), rgba(98, 32, 32, 0.95));
+    }
+
+    @keyframes sway {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      30% {
+        transform: translateY(-2px) rotate(1deg);
+      }
+      65% {
+        transform: translateY(2px) rotate(-1deg);
+      }
+    }
+
+    .dimension-footer {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 18px;
+    }
+
+    .depth-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+    }
+
+    .depth-card {
+      background: rgba(15, 24, 52, 0.82);
+      border: 1px solid rgba(118, 144, 240, 0.25);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 18px 36px rgba(8, 12, 28, 0.5);
+      backdrop-filter: blur(14px);
+    }
+
+    .depth-title {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .depth-value {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+    }
+
+    .dimension-hint {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .transcript-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 32px;
+      box-shadow: 0 32px 80px rgba(4, 7, 22, 0.72);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transcript-column::before {
+      content: "";
+      position: absolute;
+      inset: -18% -32% auto -18%;
+      height: 240px;
+      background: radial-gradient(circle at top right, rgba(102, 134, 255, 0.32), transparent 68%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .panel-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .panel-eyebrow {
+      margin: 0;
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .prompt-text {
+      margin: 6px 0 0;
+      font-size: 1.9rem;
+      line-height: 1.35;
+      font-family: var(--font-heading);
+      text-shadow: 0 18px 40px rgba(10, 16, 42, 0.6);
+    }
+
+    .language-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 160px;
+      font-family: var(--font-heading);
+    }
+
+    .language-selector label {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .language-selector select {
+      appearance: none;
+      background: rgba(16, 24, 50, 0.85);
+      border: 1px solid rgba(122, 146, 238, 0.4);
+      color: var(--text-primary);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: var(--font-heading);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .language-selector select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(106, 141, 255, 0.25);
+    }
+
+    .control-band {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .voice-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+
+    .voice-btn {
+      background: linear-gradient(135deg, rgba(106, 141, 255, 0.82), rgba(74, 108, 255, 0.68));
+      border: none;
+      border-radius: 18px;
+      padding: 14px 18px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: var(--font-heading);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 22px 45px rgba(19, 36, 94, 0.55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .voice-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 28px 54px rgba(19, 36, 94, 0.65);
+    }
+
+    .voice-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .voice-btn.secondary {
+      background: linear-gradient(135deg, rgba(54, 66, 104, 0.92), rgba(42, 54, 98, 0.92));
+      box-shadow: 0 18px 40px rgba(12, 20, 52, 0.55);
+    }
+
+    .voice-btn.recording {
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.85), rgba(161, 32, 32, 0.8));
+      box-shadow: 0 24px 55px rgba(231, 76, 60, 0.55);
+    }
+
+    .voice-btn.hidden {
+      display: none;
+    }
+
+    .transcript-stage {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .transcript-stage::before {
+      content: "";
+      position: absolute;
+      inset: -32px -32px auto;
+      height: 220px;
+      background: radial-gradient(circle at top left, rgba(255, 173, 94, 0.28), transparent 70%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .transcript-area {
+      position: relative;
+      flex: 1;
+      background: rgba(9, 14, 34, 0.85);
+      border: 1px solid rgba(118, 144, 240, 0.35);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 28px 65px rgba(5, 8, 24, 0.6);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .transcript-area::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 120px;
+      background: linear-gradient(0deg, rgba(5, 8, 24, 0.9), transparent);
+      pointer-events: none;
+    }
+
+    .transcript-text {
+      position: relative;
+      z-index: 1;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      margin: 0;
+      max-height: 100%;
+      overflow-y: auto;
+      padding-right: 12px;
+    }
+
+    .transcript-text::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .transcript-text::-webkit-scrollbar-thumb {
+      background: rgba(118, 144, 240, 0.45);
+      border-radius: 8px;
+    }
+
+    .transcript-text::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .transcript-footnote {
+      margin: 6px 0 0;
+      font-size: 0.85rem;
+      font-family: var(--font-heading);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 1240px) {
+      .court-container {
+        grid-template-columns: 1fr;
+        padding: 32px 28px;
+        gap: 28px;
+      }
+
+      .transcript-column {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .court-container {
+        padding: 24px 20px;
+      }
+
+      .dimension-column,
+      .transcript-column {
+        padding: 24px;
+        border-radius: 22px;
+      }
+
+      .voice-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .prompt-text {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-gradient"></div>
+  <div class="court-container">
+    <aside class="dimension-column">
+      <div class="dimension-header">
+        <div>
+          <span class="room-label">Chamber visual feed</span>
+          <h1 class="dimension-title">GAVL Courtroom Lens</h1>
+        </div>
+        <div class="status-indicator" id="statusIndicator">Ready</div>
+      </div>
+      <div class="scene-wrapper">
+        <canvas id="courtCanvas"></canvas>
+        <div class="scene-grid"></div>
+        <div class="simple-figures">
+          <div class="figure judge" aria-hidden="true"></div>
+          <div class="figure" aria-hidden="true"></div>
+          <div class="figure defendant" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="dimension-footer">
+        <div class="depth-grid">
+          <div class="depth-card">
+            <span class="depth-title">Language</span>
+            <span class="depth-value" id="languageReadout">English</span>
+          </div>
+          <div class="depth-card">
+            <span class="depth-title">Mode</span>
+            <span class="depth-value">Evidence intake</span>
+          </div>
+          <div class="depth-card">
+            <span class="depth-title">Quantum link</span>
+            <span class="depth-value">Standby</span>
+          </div>
+        </div>
+        <p class="dimension-hint">Dictate the unfolding record while the chamber projects layered perspectives of the bench, jury rail, and counsel tables.</p>
+      </div>
+    </aside>
+
+    <section class="transcript-column">
+      <header class="panel-header">
+        <div>
+          <p class="panel-eyebrow">Live transcript</p>
+          <h2 class="prompt-text" id="promptText">Begin telling us your evidence, talk freely</h2>
+        </div>
+        <div class="language-selector">
+          <label for="languageSelect">Language</label>
+          <select id="languageSelect" title="Select Language" aria-label="Select Language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="zh">中文</option>
+            <option value="ko">한국어</option>
+            <option value="vi">Tiếng Việt</option>
+            <option value="ar">العربية</option>
+            <option value="hi">हिन्दी</option>
+            <option value="pt">Português</option>
+            <option value="ru">Русский</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="ja">日本語</option>
+            <option value="th">ไทย</option>
+            <option value="tl">Tagalog</option>
+          </select>
+        </div>
+      </header>
+
+      <div class="control-band">
+        <div class="voice-controls">
+          <button class="voice-btn" id="startRecording">🎤 Start Speaking</button>
+          <button class="voice-btn hidden" id="stopRecording">⏹ Stop</button>
+          <button class="voice-btn secondary" id="testVoice">🔊 Test Voice</button>
+          <button class="voice-btn secondary" id="quantumAnalysis" data-help="Run quantum analysis on current evidence">⚛️ Quantum Analysis</button>
+        </div>
+        <p class="transcript-footnote">The assistant captures every beat, routes key findings to the bench overlay, and can escalate to quantum optimisation on request.</p>
+      </div>
+
+      <div class="transcript-stage">
+        <div class="transcript-area">
+          <div class="transcript-text" id="transcriptText">Your evidence will appear here as you speak...</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Language translations
+    const translations = {
+      en: {
+        prompt: "Begin telling us your evidence, talk freely",
+        startBtn: "🎤 Start Speaking",
+        stopBtn: "⏹ Stop",
+        ready: "Ready",
+        listening: "Listening...",
+        placeholder: "Your evidence will appear here as you speak..."
+      },
+      es: {
+        prompt: "Comience a contarnos su evidencia, hable libremente",
+        startBtn: "🎤 Comenzar a Hablar",
+        stopBtn: "⏹ Detener",
+        ready: "Listo",
+        listening: "Escuchando...",
+        placeholder: "Su evidencia aparecerá aquí mientras habla..."
+      },
+      zh: {
+        prompt: "开始告诉我们您的证据，自由发言",
+        startBtn: "🎤 开始说话",
+        stopBtn: "⏹ 停止",
+        ready: "准备就绪",
+        listening: "正在聆听...",
+        placeholder: "您说话时，证据将在此处显示..."
+      },
+      ko: {
+        prompt: "증거를 자유롭게 말씀해 주세요",
+        startBtn: "🎤 말하기 시작",
+        stopBtn: "⏹ 중지",
+        ready: "준비됨",
+        listening: "듣는 중...",
+        placeholder: "말씀하시면 증거가 여기에 표시됩니다..."
+      },
+      vi: {
+        prompt: "Hãy bắt đầu kể về bằng chứng của bạn, nói tự do",
+        startBtn: "🎤 Bắt Đầu Nói",
+        stopBtn: "⏹ Dừng",
+        ready: "Sẵn sàng",
+        listening: "Đang nghe...",
+        placeholder: "Bằng chứng của bạn sẽ xuất hiện ở đây khi bạn nói..."
+      },
+      ar: {
+        prompt: "ابدأ في إخبارنا بأدلتك، تحدث بحرية",
+        startBtn: "🎤 ابدأ الكلام",
+        stopBtn: "⏹ توقف",
+        ready: "جاهز",
+        listening: "أستمع...",
+        placeholder: "ستظهر أدلتك هنا أثناء تحدثك..."
+      },
+      hi: {
+        prompt: "अपने साक्ष्य के बारे में बताना शुरू करें, स्वतंत्र रूप से बोलें",
+        startBtn: "🎤 बोलना शुरू करें",
+        stopBtn: "⏹ रोकें",
+        ready: "तैयार",
+        listening: "सुन रहे हैं...",
+        placeholder: "जब आप बोलेंगे तो आपके साक्ष्य यहाँ दिखाई देंगे..."
+      },
+      pt: {
+        prompt: "Comece a nos contar sua evidência, fale livremente",
+        startBtn: "🎤 Começar a Falar",
+        stopBtn: "⏹ Parar",
+        ready: "Pronto",
+        listening: "Ouvindo...",
+        placeholder: "Sua evidência aparecerá aqui conforme você fala..."
+      },
+      ru: {
+        prompt: "Начните рассказывать нам свои доказательства, говорите свободно",
+        startBtn: "🎤 Начать Говорить",
+        stopBtn: "⏹ Остановить",
+        ready: "Готов",
+        listening: "Слушаю...",
+        placeholder: "Ваши доказательства будут появляться здесь, пока вы говорите..."
+      },
+      fr: {
+        prompt: "Commencez à nous dire vos preuves, parlez librement",
+        startBtn: "🎤 Commencer à Parler",
+        stopBtn: "⏹ Arrêter",
+        ready: "Prêt",
+        listening: "J'écoute...",
+        placeholder: "Vos preuves apparaîtront ici pendant que vous parlez..."
+      },
+      de: {
+        prompt: "Beginnen Sie, uns Ihre Beweise zu erzählen, sprechen Sie frei",
+        startBtn: "🎤 Sprechen Beginnen",
+        stopBtn: "⏹ Stoppen",
+        ready: "Bereit",
+        listening: "Höre zu...",
+        placeholder: "Ihre Beweise werden hier erscheinen, während Sie sprechen..."
+      },
+      it: {
+        prompt: "Iniziate a raccontarci le vostre prove, parlate liberamente",
+        startBtn: "🎤 Inizia a Parlare",
+        stopBtn: "⏹ Ferma",
+        ready: "Pronto",
+        listening: "Ascolto...",
+        placeholder: "Le vostre prove appariranno qui mentre parlate..."
+      },
+      ja: {
+        prompt: "証拠について話し始めてください、自由に話してください",
+        startBtn: "🎤 話し始める",
+        stopBtn: "⏹ 停止",
+        ready: "準備完了",
+        listening: "聞いています...",
+        placeholder: "話している間、証拠がここに表示されます..."
+      },
+      th: {
+        prompt: "เริ่มบอกหลักฐานของเรา พูดได้อย่างอิสระ",
+        startBtn: "🎤 เริ่มพูด",
+        stopBtn: "⏹ หยุด",
+        ready: "พร้อม",
+        listening: "กำลังฟัง...",
+        placeholder: "หลักฐานของคุณจะปรากฏที่นี่ขณะที่คุณพูด..."
+      },
+      tl: {
+        prompt: "Simulan ninyong sabihin ang inyong ebidensya, magsalita nang malaya",
+        startBtn: "🎤 Simulang Magsalita",
+        stopBtn: "⏹ Tumigil",
+        ready: "Handa",
+        listening: "Nakikinig...",
+        placeholder: "Ang inyong ebidensya ay lilitaw dito habang kayo ay nagsasalita..."
+      }
+    };
+
+    // DOM elements
+    const languageSelect = document.getElementById('languageSelect');
+    const promptText = document.getElementById('promptText');
+    const startBtn = document.getElementById('startRecording');
+    const stopBtn = document.getElementById('stopRecording');
+    const testBtn = document.getElementById('testVoice');
+    const quantumBtn = document.getElementById('quantumAnalysis');
+    const statusIndicator = document.getElementById('statusIndicator');
+    const transcriptText = document.getElementById('transcriptText');
+    const languageReadout = document.getElementById('languageReadout');
+
+    let recognition = null;
+    let isRecording = false;
+    let ws = null;
+    let micPermissionGranted = false;
+    let requestingMicAccess = false;
+
+    const speechLocaleMap = {
+      en: 'en-US',
+      es: 'es-ES',
+      zh: 'zh-CN',
+      ko: 'ko-KR',
+      vi: 'vi-VN',
+      ar: 'ar-SA',
+      hi: 'hi-IN',
+      pt: 'pt-BR',
+      ru: 'ru-RU',
+      fr: 'fr-FR',
+      de: 'de-DE',
+      it: 'it-IT',
+      ja: 'ja-JP',
+      th: 'th-TH',
+      tl: 'tl-PH'
+    };
+
+    function getTranslation(langKey, field) {
+      const lang = translations[langKey] || translations.en;
+      return lang[field] || translations.en[field];
+    }
+
+    function getTranslationObject(langKey) {
+      return translations[langKey] || translations.en;
+    }
+
+    function getSpeechLocale(langKey) {
+      return speechLocaleMap[langKey] || speechLocaleMap.en;
+    }
+
+    async function ensureMicrophoneAccess() {
+      if (micPermissionGranted) {
+        return true;
+      }
+      if (requestingMicAccess) {
+        return micPermissionGranted;
+      }
+      if (!navigator.mediaDevices?.getUserMedia) {
+        transcriptText.textContent += '\n[Error] Microphone access is not supported in this browser.\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+        if (statusIndicator) {
+          statusIndicator.textContent = 'Mic unsupported';
+          statusIndicator.classList.remove('listening');
+        }
+        return false;
+      }
+
+      requestingMicAccess = true;
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((track) => track.stop());
+        micPermissionGranted = true;
+        if (statusIndicator && !isRecording) {
+          statusIndicator.textContent = getTranslation(languageSelect.value, 'ready');
+          statusIndicator.classList.remove('listening');
+        }
+        return true;
+      } catch (err) {
+        micPermissionGranted = false;
+        const reason = err?.name || err?.message || String(err);
+        transcriptText.textContent += `\n[Error] Microphone access denied: ${reason}\n`;
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+        if (statusIndicator) {
+          statusIndicator.textContent = 'Mic blocked';
+          statusIndicator.classList.remove('listening');
+        }
+        return false;
+      } finally {
+        requestingMicAccess = false;
+      }
+    }
+
+    function updateLanguage() {
+      const lang = getTranslationObject(languageSelect.value);
+      promptText.textContent = lang.prompt;
+      startBtn.textContent = lang.startBtn;
+      stopBtn.textContent = lang.stopBtn;
+      if (statusIndicator && !isRecording) {
+        statusIndicator.textContent = lang.ready;
+      }
+      if (transcriptText) {
+        const safeText = transcriptText.textContent.trim();
+        const isPlaceholder = Object.values(translations).some((entry) => entry.placeholder === safeText);
+        if (!safeText || isPlaceholder) {
+          transcriptText.textContent = lang.placeholder;
+        }
+      }
+      if (languageReadout) {
+        languageReadout.textContent = languageSelect.options[languageSelect.selectedIndex].textContent;
+      }
+      if (recognition && !isRecording) {
+        recognition.lang = getSpeechLocale(languageSelect.value);
+      }
+    }
+
+    // Voice recognition setup
+    function initVoiceRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        transcriptText.textContent = '[Error] Your browser does not support speech recognition.';
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = getSpeechLocale(languageSelect.value);
+
+      recognition.onstart = () => {
+        isRecording = true;
+        micPermissionGranted = true;
+        startBtn.classList.add('hidden');
+        stopBtn.classList.remove('hidden');
+        startBtn.classList.remove('recording');
+        stopBtn.classList.add('recording');
+        statusIndicator.textContent = getTranslation(languageSelect.value, 'listening');
+        statusIndicator.classList.add('listening');
+      };
+
+      recognition.onresult = (event) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + '\n';
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        if (finalTranscript) {
+          if (transcriptText.textContent === getTranslation(languageSelect.value, 'placeholder')) {
+            transcriptText.textContent = '';
+          }
+          transcriptText.textContent += finalTranscript;
+          transcriptText.scrollTop = transcriptText.scrollHeight;
+
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({
+              type: 'evidence',
+              text: finalTranscript.trim(),
+              language: languageSelect.value
+            }));
+          }
+        }
+
+        if (interimTranscript) {
+          statusIndicator.textContent = getTranslation(languageSelect.value, 'listening');
+        }
+      };
+
+      recognition.onerror = (event) => {
+        const { error } = event;
+        console.error('Speech recognition error:', error);
+        let message = `[Error] ${error}`;
+        if (error === 'not-allowed' || error === 'service-not-allowed') {
+          micPermissionGranted = false;
+          message += ' — please allow microphone access and try again.';
+          if (statusIndicator) {
+            statusIndicator.textContent = 'Mic blocked';
+            statusIndicator.classList.remove('listening');
+          }
+        } else if (error === 'aborted') {
+          message += ' — speech service aborted the session.';
+        } else if (error === 'no-speech') {
+          message += ' — no speech detected, please try again.';
+        }
+        transcriptText.textContent += `\n${message}\n`;
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      };
+
+      recognition.onend = () => {
+        isRecording = false;
+        startBtn.classList.remove('hidden');
+        stopBtn.classList.add('hidden');
+        stopBtn.classList.remove('recording');
+        statusIndicator.textContent = getTranslation(languageSelect.value, 'ready');
+        statusIndicator.classList.remove('listening');
+      };
+    }
+
+    async function startRecording() {
+      const micOk = await ensureMicrophoneAccess();
+      if (!micOk) return;
+      if (!recognition) {
+        initVoiceRecognition();
+      }
+      if (recognition && !isRecording) {
+        recognition.lang = getSpeechLocale(languageSelect.value);
+        try {
+          recognition.start();
+        } catch (err) {
+          const reason = err?.name || err?.message || String(err);
+          transcriptText.textContent += `\n[Error] Unable to start speech recognition: ${reason}\n`;
+          transcriptText.scrollTop = transcriptText.scrollHeight;
+          if (statusIndicator) {
+            statusIndicator.textContent = 'Mic error';
+            statusIndicator.classList.remove('listening');
+          }
+        }
+      } else if (!recognition) {
+        transcriptText.textContent += '\n[Error] Speech recognition is unavailable.\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      }
+    }
+
+    function stopRecording() {
+      if (recognition && isRecording) {
+        isRecording = false;
+        recognition.stop();
+        startBtn.classList.remove('hidden');
+        stopBtn.classList.add('hidden');
+        stopBtn.classList.remove('recording');
+        statusIndicator.textContent = getTranslation(languageSelect.value, 'ready');
+        statusIndicator.classList.remove('listening');
+      }
+    }
+
+    async function testVoice() {
+      transcriptText.textContent += '\n[Test] Testing voice recognition...\n';
+      transcriptText.scrollTop = transcriptText.scrollHeight;
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        transcriptText.textContent += '[Error] Voice recognition not available\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+        return;
+      }
+
+      if (isRecording) {
+        transcriptText.textContent += '[Test] Already recording\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+        return;
+      }
+      const micOk = await ensureMicrophoneAccess();
+      if (!micOk) return;
+
+      const testRecognition = new SpeechRecognition();
+      testRecognition.continuous = false;
+      testRecognition.interimResults = true;
+      testRecognition.lang = getSpeechLocale(languageSelect.value);
+
+      testRecognition.onresult = (event) => {
+        let testTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          testTranscript += event.results[i][0].transcript;
+        }
+        transcriptText.textContent += '[Test Result] ' + testTranscript + '\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      };
+
+      testRecognition.onerror = (event) => {
+        transcriptText.textContent += '[Test Error] ' + event.error + '\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      };
+
+      testRecognition.onend = () => {
+        transcriptText.textContent += '[Test] Mic test finished\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      };
+
+      try {
+        testRecognition.start();
+        transcriptText.textContent += '[Test] Say something now...\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      } catch (err) {
+        const reason = err?.name || err?.message || String(err);
+        transcriptText.textContent += `[Test Error] Unable to start test: ${reason}\n`;
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      }
+    }
+
+    function runQuantumAnalysis() {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        const currentEvidence = transcriptText.textContent.trim();
+        if (currentEvidence && currentEvidence !== getTranslation(languageSelect.value, 'placeholder')) {
+          ws.send(JSON.stringify({
+            type: 'quantum_optimize',
+            evidence: currentEvidence
+          }));
+          transcriptText.textContent += '\n\n[Quantum Analysis Requested]\nAnalyzing evidence with quantum computing...\n';
+          transcriptText.scrollTop = transcriptText.scrollHeight;
+        } else {
+          transcriptText.textContent += '\n\n[Quantum Analysis]\nNo evidence to analyze. Please speak some evidence first.\n';
+          transcriptText.scrollTop = transcriptText.scrollHeight;
+        }
+      }
+    }
+
+    languageSelect.addEventListener('change', updateLanguage);
+    startBtn.addEventListener('click', startRecording);
+    stopBtn.addEventListener('click', stopRecording);
+    testBtn.addEventListener('click', testVoice);
+    quantumBtn.addEventListener('click', runQuantumAnalysis);
+
+    function initWebSocket() {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${window.location.host}/ws/simple`;
+
+      ws = new WebSocket(wsUrl);
+
+      ws.onopen = () => {
+        console.log('Connected to simple court assistant');
+        statusIndicator.textContent = getTranslation(languageSelect.value, 'ready');
+        transcriptText.textContent += '\n[System] Connected to court assistant\n';
+        transcriptText.scrollTop = transcriptText.scrollHeight;
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'response') {
+            transcriptText.textContent += '\n\n[Court Response]\n' + data.output + '\n';
+            transcriptText.scrollTop = transcriptText.scrollHeight;
+          }
+        } catch (err) {
+          console.error('Error parsing WebSocket message:', err);
+        }
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket connection closed');
+        statusIndicator.textContent = 'Disconnected';
+        statusIndicator.classList.remove('listening');
+        setTimeout(initWebSocket, 3000);
+      };
+
+      ws.onerror = (err) => {
+        console.error('WebSocket error:', err);
+      };
+    }
+
+    function initSimpleCourtScene() {
+      const canvas = document.getElementById('courtCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+
+      function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        drawCourtScene();
+      }
+
+      function drawCourtScene() {
+        const width = canvas.width;
+        const height = canvas.height;
+
+        ctx.fillStyle = '#0b1222';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#1e2a4b';
+        ctx.fillRect(width * 0.22, height * 0.25, width * 0.56, height * 0.14);
+
+        const time = Date.now() * 0.001;
+        const sway = Math.sin(time * 0.6) * 4;
+
+        ctx.save();
+        ctx.translate(sway, 0);
+
+        ctx.fillStyle = '#2f3d68';
+        ctx.fillRect(width * 0.48, height * 0.32, 22, 44);
+        ctx.fillStyle = '#f1dcc0';
+        ctx.beginPath();
+        ctx.arc(width * 0.5 + sway * 0.02, height * 0.32, 10, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#7d889a';
+        ctx.fillRect(width * 0.28, height * 0.45, 18, 34);
+        ctx.fillStyle = '#f4e2c6';
+        ctx.beginPath();
+        ctx.arc(width * 0.28 + 9, height * 0.45, 7, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#9fa8c2';
+        ctx.fillRect(width * 0.7, height * 0.45, 18, 34);
+        ctx.fillStyle = '#f4e2c6';
+        ctx.beginPath();
+        ctx.arc(width * 0.7 + 9, height * 0.45, 7, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+
+        ctx.strokeStyle = 'rgba(108, 138, 255, 0.35)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 12; i++) {
+          ctx.beginPath();
+          ctx.moveTo(0, (height / 12) * i);
+          ctx.lineTo(width, (height / 12) * i);
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      setInterval(drawCourtScene, 100);
+    }
+
+    initVoiceRecognition();
+    initWebSocket();
+    updateLanguage();
+    initSimpleCourtScene();
+  </script>
+</body>
+</html>

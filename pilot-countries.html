@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheGAVL Government Pilot Program | 10 Nations</title>
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gavl-navy: #0a1428;
+            --gavl-blue: #1e40af;
+            --gavl-gold: #d4af37;
+            --gavl-white: #ffffff;
+            --gavl-gray: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2847 50%, #0d1f3c 100%);
+            color: #e8eef7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(30, 58, 138, 0.3) 100%);
+            border-bottom: 3px solid rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #d4af37 0%, #f3e5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #93c5fd;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .country-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .country-card:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .country-name {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 12px;
+        }
+
+        .country-program {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            color: #cbd5e1;
+            padding: 8px 0;
+            font-size: 0.9em;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .features-list li:before {
+            content: "✓ ";
+            color: #d4af37;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            color: #0a1428;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .support-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(26, 40, 71, 0.3) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .support-title {
+            color: #d4af37;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .support-desc {
+            color: #cbd5e1;
+            margin-bottom: 15px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #93c5fd;
+            text-decoration: none;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .countries-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to TheGAVL</a>
+
+        <header>
+            <h1>🌍 Government Pilot Program</h1>
+            <p class="tagline">TheGAVL Justice Ministry Deployment Initiative</p>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">Court-grade infrastructure for priority global markets</p>
+        </header>
+
+        <section class="section">
+            <h2>Pilot Invitations: Priority Nations</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 25px;">
+                TheGAVL governance team is onboarding justice ministries and regulatory sandboxes across priority nations. Each cohort receives court-grade infrastructure, localized precedent packs, and white-glove onboarding support for mission-critical deployments.
+            </p>
+
+            <div class="countries-grid">
+                <div class="country-card">
+                    <div class="country-name">🇲🇨 Monaco</div>
+                    <div class="country-program">High-Net-Worth Commercial Law</div>
+                    <div class="country-program">Wealth management and international arbitration</div>
+                    <ul class="features-list">
+                        <li>International maritime law library</li>
+                        <li>Commercial arbitration precedents</li>
+                        <li>Multinational contract analysis</li>
+                        <li>Wealth litigation outcome prediction</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇺🇸 United States</div>
+                    <div class="country-program">Federal Docket Acceleration</div>
+                    <div class="country-program">Administrative law judges and federal courts</div>
+                    <ul class="features-list">
+                        <li>Federal Rules of Civil Procedure codex</li>
+                        <li>Administrative law precedent library</li>
+                        <li>Docket triage and case routing</li>
+                        <li>Opinion quality assurance analytics</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇨🇦 Canada</div>
+                    <div class="country-program">Provincial Civil Pilot</div>
+                    <div class="country-program">Bilingual legal analysis and precedent discovery</div>
+                    <ul class="features-list">
+                        <li>Bilingual French/English precedent library</li>
+                        <li>Provincial civil code analysis</li>
+                        <li>Multi-jurisdiction conflict detection</li>
+                        <li>Court-specific filing guidance</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇬🇧 United Kingdom</div>
+                    <div class="country-program">HMCTS Innovation Sandbox</div>
+                    <div class="country-program">Judicial analytics and modernization</div>
+                    <ul class="features-list">
+                        <li>Common law precedent discovery</li>
+                        <li>Judicial analytics dashboards</li>
+                        <li>Case management automation</li>
+                        <li>Judgment writing assistance</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇩🇪 Germany</div>
+                    <div class="country-program">Data-Protection Compliant Deployment</div>
+                    <div class="country-program">On-premise infrastructure with regulatory assurance</div>
+                    <ul class="features-list">
+                        <li>GDPR-compliant processing</li>
+                        <li>On-premises or sovereign cloud only</li>
+                        <li>German law code library</li>
+                        <li>Audit trail and compliance reporting</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇸🇬 Singapore</div>
+                    <div class="country-program">Smart Courtroom Pilot</div>
+                    <div class="country-program">Digital-native affidavit and evidence validation</div>
+                    <ul class="features-list">
+                        <li>Smart contract integration</li>
+                        <li>Digital affidavit validation</li>
+                        <li>Singapore Penal Code analysis</li>
+                        <li>International commercial law library</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇦🇺 Australia</div>
+                    <div class="country-program">Multi-State Magistrates Program</div>
+                    <div class="country-program">High-volume case backlog triage and management</div>
+                    <ul class="features-list">
+                        <li>Multi-state precedent library</li>
+                        <li>Magistrate case triage</li>
+                        <li>Appellate decision prediction</li>
+                        <li>Backlog analytics dashboard</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇦🇪 UAE</div>
+                    <div class="country-program">Commercial Court Integration</div>
+                    <div class="country-program">Arbitration and commercial dispute resolution</div>
+                    <ul class="features-list">
+                        <li>Commercial law precedent library</li>
+                        <li>Arbitration visibility analytics</li>
+                        <li>Multi-jurisdictional contract analysis</li>
+                        <li>Dispute valuation assistance</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇧🇷 Brazil</div>
+                    <div class="country-program">Translation-Aware Civil Workflow</div>
+                    <div class="country-program">High-volume civil litigation with language support</div>
+                    <ul class="features-list">
+                        <li>Portuguese legal terminology</li>
+                        <li>Translation-aware analysis</li>
+                        <li>Civil code precedent discovery</li>
+                        <li>High-volume case triage</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇮🇳 India</div>
+                    <div class="country-program">Fast-Track Benches Program</div>
+                    <div class="country-program">Appeals analytics for expedited hearing</div>
+                    <ul class="features-list">
+                        <li>Indian Penal Code library</li>
+                        <li>Appeals outcome prediction</li>
+                        <li>Fast-track eligibility analysis</li>
+                        <li>Precedent discovery</li>
+                    </ul>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-name">🇰🇷 South Korea</div>
+                    <div class="country-program">Constitutional Court Precedent Discovery</div>
+                    <div class="country-program">Augmented constitutional law research</div>
+                    <ul class="features-list">
+                        <li>Constitutional precedent discovery</li>
+                        <li>Case law augmentation</li>
+                        <li>Seoul High Court analytics</li>
+                        <li>Constitutional rights analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Included in Every Government Deployment</h2>
+            <div class="support-box">
+                <div class="support-title">🏛️ Justice Ministry Support</div>
+                <div class="support-desc">Every government pilot includes:</div>
+                <ul style="color: #cbd5e1; margin-left: 20px;">
+                    <li>Court-grade infrastructure (redundancy, failover, 99.99% uptime SLA)</li>
+                    <li>White-glove onboarding with legal tech specialists</li>
+                    <li>Localized precedent library specific to jurisdiction</li>
+                    <li>Judicial oversight tooling and audit trails</li>
+                    <li>Chain-of-custody export and compliance reporting</li>
+                    <li>Multi-language support for multilingual jurisdictions</li>
+                    <li>Dedicated government liaison and technical support team</li>
+                    <li>Configurable audit retention and privacy safeguards</li>
+                    <li>Secure verdict token infrastructure with TLS mutual authentication</li>
+                    <li>Signed activity logs and tamper-evident case records</li>
+                </ul>
+            </div>
+
+            <div class="support-box">
+                <div class="support-title">📋 Compliance & Governance</div>
+                <div class="support-desc">Built for judicial requirements:</div>
+                <ul style="color: #cbd5e1; margin-left: 20px;">
+                    <li>Transparency in AI decision-making with explainable reasoning</li>
+                    <li>No judicial authority delegation - tool assists, judges decide</li>
+                    <li>Case law bias auditing and fairness verification</li>
+                    <li>Confidential information protection and sealed records handling</li>
+                    <li>Regular accuracy validation and performance reporting</li>
+                    <li>Judicial advisory board oversight of system updates</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section" style="text-align: center;">
+            <h2>Ready to Participate in the Pilot Program?</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 30px;">
+                Contact the TheGAVL governance team to discuss your justice ministry's specific needs.
+            </p>
+            <a href="mailto:inventor@aios.is?subject=Government%20Pilot%20Inquiry" class="btn btn-primary">Request Government Briefing</a>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 TheGAVL. Government Pilot Program.</p>
+            <p>Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+        </footer>
+    </div>
+</body>
+</html>

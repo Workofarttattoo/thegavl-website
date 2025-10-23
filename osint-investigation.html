@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT Investigation Module | TheGAVL</title>
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gavl-navy: #0a1428;
+            --gavl-blue: #1e40af;
+            --gavl-gold: #d4af37;
+            --gavl-white: #ffffff;
+            --gavl-cyan: #06b6d4;
+            --gavl-gray: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2847 50%, #0d1f3c 100%);
+            color: #e8eef7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(30, 58, 138, 0.3) 100%);
+            border-bottom: 3px solid rgba(6, 182, 212, 0.4);
+            border-radius: 15px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #06b6d4;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #06b6d4;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #93c5fd;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid #06b6d4;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-left-color: #22d3ee;
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(6, 182, 212, 0.1);
+        }
+
+        .feature-title {
+            color: #06b6d4;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.5);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #93c5fd;
+            text-decoration: none;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to TheGAVL</a>
+
+        <header>
+            <h1>🔍 OSINT Investigation</h1>
+            <p class="tagline">Open Source Intelligence Gathering & Analysis</p>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">Uncover evidence and intelligence from publicly available sources</p>
+        </header>
+
+        <section class="section">
+            <h2>Intelligence From Open Sources</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 25px;">
+                OSINT Investigation module systematically gathers, analyzes, and connects evidence from publicly available sources: social media, business databases, regulatory filings, news archives, property records, and web resources. Build stronger cases by uncovering evidence opposing counsel may have missed.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Digital Footprint Analysis</div>
+                    <div class="feature-desc">
+                        Analyze social media profiles, digital history, and online presence. Identify contradictions between testimony and public behavior.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Business Intelligence Gathering</div>
+                    <div class="feature-desc">
+                        Access SEC filings, corporate records, and business databases. Understand financial capacity and settlement authority.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Network Analysis</div>
+                    <div class="feature-desc">
+                        Map relationships between parties, witnesses, and organizations. Identify undisclosed conflicts of interest and connections.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Timeline Reconstruction</div>
+                    <div class="feature-desc">
+                        Build detailed timelines using news reports, social media posts, and public records. Verify or contradict party claims.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Geolocation Intelligence</div>
+                    <div class="feature-desc">
+                        Use location data from public sources and geotags. Verify alibis or establish proximity to relevant locations and events.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Pattern Recognition</div>
+                    <div class="feature-desc">
+                        Identify patterns in public behavior, financial transactions, and communications. Uncover schemes and cover-up attempts.
+                    </div>
+                </div>
+            </div>
+
+            <h3>How It Works</h3>
+            <p style="color: #cbd5e1; margin-bottom: 15px;">
+                OSINT Investigation applies systematic intelligence gathering:
+            </p>
+            <ol style="color: #cbd5e1; margin-left: 20px;">
+                <li>Identifies relevant publicly available data sources for your case</li>
+                <li>Systematically gathers information from multiple sources</li>
+                <li>Cross-references and verifies information for reliability</li>
+                <li>Analyzes patterns, connections, and contradictions</li>
+                <li>Generates actionable intelligence for case strategy</li>
+            </ol>
+        </section>
+
+        <section class="section">
+            <h2>Use Cases</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Witness Impeachment</div>
+                    <div class="feature-desc">
+                        Find public statements, social media posts, or published records that contradict witness testimony or credibility.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Evidence Discovery</div>
+                    <div class="feature-desc">
+                        Identify documents, photos, and statements accessible publicly that should be discovered or obtained through discovery.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Party Profile Development</div>
+                    <div class="feature-desc">
+                        Build comprehensive profiles of opposing parties using public information. Understand motivations and likely strategies.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Financial Analysis</div>
+                    <div class="feature-desc">
+                        Assess opponent's financial situation using SEC filings, property records, and business databases for settlement positioning.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Expert Witness Vetting</div>
+                    <div class="feature-desc">
+                        Research expert credentials, published work, and prior testimony. Identify experts with conflicts or consistency issues.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Regulatory Compliance Review</div>
+                    <div class="feature-desc">
+                        Analyze public regulatory records and filings. Identify violations, sanctions, or prior similar conduct.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="text-align: center;">
+            <h2>Ready to Gather Intelligence?</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 30px;">
+                Let OSINT Investigation uncover evidence that strengthens your case.
+            </p>
+            <a href="index.html#pricing" class="btn btn-primary">Get Started with TheGAVL</a>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 TheGAVL. OSINT Investigation Module.</p>
+            <p>Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Sophiarc Probabilistic Reasoning | TheGAVL</title>
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gavl-navy: #0a1428;
+            --gavl-blue: #1e40af;
+            --gavl-gold: #d4af37;
+            --gavl-white: #ffffff;
+            --gavl-green: #10b981;
+            --gavl-gray: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2847 50%, #0d1f3c 100%);
+            color: #e8eef7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(30, 58, 138, 0.3) 100%);
+            border-bottom: 3px solid rgba(16, 185, 129, 0.4);
+            border-radius: 15px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #10b981;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #10b981;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #93c5fd;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid #10b981;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-left-color: #6ee7b7;
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .feature-title {
+            color: #10b981;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #93c5fd;
+            text-decoration: none;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to TheGAVL</a>
+
+        <header>
+            <h1>🧠 Bayesian Sophiarc</h1>
+            <p class="tagline">Advanced Probabilistic Reasoning & Belief Updating</p>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">Transform evidence into actionable probability estimates for case outcomes</p>
+        </header>
+
+        <section class="section">
+            <h2>Reason Under Uncertainty</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 25px;">
+                Bayesian Sophiarc is an advanced reasoning module that applies Bayesian probability theory to evolve your beliefs about case outcomes as new evidence emerges. Rather than static predictions, it continuously updates probability estimates based on actual case developments, providing a sophisticated framework for reasoning under uncertainty.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Prior Probability Establishment</div>
+                    <div class="feature-desc">
+                        Establish baseline probabilities for case outcomes based on similar historical cases, case law, and jurisdiction-specific factors.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Evidence Likelihood Modeling</div>
+                    <div class="feature-desc">
+                        For each piece of evidence, model how likely that evidence would be if your case is strong vs. weak. Update beliefs accordingly.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Posterior Probability Calculation</div>
+                    <div class="feature-desc">
+                        Automatically recalculate case outcome probabilities as new evidence enters the case. Watch your win probability evolve in real-time.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Confidence Interval Estimation</div>
+                    <div class="feature-desc">
+                        Know not just the most likely outcome, but the range of plausible outcomes with associated confidence levels.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Counterfactual Analysis</div>
+                    <div class="feature-desc">
+                        Ask "what if" questions: How would outcome probabilities change if this evidence were ruled inadmissible? If witness testimony is impeached?
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Sensitivity Analysis</div>
+                    <div class="feature-desc">
+                        Identify which pieces of evidence matter most to outcome. Focus preparation on what actually impacts the verdict.
+                    </div>
+                </div>
+            </div>
+
+            <h3>How It Works</h3>
+            <p style="color: #cbd5e1; margin-bottom: 15px;">
+                Bayesian Sophiarc applies sophisticated probabilistic reasoning:
+            </p>
+            <ol style="color: #cbd5e1; margin-left: 20px;">
+                <li>Analyzes case history to establish reasonable prior probabilities for your case type</li>
+                <li>Models likelihood ratios for each piece of evidence</li>
+                <li>Applies Bayes' theorem to update probabilities as evidence develops</li>
+                <li>Quantifies uncertainty with credible intervals and confidence ranges</li>
+                <li>Provides sensitivity analysis showing which evidence matters most</li>
+            </ol>
+        </section>
+
+        <section class="section">
+            <h2>Use Cases</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Evidence Evaluation</div>
+                    <div class="feature-desc">
+                        Understand the true impact of new evidence on your case. Focus resources on evidence that actually matters.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Discovery Planning</div>
+                    <div class="feature-desc">
+                        Model how different discovery responses will impact outcome probabilities. Plan strategically with confidence.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Motion Impact Forecasting</div>
+                    <div class="feature-desc">
+                        Predict how ruling on motions in limine will impact case trajectory. Know which motions truly matter.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Expert Witness Planning</div>
+                    <div class="feature-desc">
+                        Model how different expert testimony will impact case outcome. Hire and prepare experts strategically.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Settlement Valuation</div>
+                    <div class="feature-desc">
+                        Use probability distributions to value your case more accurately than traditional settlement analysis.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Appeal Strength Assessment</div>
+                    <div class="feature-desc">
+                        Forecast appellate success by modeling how different appeals courts have treated similar issues.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="text-align: center;">
+            <h2>Ready for Sophisticated Probabilistic Reasoning?</h2>
+            <p style="font-size: 1.1em; color: #e8eef7; margin-bottom: 30px;">
+                Let Bayesian Sophiarc transform evidence into actionable probability insights.
+            </p>
+            <a href="index.html#pricing" class="btn btn-primary">Get Started with TheGAVL</a>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 TheGAVL. Bayesian Sophiarc Probabilistic Reasoning Module.</p>
+            <p>Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+        </footer>
+    </div>
+</body>
+</html>
