@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact TheGAVL - Legal Tech Innovation</title>
+    <meta name="description" content="Contact TheGAVL team. Questions about our legal tech solutions, case analysis tools, or AI-powered litigation support? We're here to help.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #e0e0e0;
+            --text-dim: #a0a0a0;
+            --accent: #00ff88;
+            --accent-dim: #00cc6a;
+            --legal: #d4af37;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .back-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--legal), #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .form-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--legal);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--legal), #ffcc00);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+        }
+
+        .info-box h3 {
+            color: var(--legal);
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: var(--text-dim);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to TheGAVL</a>
+
+        <h1>Contact TheGAVL</h1>
+        <p class="subtitle">
+            Questions about our legal tech solutions? Let's discuss how we can help transform your practice.
+        </p>
+
+        <div class="form-container">
+            <form id="contactForm" action="https://formspree.io/f/manlqqep" method="POST">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="you@lawfirm.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="firm">Law Firm/Organization (optional)</label>
+                    <input type="text" id="firm" name="firm" placeholder="Your firm or organization">
+                </div>
+
+                <div class="form-group">
+                    <label for="topic">What can we help with? *</label>
+                    <select id="topic" name="topic" required>
+                        <option value="">Select a topic...</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="gavl_suite">TheGAVL Suite / Case Analysis</option>
+                        <option value="chrono_walker">Chrono Walker / Evidence Timeline</option>
+                        <option value="boardroom">Boardroom of Light / Strategy</option>
+                        <option value="oracle">Oracle of Light / Outcome Prediction</option>
+                        <option value="enterprise">Enterprise Deployment</option>
+                        <option value="pilot">Pilot Program Interest</option>
+                        <option value="partnership">Partnership Opportunity</option>
+                        <option value="demo">Request Demo</option>
+                        <option value="support">Technical Support</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your legal tech needs, case requirements, or how we can help your practice..."></textarea>
+                </div>
+
+                <input type="hidden" name="_subject" value="New TheGAVL Contact Form Submission">
+                <input type="hidden" name="_next" value="https://thegavl.com/contact-success.html">
+
+                <button type="submit" class="btn" id="submitBtn">
+                    Send Message
+                </button>
+            </form>
+
+            <div class="info-box">
+                <h3>⚖️ Direct Contact</h3>
+                <p><strong>Email:</strong> inventor@aios.is</p>
+                <p><strong>For Law Firms:</strong> Schedule a confidential consultation to discuss your specific litigation needs.</p>
+                <p><strong>Response Time:</strong> We typically respond within 24 hours on business days.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+        });
+    </script>
+</body>
+</html>
