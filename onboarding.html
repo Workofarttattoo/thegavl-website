@@ -1148,10 +1148,8 @@
                     respondent: 'Opposing Party'
                 };
 
-                // Call GAVL API
-                // For local testing: http://localhost:8000/api/v1/predict
-                // For production: https://api.thegavl.com/api/v1/predict
-                const API_URL = 'http://localhost:8000/api/v1/predict';
+                // Call GAVL API (serverless function on same domain)
+                const API_URL = '/api/predict';
 
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -1192,11 +1190,9 @@
 
                 // Show error message
                 alert('⚠️ Unable to connect to TheGAVL analysis service.\n\n' +
-                      'Please ensure:\n' +
-                      '1. The GAVL API server is running (localhost:8000)\n' +
-                      '2. You have an internet connection\n\n' +
+                      'This may be a temporary issue. Please try again in a moment.\n\n' +
                       'Error: ' + error.message + '\n\n' +
-                      'Contact support at sales@thegavl.com if this persists.');
+                      'If this problem persists, contact support at sales@thegavl.com');
             }
         }
 

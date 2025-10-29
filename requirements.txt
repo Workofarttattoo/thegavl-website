@@ -1,0 +1,2 @@
+# TheGAVL API Dependencies
+# For Vercel serverless deployment
