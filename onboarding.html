@@ -1116,7 +1116,8 @@
             if (step6Text) document.getElementById('summary6').textContent = step6Text.substring(0, 200) + (step6Text.length > 200 ? '...' : '');
         }
 
-        function submitCase() {
+        async function submitCase() {
+            // Collect case data
             const caseData = {
                 caseType: caseType,
                 overview: document.getElementById('textInput1')?.value || document.getElementById('transcription1')?.textContent,
@@ -1127,8 +1128,76 @@
                 damages: document.getElementById('textInput6')?.value || document.getElementById('transcription6')?.textContent,
             };
 
+            // Save for results page
             sessionStorage.setItem('caseData', JSON.stringify(caseData));
-            alert('🎉 Your case has been submitted!\n\nTheGAVL is now analyzing your complete case with quantum-enhanced reasoning:\n✓ Your strengths and weaknesses\n✓ Opposing side\'s likely strategy\n✓ Vulnerability assessment\n✓ Strategic recommendations\n\nYour analysis will be ready in moments.');
+
+            // Show loading state
+            const analyzeBtn = event.target;
+            const originalText = analyzeBtn.textContent;
+            analyzeBtn.textContent = '⏳ Analyzing...';
+            analyzeBtn.disabled = true;
+
+            try {
+                // Prepare API request
+                const apiRequest = {
+                    case_id: `CASE-${Date.now()}`,
+                    case_name: `${caseData.caseType} Case - ${userData?.name || 'User'}`,
+                    issue_area: caseData.caseType || 'general',
+                    opinion_text: `Overview: ${caseData.overview}\n\nFacts: ${caseData.facts}\n\nYour Evidence: ${caseData.yourEvidence}\n\nOpposing Evidence: ${caseData.opposingEvidence}\n\nWeaknesses: ${caseData.weaknesses}\n\nDamages: ${caseData.damages}`,
+                    petitioner: userData?.name || 'User',
+                    respondent: 'Opposing Party'
+                };
+
+                // Call GAVL API
+                // For local testing: http://localhost:8000/api/v1/predict
+                // For production: https://api.thegavl.com/api/v1/predict
+                const API_URL = 'http://localhost:8000/api/v1/predict';
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(apiRequest)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const prediction = await response.json();
+
+                // Deduct verdict from user's balance
+                if (userData && userData.email) {
+                    const storedUsers = JSON.parse(localStorage.getItem('gavlUsers') || '{}');
+                    if (storedUsers[userData.email]) {
+                        storedUsers[userData.email].creditsRemaining -= 1;
+                        storedUsers[userData.email].casesAnalyzed = (storedUsers[userData.email].casesAnalyzed || 0) + 1;
+                        localStorage.setItem('gavlUsers', JSON.stringify(storedUsers));
+                    }
+                }
+
+                // Store prediction results
+                sessionStorage.setItem('verdictResult', JSON.stringify(prediction));
+
+                // Redirect to results page
+                window.location.href = 'verdict-results.html';
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+
+                // Restore button
+                analyzeBtn.textContent = originalText;
+                analyzeBtn.disabled = false;
+
+                // Show error message
+                alert('⚠️ Unable to connect to TheGAVL analysis service.\n\n' +
+                      'Please ensure:\n' +
+                      '1. The GAVL API server is running (localhost:8000)\n' +
+                      '2. You have an internet connection\n\n' +
+                      'Error: ' + error.message + '\n\n' +
+                      'Contact support at sales@thegavl.com if this persists.');
+            }
         }
 
         // Enrollment Functions
