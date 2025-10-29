@@ -595,6 +595,33 @@
                     </div>
 
                     <div style="margin-bottom: 25px;">
+                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                            Password *
+                        </label>
+                        <input
+                            type="password"
+                            id="userPassword"
+                            placeholder="Create a secure password"
+                            minlength="6"
+                            style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
+                        />
+                        <small style="color: #94a3b8; font-size: 0.85em;">Minimum 6 characters</small>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                            Confirm Password *
+                        </label>
+                        <input
+                            type="password"
+                            id="userPasswordConfirm"
+                            placeholder="Re-enter your password"
+                            minlength="6"
+                            style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
+                        />
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
                         <label style="display: flex; align-items: center; cursor: pointer;">
                             <input
                                 type="checkbox"
@@ -605,6 +632,20 @@
                                 I agree to the <a href="#" style="color: #60a5fa; text-decoration: underline;">Terms of Service</a> and <a href="#" style="color: #60a5fa; text-decoration: underline;">Privacy Policy</a>
                             </span>
                         </label>
+                    </div>
+                </div>
+
+                <div id="signInFields" style="display: none;">
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                            Password *
+                        </label>
+                        <input
+                            type="password"
+                            id="signInPassword"
+                            placeholder="Enter your password"
+                            style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
+                        />
                     </div>
                 </div>
 
@@ -1099,6 +1140,7 @@
             const enrollBtn = document.getElementById('enrollBtn');
             const signInBtn = document.getElementById('signInBtn');
             const enrollFields = document.getElementById('enrollFields');
+            const signInFields = document.getElementById('signInFields');
             const enrollGuidance = document.getElementById('enrollGuidance');
             const signInGuidance = document.getElementById('signInGuidance');
             const submitBtn = document.getElementById('submitBtn');
@@ -1114,14 +1156,20 @@
                 signInBtn.style.color = '#cbd5e1';
 
                 enrollFields.style.display = 'block';
+                signInFields.style.display = 'none';
                 enrollGuidance.style.display = 'block';
                 signInGuidance.style.display = 'none';
 
                 submitBtn.textContent = 'Start Free Trial →';
 
-                // Make fields required
+                // Make enroll fields required
                 document.getElementById('userName').required = true;
+                document.getElementById('userPassword').required = true;
+                document.getElementById('userPasswordConfirm').required = true;
                 document.getElementById('agreeTerms').required = true;
+
+                // Make sign in fields not required
+                document.getElementById('signInPassword').required = false;
             } else {
                 // Show sign in mode
                 signInBtn.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.15) 100%)';
@@ -1133,13 +1181,19 @@
                 enrollBtn.style.color = '#cbd5e1';
 
                 enrollFields.style.display = 'none';
+                signInFields.style.display = 'block';
                 enrollGuidance.style.display = 'none';
                 signInGuidance.style.display = 'block';
 
                 submitBtn.textContent = 'Sign In →';
 
-                // Make fields not required
+                // Make sign in fields required
+                document.getElementById('signInPassword').required = true;
+
+                // Make enroll fields not required
                 document.getElementById('userName').required = false;
+                document.getElementById('userPassword').required = false;
+                document.getElementById('userPasswordConfirm').required = false;
                 document.getElementById('agreeTerms').required = false;
             }
         }
@@ -1193,9 +1247,23 @@
 
             // Sign In Mode
             if (authMode === 'signin') {
+                const password = document.getElementById('signInPassword').value;
+
+                if (!password) {
+                    alert('Please enter your password.');
+                    return;
+                }
+
                 if (!storedUsers[email]) {
                     alert('⚠️ No account found with this email.\n\nPlease click "Create Free Account" to start your trial.');
                     switchAuthMode('enroll');
+                    return;
+                }
+
+                // Validate password
+                const storedPassword = atob(storedUsers[email].passwordHash);
+                if (password !== storedPassword) {
+                    alert('⚠️ Incorrect password.\n\nPlease try again or reset your password.');
                     return;
                 }
 
@@ -1228,10 +1296,22 @@
             // Enroll Mode
             const name = document.getElementById('userName').value.trim();
             const phone = document.getElementById('userPhone').value.trim();
+            const password = document.getElementById('userPassword').value;
+            const passwordConfirm = document.getElementById('userPasswordConfirm').value;
             const agreeTerms = document.getElementById('agreeTerms').checked;
 
-            if (!email || !name || !agreeTerms) {
+            if (!email || !name || !password || !passwordConfirm || !agreeTerms) {
                 alert('Please fill in all required fields and agree to the terms.');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('⚠️ Password must be at least 6 characters long.');
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                alert('⚠️ Passwords do not match.\n\nPlease make sure both password fields are identical.');
                 return;
             }
 
@@ -1241,11 +1321,12 @@
                 return;
             }
 
-            // Create new user
+            // Create new user with password
             storedUsers[email] = {
                 email: email,
                 name: name,
                 phone: phone,
+                passwordHash: btoa(password), // Basic encoding (not secure, but works for demo)
                 enrollmentDate: new Date().toISOString(),
                 creditsRemaining: 1000,
                 casesAnalyzed: 0,
