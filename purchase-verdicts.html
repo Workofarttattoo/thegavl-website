@@ -263,11 +263,11 @@
             </div>
         </div>
 
-        <!-- Purchase Request Form -->
+        <!-- Square Payment Form -->
         <div class="purchase-form">
-            <h2 style="color: #60a5fa; margin-bottom: 20px;">📞 Request Verdict Purchase</h2>
+            <h2 style="color: #60a5fa; margin-bottom: 20px;">💳 Complete Your Purchase</h2>
             <p style="color: #94a3b8; margin-bottom: 30px;">
-                Fill out this form and we'll contact you to complete your purchase via phone with Square payment processing.
+                Secure payment processing powered by Square. Your verdict credits will be available immediately after payment.
             </p>
 
             <form id="purchaseForm">
@@ -282,18 +282,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone Number *</label>
-                    <input type="tel" id="phone" required placeholder="(555) 123-4567">
-                </div>
-
-                <div class="form-group">
                     <label for="package">Select Package *</label>
                     <select id="package" required>
                         <option value="">-- Choose a package --</option>
                         <option value="single">Single Verdict - $39</option>
                         <option value="professional">Professional (40 verdicts) - $399</option>
                         <option value="firm">Firm (125 verdicts) - $999</option>
-                        <option value="enterprise">Enterprise (Custom pricing)</option>
                     </select>
                 </div>
 
@@ -302,33 +296,44 @@
                     <input type="text" id="organization" placeholder="Your firm name">
                 </div>
 
-                <div class="form-group">
-                    <label for="notes">Additional Notes (optional)</label>
-                    <textarea id="notes" rows="4" placeholder="Any questions or special requirements?"></textarea>
+                <!-- Square Card Payment -->
+                <div id="payment-section" style="display: none; margin-top: 30px;">
+                    <div style="background: rgba(96, 165, 250, 0.1); border: 2px solid rgba(96, 165, 250, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                        <h3 style="color: #60a5fa; margin-bottom: 15px;">Payment Information</h3>
+                        <div style="color: #cbd5e1; margin-bottom: 15px;">
+                            <strong>Package:</strong> <span id="selected-package-name">-</span><br>
+                            <strong>Amount:</strong> <span id="selected-amount">$0</span><br>
+                            <strong>Verdicts:</strong> <span id="selected-verdicts">0</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Card Information</label>
+                        <div id="card-container" style="background: rgba(30, 41, 59, 0.8); border: 2px solid #334155; border-radius: 8px; padding: 15px; min-height: 100px;">
+                            <!-- Square Payment Form will be inserted here -->
+                        </div>
+                        <div id="payment-status-container" style="margin-top: 10px; color: #94a3b8; font-size: 0.9em;"></div>
+                    </div>
+
+                    <button type="button" id="card-button" class="btn btn-gold" style="margin-top: 20px;">
+                        Complete Payment
+                    </button>
                 </div>
 
-                <div class="form-group">
-                    <label for="preferredTime">Preferred Contact Time</label>
-                    <select id="preferredTime">
-                        <option value="morning">Morning (9 AM - 12 PM)</option>
-                        <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
-                        <option value="evening">Evening (5 PM - 8 PM)</option>
-                        <option value="anytime">Anytime</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-gold">Submit Purchase Request</button>
+                <button type="button" id="continue-to-payment" class="btn btn-gold" style="display: block;">
+                    Continue to Payment
+                </button>
             </form>
         </div>
 
         <!-- Success Message -->
         <div class="success-message" id="successMessage">
-            <h2>✅ Request Submitted Successfully!</h2>
+            <h2>✅ Payment Successful!</h2>
             <p style="color: #cbd5e1; font-size: 1.1em; margin: 15px 0;">
-                We've received your purchase request. We'll call you within 24 hours to complete your payment via Square.
+                Your verdict credits have been added to your account!
             </p>
             <p style="color: #94a3b8;">
-                Check your email for confirmation and our contact information.
+                You can start analyzing cases immediately.
             </p>
         </div>
 
@@ -388,49 +393,209 @@
         </div>
     </div>
 
+    <!-- Square Web Payments SDK -->
+    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+
     <script>
-        document.getElementById('purchaseForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        // Package pricing configuration
+        const PACKAGES = {
+            'single': { name: 'Single Verdict', amount: 39, verdicts: 1, validity: 30 },
+            'professional': { name: 'Professional Package', amount: 399, verdicts: 40, validity: 90 },
+            'firm': { name: 'Firm Package', amount: 999, verdicts: 125, validity: 180 }
+        };
 
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                package: document.getElementById('package').value,
-                organization: document.getElementById('organization').value,
-                notes: document.getElementById('notes').value,
-                preferredTime: document.getElementById('preferredTime').value,
-                requestDate: new Date().toISOString()
-            };
-
-            try {
-                // Store in localStorage temporarily (you can move to Supabase later)
-                const requests = JSON.parse(localStorage.getItem('verdictPurchaseRequests') || '[]');
-                requests.push(formData);
-                localStorage.setItem('verdictPurchaseRequests', JSON.stringify(requests));
-
-                // Show success message
-                document.querySelector('.purchase-form').style.display = 'none';
-                document.getElementById('successMessage').style.display = 'block';
-
-                // Send email notification (you can set up an email service)
-                console.log('Purchase request submitted:', formData);
-
-                // Scroll to success message
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            } catch (error) {
-                alert('Error submitting request. Please try calling us directly.');
-                console.error(error);
-            }
-        });
+        let card, payments;
+        let selectedPackage = null;
 
         // Pre-fill email if user is signed in
         const userData = JSON.parse(localStorage.getItem('gavlUserData') || '{}');
         if (userData.email) {
             document.getElementById('email').value = userData.email;
             document.getElementById('name').value = userData.name || '';
-            document.getElementById('phone').value = userData.phone || '';
+        }
+
+        // Continue to payment button
+        document.getElementById('continue-to-payment').addEventListener('click', async function() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const packageType = document.getElementById('package').value;
+
+            if (!name || !email || !packageType) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            selectedPackage = PACKAGES[packageType];
+
+            // Update payment summary
+            document.getElementById('selected-package-name').textContent = selectedPackage.name;
+            document.getElementById('selected-amount').textContent = '$' + selectedPackage.amount;
+            document.getElementById('selected-verdicts').textContent = selectedPackage.verdicts;
+
+            // Hide continue button, show payment section
+            this.style.display = 'none';
+            document.getElementById('payment-section').style.display = 'block';
+
+            // Initialize Square payment form
+            await initializeSquarePayment(packageType);
+        });
+
+        async function initializeSquarePayment(packageType) {
+            try {
+                // Get payment intent from our API
+                const response = await fetch('/api/square-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'create_payment',
+                        package: packageType,
+                        email: document.getElementById('email').value,
+                        name: document.getElementById('name').value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to initialize payment');
+                }
+
+                const squareConfig = result.square_config;
+                const paymentIntent = result.payment_intent;
+
+                // Initialize Square Web Payments SDK
+                if (!window.Square) {
+                    throw new Error('Square SDK failed to load');
+                }
+
+                payments = window.Square.payments(
+                    squareConfig.application_id,
+                    squareConfig.location_id
+                );
+
+                // Initialize card payment
+                card = await payments.card();
+                await card.attach('#card-container');
+
+                document.getElementById('payment-status-container').innerHTML = '✓ Payment form ready';
+                document.getElementById('payment-status-container').style.color = '#4ade80';
+
+                // Store payment intent for later
+                window.paymentIntent = paymentIntent;
+
+            } catch (error) {
+                console.error('Square initialization error:', error);
+                document.getElementById('payment-status-container').innerHTML = '⚠️ ' + error.message;
+                document.getElementById('payment-status-container').style.color = '#f87171';
+
+                // Fallback: Show contact information
+                alert('Payment system initialization failed. Please contact sales@thegavl.com or refresh and try again.');
+            }
+        }
+
+        // Handle payment button
+        document.getElementById('card-button').addEventListener('click', async function() {
+            const button = this;
+            const originalText = button.textContent;
+
+            try {
+                button.textContent = '⏳ Processing...';
+                button.disabled = true;
+
+                // Tokenize card
+                const result = await card.tokenize();
+
+                if (result.status === 'OK') {
+                    // Process payment
+                    const paymentResponse = await fetch('/api/square-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: 'process_payment',
+                            source_id: result.token,
+                            idempotency_key: window.paymentIntent.idempotency_key,
+                            package: window.paymentIntent.package,
+                            email: window.paymentIntent.user_email,
+                            name: window.paymentIntent.user_name
+                        })
+                    });
+
+                    const paymentResult = await paymentResponse.json();
+
+                    if (paymentResult.success) {
+                        // Payment successful - allocate verdicts
+                        await allocateVerdicts(paymentResult);
+
+                        // Show success message
+                        document.querySelector('.purchase-form').style.display = 'none';
+                        const successMsg = document.getElementById('successMessage');
+                        successMsg.innerHTML = `
+                            <h2>✅ Payment Successful!</h2>
+                            <p style="color: #cbd5e1; font-size: 1.2em; margin: 20px 0;">
+                                <strong>${paymentResult.verdicts_added} verdict credits</strong> have been added to your account!
+                            </p>
+                            <p style="color: #94a3b8; margin: 15px 0;">
+                                Payment ID: ${paymentResult.payment_id}<br>
+                                Valid for: ${paymentResult.validity_days} days
+                            </p>
+                            <button onclick="window.location.href='onboarding.html'" class="btn btn-gold" style="margin-top: 20px;">
+                                Start Analyzing Cases →
+                            </button>
+                        `;
+                        successMsg.style.display = 'block';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    } else {
+                        throw new Error(paymentResult.error || 'Payment failed');
+                    }
+
+                } else {
+                    throw new Error('Card tokenization failed: ' + (result.errors || []).map(e => e.message).join(', '));
+                }
+
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment failed: ' + error.message + '\n\nPlease try again or contact sales@thegavl.com');
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        });
+
+        async function allocateVerdicts(paymentResult) {
+            try {
+                // Get current user data
+                const storedUsers = JSON.parse(localStorage.getItem('gavlUsers') || '{}');
+                const userEmail = window.paymentIntent.user_email;
+
+                if (!storedUsers[userEmail]) {
+                    storedUsers[userEmail] = {
+                        email: userEmail,
+                        name: window.paymentIntent.user_name,
+                        creditsRemaining: 0,
+                        trialEnded: true
+                    };
+                }
+
+                // Add purchased verdicts
+                storedUsers[userEmail].creditsRemaining += paymentResult.verdicts_added;
+                storedUsers[userEmail].lastPurchase = {
+                    date: new Date().toISOString(),
+                    paymentId: paymentResult.payment_id,
+                    verdicts: paymentResult.verdicts_added,
+                    validityDays: paymentResult.validity_days
+                };
+
+                // Save to localStorage
+                localStorage.setItem('gavlUsers', JSON.stringify(storedUsers));
+
+                // Update current session
+                localStorage.setItem('gavlUserData', JSON.stringify(storedUsers[userEmail]));
+
+                console.log('Verdicts allocated:', paymentResult);
+
+            } catch (error) {
+                console.error('Allocation error:', error);
+            }
         }
     </script>
 </body>
