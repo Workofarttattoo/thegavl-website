@@ -505,6 +505,18 @@
             <h1>👤 Welcome to TheGAVL Case Analysis</h1>
             <p class="step-subtitle">Let's get you started with your free trial or continue where you left off.</p>
 
+            <!-- Sign In / Enroll Toggle -->
+            <div style="display: flex; gap: 15px; margin: 30px 0; justify-content: center;">
+                <button type="button" id="enrollBtn" class="case-type-btn" onclick="switchAuthMode('enroll')" style="flex: 1; max-width: 250px; padding: 20px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.15) 100%); border: 2px solid #3b82f6; border-radius: 12px; color: white; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                    🆕 Create Free Account
+                    <div style="font-size: 0.8em; font-weight: 400; margin-top: 5px; color: #93c5fd;">14-day trial • 1,000 credits</div>
+                </button>
+                <button type="button" id="signInBtn" class="case-type-btn" onclick="switchAuthMode('signin')" style="flex: 1; max-width: 250px; padding: 20px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 12px; color: #cbd5e1; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                    🔑 Sign In
+                    <div style="font-size: 0.8em; font-weight: 400; margin-top: 5px; color: #94a3b8;">Already have an account?</div>
+                </button>
+            </div>
+
             <!-- Trial Status Display (shown for returning users) -->
             <div id="trialStatusBox" style="display: none; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.1) 100%); border: 2px solid #22c55e; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
                 <h3 style="color: #4ade80; margin-bottom: 15px; font-size: 1.3em;">✅ Welcome Back!</h3>
@@ -520,7 +532,7 @@
                 </div>
             </div>
 
-            <div class="guidance-box">
+            <div class="guidance-box" id="enrollGuidance">
                 <div class="guidance-title">💡 About Your Free Trial</div>
                 <div class="guidance-text">
                     <strong>New users receive:</strong><br>
@@ -528,7 +540,15 @@
                     • 1,000 case analysis credits<br>
                     • Access to all 5 modules<br>
                     • No credit card required<br><br>
-                    <strong>Returning users:</strong> We'll show your remaining trial days and credits above.
+                    <strong>Already have an account?</strong> Click "Sign In" above.
+                </div>
+            </div>
+
+            <div class="guidance-box" id="signInGuidance" style="display: none;">
+                <div class="guidance-title">🔑 Sign In to Continue</div>
+                <div class="guidance-text">
+                    <strong>Enter your email</strong> to access your trial account and remaining credits.<br><br>
+                    <strong>Don't have an account?</strong> Click "Create Free Account" above.
                 </div>
             </div>
 
@@ -548,48 +568,48 @@
                     <small style="color: #94a3b8; font-size: 0.85em;">We'll use this to save your progress and trial status</small>
                 </div>
 
-                <div style="margin-bottom: 25px;">
-                    <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
-                        Full Name *
-                    </label>
-                    <input
-                        type="text"
-                        id="userName"
-                        required
-                        placeholder="John Doe"
-                        style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
-                    />
-                </div>
-
-                <div style="margin-bottom: 25px;">
-                    <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
-                        Phone Number (Optional)
-                    </label>
-                    <input
-                        type="tel"
-                        id="userPhone"
-                        placeholder="(555) 123-4567"
-                        style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
-                    />
-                    <small style="color: #94a3b8; font-size: 0.85em;">For important case updates only</small>
-                </div>
-
-                <div style="margin-bottom: 25px;">
-                    <label style="display: flex; align-items: center; cursor: pointer;">
+                <div id="enrollFields">
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                            Full Name *
+                        </label>
                         <input
-                            type="checkbox"
-                            id="agreeTerms"
-                            required
-                            style="width: 20px; height: 20px; margin-right: 10px; cursor: pointer;"
+                            type="text"
+                            id="userName"
+                            placeholder="John Doe"
+                            style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
                         />
-                        <span style="color: #cbd5e1; font-size: 0.95em;">
-                            I agree to the <a href="#" style="color: #60a5fa; text-decoration: underline;">Terms of Service</a> and <a href="#" style="color: #60a5fa; text-decoration: underline;">Privacy Policy</a>
-                        </span>
-                    </label>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                            Phone Number (Optional)
+                        </label>
+                        <input
+                            type="tel"
+                            id="userPhone"
+                            placeholder="(555) 123-4567"
+                            style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
+                        />
+                        <small style="color: #94a3b8; font-size: 0.85em;">For important case updates only</small>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input
+                                type="checkbox"
+                                id="agreeTerms"
+                                style="width: 20px; height: 20px; margin-right: 10px; cursor: pointer;"
+                            />
+                            <span style="color: #cbd5e1; font-size: 0.95em;">
+                                I agree to the <a href="#" style="color: #60a5fa; text-decoration: underline;">Terms of Service</a> and <a href="#" style="color: #60a5fa; text-decoration: underline;">Privacy Policy</a>
+                            </span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" class="btn-primary" style="width: 100%;">Start Free Trial →</button>
+                    <button type="submit" class="btn-primary" id="submitBtn" style="width: 100%;">Start Free Trial →</button>
                 </div>
             </form>
         </div>
@@ -1071,6 +1091,59 @@
         }
 
         // Enrollment Functions
+        let authMode = 'enroll'; // 'enroll' or 'signin'
+
+        function switchAuthMode(mode) {
+            authMode = mode;
+
+            const enrollBtn = document.getElementById('enrollBtn');
+            const signInBtn = document.getElementById('signInBtn');
+            const enrollFields = document.getElementById('enrollFields');
+            const enrollGuidance = document.getElementById('enrollGuidance');
+            const signInGuidance = document.getElementById('signInGuidance');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (mode === 'enroll') {
+                // Show enroll mode
+                enrollBtn.style.background = 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.15) 100%)';
+                enrollBtn.style.borderColor = '#3b82f6';
+                enrollBtn.style.color = 'white';
+
+                signInBtn.style.background = 'rgba(255, 255, 255, 0.05)';
+                signInBtn.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                signInBtn.style.color = '#cbd5e1';
+
+                enrollFields.style.display = 'block';
+                enrollGuidance.style.display = 'block';
+                signInGuidance.style.display = 'none';
+
+                submitBtn.textContent = 'Start Free Trial →';
+
+                // Make fields required
+                document.getElementById('userName').required = true;
+                document.getElementById('agreeTerms').required = true;
+            } else {
+                // Show sign in mode
+                signInBtn.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.15) 100%)';
+                signInBtn.style.borderColor = '#d4af37';
+                signInBtn.style.color = 'white';
+
+                enrollBtn.style.background = 'rgba(255, 255, 255, 0.05)';
+                enrollBtn.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                enrollBtn.style.color = '#cbd5e1';
+
+                enrollFields.style.display = 'none';
+                enrollGuidance.style.display = 'none';
+                signInGuidance.style.display = 'block';
+
+                submitBtn.textContent = 'Sign In →';
+
+                // Make fields not required
+                document.getElementById('userName').required = false;
+                document.getElementById('agreeTerms').required = false;
+            }
+        }
+
         function checkReturningUser() {
             const email = document.getElementById('userEmail').value.toLowerCase().trim();
             if (!email) return;
@@ -1109,6 +1182,50 @@
             event.preventDefault();
 
             const email = document.getElementById('userEmail').value.toLowerCase().trim();
+
+            if (!email) {
+                alert('Please enter your email address.');
+                return;
+            }
+
+            // Get existing users or create new object
+            const storedUsers = JSON.parse(localStorage.getItem('gavlUsers') || '{}');
+
+            // Sign In Mode
+            if (authMode === 'signin') {
+                if (!storedUsers[email]) {
+                    alert('⚠️ No account found with this email.\n\nPlease click "Create Free Account" to start your trial.');
+                    switchAuthMode('enroll');
+                    return;
+                }
+
+                userData = storedUsers[email];
+                userData.lastVisit = new Date().toISOString();
+                localStorage.setItem('gavlUsers', JSON.stringify(storedUsers));
+                sessionStorage.setItem('currentUser', JSON.stringify(userData));
+
+                // Check trial status
+                const enrollmentDate = new Date(userData.enrollmentDate);
+                const daysElapsed = Math.floor((new Date() - enrollmentDate) / (1000 * 60 * 60 * 24));
+
+                if (daysElapsed >= 14) {
+                    alert('⚠️ Your 14-day trial has expired.\n\nPlease subscribe to continue using TheGAVL analysis.\n\nRedirecting you to pricing...');
+                    window.location.href = 'index.html#pricing';
+                    return;
+                }
+
+                if (userData.creditsRemaining <= 0) {
+                    alert('⚠️ You have used all your trial credits.\n\nPlease purchase TRVTH tokens or subscribe to continue.\n\nRedirecting you to pricing...');
+                    window.location.href = 'index.html#pricing';
+                    return;
+                }
+
+                alert(`✅ Welcome back ${userData.name}!\n\n📊 Trial Status:\n• Days Remaining: ${14 - daysElapsed}\n• Credits Remaining: ${userData.creditsRemaining}\n\nLet's analyze your case!`);
+                goToStep(1);
+                return;
+            }
+
+            // Enroll Mode
             const name = document.getElementById('userName').value.trim();
             const phone = document.getElementById('userPhone').value.trim();
             const agreeTerms = document.getElementById('agreeTerms').checked;
@@ -1118,29 +1235,23 @@
                 return;
             }
 
-            // Get existing users or create new object
-            const storedUsers = JSON.parse(localStorage.getItem('gavlUsers') || '{}');
-
-            // Create or update user data
-            if (!storedUsers[email]) {
-                // New user
-                storedUsers[email] = {
-                    email: email,
-                    name: name,
-                    phone: phone,
-                    enrollmentDate: new Date().toISOString(),
-                    creditsRemaining: 1000,
-                    casesAnalyzed: 0,
-                    lastVisit: new Date().toISOString()
-                };
-                console.log('New user enrolled:', email);
-            } else {
-                // Returning user - update last visit
-                storedUsers[email].lastVisit = new Date().toISOString();
-                storedUsers[email].name = name;
-                storedUsers[email].phone = phone;
-                console.log('Returning user updated:', email);
+            if (storedUsers[email]) {
+                alert('⚠️ An account with this email already exists.\n\nPlease click "Sign In" to access your account.');
+                switchAuthMode('signin');
+                return;
             }
+
+            // Create new user
+            storedUsers[email] = {
+                email: email,
+                name: name,
+                phone: phone,
+                enrollmentDate: new Date().toISOString(),
+                creditsRemaining: 1000,
+                casesAnalyzed: 0,
+                lastVisit: new Date().toISOString()
+            };
+            console.log('New user enrolled:', email);
 
             userData = storedUsers[email];
 
