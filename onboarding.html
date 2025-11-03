@@ -683,10 +683,10 @@
             </div>
 
             <div class="case-type-buttons">
-                <button class="case-type-btn plaintiff" onclick="selectCaseType('plaintiff')">
+                <button class="case-type-btn plaintiff" onclick="selectCaseType(event, 'plaintiff')">
                     🎯 I'm the Plaintiff<div class="case-type-small">I filed this lawsuit</div>
                 </button>
-                <button class="case-type-btn defendant" onclick="selectCaseType('defendant')">
+                <button class="case-type-btn defendant" onclick="selectCaseType(event, 'defendant')">
                     🛡️ I'm the Defendant<div class="case-type-small">I'm being sued</div>
                 </button>
             </div>
@@ -1006,7 +1006,7 @@
 
             <div class="button-group">
                 <button class="btn-secondary" onclick="goToStep(7)">← Back</button>
-                <button class="btn-primary" onclick="submitCase()">Analyze My Case 🚀</button>
+                <button class="btn-primary" id="analyzeBtn" onclick="submitCase(event)">Analyze My Case 🚀</button>
             </div>
         </div>
     </div>
@@ -1028,12 +1028,15 @@
             recognition.lang = 'en-US';
         }
 
-        function selectCaseType(type) {
+        function selectCaseType(evt, type) {
             caseType = type;
             document.querySelectorAll('.case-type-btn').forEach(btn => {
                 btn.classList.remove('selected');
             });
-            event.target.closest('.case-type-btn').classList.add('selected');
+            const target = evt?.currentTarget ?? evt?.target;
+            if (target && target.classList) {
+                target.classList.add('selected');
+            }
             document.getElementById('caseTypeBtn').disabled = false;
             document.getElementById('caseTypeBtn').style.opacity = '1';
             document.getElementById('caseTypeBtn').style.cursor = 'pointer';
@@ -1130,7 +1133,9 @@
             if (step6Text) document.getElementById('summary6').textContent = step6Text.substring(0, 200) + (step6Text.length > 200 ? '...' : '');
         }
 
-        async function submitCase() {
+        async function submitCase(evt) {
+            evt?.preventDefault();
+
             // Collect case data
             const caseData = {
                 caseType: caseType,
@@ -1146,10 +1151,12 @@
             sessionStorage.setItem('caseData', JSON.stringify(caseData));
 
             // Show loading state
-            const analyzeBtn = event.target;
-            const originalText = analyzeBtn.textContent;
-            analyzeBtn.textContent = '⏳ Analyzing...';
-            analyzeBtn.disabled = true;
+            const analyzeBtn = evt?.currentTarget ?? document.getElementById('analyzeBtn');
+            const originalText = analyzeBtn?.textContent;
+            if (analyzeBtn) {
+                analyzeBtn.textContent = '⏳ Analyzing...';
+                analyzeBtn.disabled = true;
+            }
 
             try {
                 // Prepare API request
@@ -1199,8 +1206,10 @@
                 console.error('Analysis error:', error);
 
                 // Restore button
-                analyzeBtn.textContent = originalText;
-                analyzeBtn.disabled = false;
+                if (analyzeBtn && originalText) {
+                    analyzeBtn.textContent = originalText;
+                    analyzeBtn.disabled = false;
+                }
 
                 // Show error message
                 alert('⚠️ Unable to connect to TheGAVL analysis service.\n\n' +
