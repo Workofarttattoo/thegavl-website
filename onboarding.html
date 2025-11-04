@@ -473,6 +473,19 @@
             line-height: 1.6;
         }
 
+        /* Screen reader only class for accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
@@ -568,12 +581,13 @@
 
             <form id="enrollmentForm" style="margin-top: 30px;">
                 <div style="margin-bottom: 25px;">
-                    <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                    <label for="userEmail" style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
                         Email Address *
                     </label>
                     <input
                         type="email"
                         id="userEmail"
+                        name="userEmail"
                         required
                         placeholder="your.email@example.com"
                         style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
@@ -584,24 +598,26 @@
 
                 <div id="enrollFields">
                     <div style="margin-bottom: 25px;">
-                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                        <label for="userName" style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
                             Full Name *
                         </label>
                         <input
                             type="text"
                             id="userName"
+                            name="userName"
                             placeholder="John Doe"
                             style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
                         />
                     </div>
 
                     <div style="margin-bottom: 25px;">
-                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                        <label for="userPhone" style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
                             Phone Number (Optional)
                         </label>
                         <input
                             type="tel"
                             id="userPhone"
+                            name="userPhone"
                             placeholder="(555) 123-4567"
                             style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
                         />
@@ -609,12 +625,13 @@
                     </div>
 
                     <div style="margin-bottom: 25px;">
-                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                        <label for="userPassword" style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
                             Password *
                         </label>
                         <input
                             type="password"
                             id="userPassword"
+                            name="userPassword"
                             placeholder="Create a secure password"
                             minlength="6"
                             style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
@@ -623,12 +640,13 @@
                     </div>
 
                     <div style="margin-bottom: 25px;">
-                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                        <label for="userPasswordConfirm" style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
                             Confirm Password *
                         </label>
                         <input
                             type="password"
                             id="userPasswordConfirm"
+                            name="userPasswordConfirm"
                             placeholder="Re-enter your password"
                             minlength="6"
                             style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
@@ -636,10 +654,11 @@
                     </div>
 
                     <div style="margin-bottom: 25px;">
-                        <label style="display: flex; align-items: center; cursor: pointer;">
+                        <label for="agreeTerms" style="display: flex; align-items: center; cursor: pointer;">
                             <input
                                 type="checkbox"
                                 id="agreeTerms"
+                                name="agreeTerms"
                                 style="width: 20px; height: 20px; margin-right: 10px; cursor: pointer;"
                             />
                             <span style="color: #cbd5e1; font-size: 0.95em;">
@@ -651,12 +670,13 @@
 
                 <div id="signInFields" style="display: none;">
                     <div style="margin-bottom: 25px;">
-                        <label style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
+                        <label for="signInPassword" style="display: block; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; font-size: 0.95em;">
                             Password *
                         </label>
                         <input
                             type="password"
                             id="signInPassword"
+                            name="signInPassword"
                             placeholder="Enter your password"
                             style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: white; font-size: 1em;"
                         />
@@ -724,7 +744,8 @@
                 </div>
 
                 <div id="text1" class="tab-content">
-                    <textarea id="textInput1" placeholder="Describe your case here... For example: 'I have a dispute with my landlord over security deposit.' Be as detailed as you want."></textarea>
+                    <label for="textInput1" class="sr-only">Case Overview</label>
+                    <textarea id="textInput1" name="caseOverview" placeholder="Describe your case here... For example: 'I have a dispute with my landlord over security deposit.' Be as detailed as you want." aria-label="Case Overview"></textarea>
                 </div>
             </div>
 
@@ -769,7 +790,8 @@
                 </div>
 
                 <div id="text2" class="tab-content">
-                    <textarea id="textInput2" placeholder="Describe what happened in order... Start with dates and details: 'On [date], [who did what]. Then on [date], [next event]...'"></textarea>
+                    <label for="textInput2" class="sr-only">Facts and Timeline</label>
+                    <textarea id="textInput2" name="factsTimeline" placeholder="Describe what happened in order... Start with dates and details: 'On [date], [who did what]. Then on [date], [next event]...'" aria-label="Facts and Timeline"></textarea>
                 </div>
             </div>
 
@@ -814,7 +836,8 @@
                 </div>
 
                 <div id="text3" class="tab-content">
-                    <textarea id="textInput3" placeholder="List your evidence: 'I have emails from the defendant dated...', 'There's a contract that shows...', 'I have photos of...', 'I have a witness who can testify...', etc."></textarea>
+                    <label for="textInput3" class="sr-only">Your Evidence</label>
+                    <textarea id="textInput3" name="yourEvidence" placeholder="List your evidence: 'I have emails from the defendant dated...', 'There's a contract that shows...', 'I have photos of...', 'I have a witness who can testify...', etc." aria-label="Your Evidence"></textarea>
                 </div>
             </div>
 
@@ -859,7 +882,8 @@
                 </div>
 
                 <div id="text4" class="tab-content">
-                    <textarea id="textInput4" placeholder="What evidence does the other side have? 'They have emails where I said...', 'They can show that I...', 'They have a witness who...', etc."></textarea>
+                    <label for="textInput4" class="sr-only">Opposing Evidence</label>
+                    <textarea id="textInput4" name="opposingEvidence" placeholder="What evidence does the other side have? 'They have emails where I said...', 'They can show that I...', 'They have a witness who...', etc." aria-label="Opposing Evidence"></textarea>
                 </div>
             </div>
 
@@ -904,7 +928,8 @@
                 </div>
 
                 <div id="text5" class="tab-content">
-                    <textarea id="textInput5" placeholder="What are your case weaknesses? 'I don't have written proof of...', 'My witness can no longer testify because...', 'There's a gap in the timeline...', 'The contract was verbal...', etc."></textarea>
+                    <label for="textInput5" class="sr-only">Weaknesses</label>
+                    <textarea id="textInput5" name="weaknesses" placeholder="What are your case weaknesses? 'I don't have written proof of...', 'My witness can no longer testify because...', 'There's a gap in the timeline...', 'The contract was verbal...', etc." aria-label="Weaknesses"></textarea>
                 </div>
             </div>
 
@@ -951,7 +976,8 @@
                 </div>
 
                 <div id="text6" class="tab-content">
-                    <textarea id="textInput6" placeholder="What are you seeking? 'I want $[amount] because...', 'I want them to [specific action]', 'I want the court to order...', etc."></textarea>
+                    <label for="textInput6" class="sr-only">Damages and Relief Sought</label>
+                    <textarea id="textInput6" name="damages" placeholder="What are you seeking? 'I want $[amount] because...', 'I want them to [specific action]', 'I want the court to order...', etc." aria-label="Damages and Relief Sought"></textarea>
                 </div>
             </div>
 

@@ -197,42 +197,42 @@
         <form id="registerForm">
             <div class="form-group">
                 <label for="name">Full Name *</label>
-                <input type="text" id="name" required placeholder="Your Full Name">
+                <input type="text" id="name" name="name" required placeholder="Your Full Name">
             </div>
 
             <div class="form-group">
                 <label for="email">Email Address *</label>
-                <input type="email" id="email" required placeholder="you@example.com">
+                <input type="email" id="email" name="email" required placeholder="you@example.com">
             </div>
 
             <div class="form-group">
                 <label for="company">Company/Organization (Optional)</label>
-                <input type="text" id="company" placeholder="Your Company">
+                <input type="text" id="company" name="company" placeholder="Your Company">
             </div>
 
             <div class="form-group">
                 <label for="password">Password *</label>
-                <input type="password" id="password" required placeholder="Minimum 8 characters" minlength="8">
+                <input type="password" id="password" name="password" required placeholder="Minimum 8 characters" minlength="8">
             </div>
 
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password *</label>
-                <input type="password" id="confirmPassword" required placeholder="Re-enter password" minlength="8">
+                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter password" minlength="8">
             </div>
 
             <div class="checkbox-group">
-                <label>
-                    <input type="checkbox" id="termsAccept" required>
+                <label for="termsAccept">
+                    <input type="checkbox" id="termsAccept" name="termsAccept" required>
                     I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a>
                 </label>
 
-                <label>
-                    <input type="checkbox" id="privacyAccept" required>
+                <label for="privacyAccept">
+                    <input type="checkbox" id="privacyAccept" name="privacyAccept" required>
                     I agree to the <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
                 </label>
 
-                <label>
-                    <input type="checkbox" id="emailOptIn">
+                <label for="emailOptIn">
+                    <input type="checkbox" id="emailOptIn" name="emailOptIn">
                     I want to receive updates about TheGAVL
                 </label>
             </div>
