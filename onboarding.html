@@ -1195,8 +1195,8 @@
                     respondent: 'Opposing Party'
                 };
 
-                // Call GAVL API (serverless function on same domain)
-                const API_URL = '/api/predict';
+                // Call GAVL API (hosted on Vercel)
+                const API_URL = 'https://thegavl-api.vercel.app/api/predict';
 
                 const response = await fetch(API_URL, {
                     method: 'POST',
